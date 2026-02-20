@@ -1,0 +1,1 @@
+# copilot-config-workshop
