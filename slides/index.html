@@ -54,11 +54,13 @@
     }
 
     .reveal h2 {
-      font-size: 1.55rem;
+      font-size: 1.6rem;
+      font-weight: 700;
       color: #58a6ff;
-      border-bottom: 1px solid #30363d;
+      border-bottom: 1px solid #21262d;
       padding-bottom: 0.3em;
       margin-bottom: 0.6em;
+      letter-spacing: -0.01em;
     }
 
     .reveal h3 {
@@ -78,6 +80,17 @@
     .title-slide {
       background: linear-gradient(135deg, #0d1117 0%, #161b22 60%, #1a1f2e 100%) !important;
       color: #ffffff;
+      text-align: center;
+    }
+
+    .title-slide h1 {
+      font-size: 2.8rem !important;
+      font-weight: 800 !important;
+      background: linear-gradient(135deg, #ffffff 30%, #79c0ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.15 !important;
     }
 
     .title-slide h2 {
@@ -87,17 +100,42 @@
 
     /* ---- Exercise intro ---- */
     .exercise-intro {
-      background: linear-gradient(135deg, #0d1117 0%, #161b22 100%) !important;
+      background: linear-gradient(160deg, #0d1117 0%, #0d1f38 50%, #0d1117 100%) !important;
       color: #ffffff;
+      text-align: center;
     }
 
     .exercise-intro h2 {
-      color: #58a6ff;
-      border-bottom-color: rgba(255,255,255,0.1);
+      color: #79c0ff;
+      border-bottom: none;
+      font-size: 1.8rem !important;
+      font-weight: 700;
+      margin-bottom: 0.4em;
     }
 
     .exercise-intro p {
       color: #c9d1d9;
+      font-size: 1rem;
+    }
+
+    /* ---- CTA box for "Start Lab" ---- */
+    .cta-box {
+      display: inline-block;
+      background: linear-gradient(90deg, rgba(56,139,253,0.18), rgba(56,139,253,0.06));
+      border: 1px solid #388bfd;
+      border-radius: 8px;
+      padding: 0.55em 1.4em;
+      margin-top: 1em;
+      font-size: 0.88rem;
+      color: #79c0ff;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .cta-hint {
+      font-size: 0.72rem;
+      color: #484f58;
+      margin-top: 0.5em;
     }
 
     /* ---- Labels ---- */
@@ -198,10 +236,12 @@
     /* ---- Cards ---- */
     .card {
       border: 1px solid #30363d;
+      border-left: 3px solid #388bfd;
       border-radius: 8px;
       padding: 1em 1.1em;
-      background: #161b22;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+      background: linear-gradient(135deg, #161b22 0%, #0d1117 100%);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      position: relative;
     }
 
     .card h3 {
@@ -224,12 +264,13 @@
 
     /* ---- Large exercise number ---- */
     .exercise-number {
-      font-size: 4rem;
+      font-size: 6rem;
       font-weight: 800;
-      color: rgba(255,255,255,0.06);
+      color: rgba(88,166,255,0.12);
       display: block;
-      margin-bottom: 0.05em;
+      margin-bottom: 0em;
       line-height: 1;
+      letter-spacing: -0.04em;
     }
 
     /* ---- Numbered steps ---- */
@@ -395,16 +436,15 @@
      SLIDE 1: Title
      ============================================================ -->
 <section class="title-slide" data-background="linear-gradient(135deg, #0d1117 0%, #161b22 60%, #1a1f2e 100%)">
-  <br>
-  <svg class="gh-mark" viewBox="0 0 98 96" xmlns="http://www.w3.org/2000/svg" aria-label="GitHub">
+  <svg class="gh-mark" viewBox="0 0 98 96" xmlns="http://www.w3.org/2000/svg" aria-label="GitHub" style="display:block; margin:0 auto 0.6em; width:64px; height:64px;">
     <path fill-rule="evenodd" clip-rule="evenodd" d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z"/>
   </svg>
-  <h1 style="color:#ffffff; font-size:2.3rem">GitHub Copilot<br>Configuration Workshop</h1>
+  <h1>GitHub Copilot<br>Configuration Workshop</h1>
   <div class="divider"></div>
   <p style="color:#8b949e; margin-top:0.7em; font-size:1rem">
     Prompt engineering &bull; Custom instructions &bull; Path-specific rules &bull; Agent files &bull; Org-level practices
   </p>
-  <p style="font-size:0.72rem; color:#484f58; margin-top:2.5em">
+  <p style="font-size:0.72rem; color:#484f58; margin-top:2em">
     Open-source &bull; No additional tools required
   </p>
 </section>
@@ -638,18 +678,43 @@
 </section>
 
 <!-- ============================================================
+     How to Use These Slides
+     ============================================================ -->
+<section>
+  <h2>How to Use These Slides</h2>
+  <div class="two-col">
+    <div class="card" style="border-left-color: #3fb950;">
+      <h3 style="color:#3fb950">&#9312; Do the lab first</h3>
+      <p>Each exercise section starts with a <strong>dark intro slide</strong>. When you see it, stop here and open your GitHub Issue — that's where the step-by-step lab instructions live.</p>
+      <p style="margin-top:0.6em">Push your changes. GitHub Actions automatically posts the next step.</p>
+    </div>
+    <div class="card" style="border-left-color: #58a6ff;">
+      <h3 style="color:#58a6ff">&#9313; Use slides as reference</h3>
+      <p>The slides that follow each intro cover the <strong>theory and concepts</strong> behind each feature. Return to them while doing the lab, or use them as a reference after.</p>
+      <p style="margin-top:0.6em">Slides do not replace the Issue — they add context and depth.</p>
+    </div>
+  </div>
+  <div style="margin-top:1.1em; display:flex; align-items:center; justify-content:center; gap:1.5em; font-size:0.82rem; color:#8b949e">
+    <span>Dark intro slide &rarr; <strong style="color:#3fb950">go to Issue</strong></span>
+    <span style="color:#30363d">|</span>
+    <span>Light content slides &rarr; <strong style="color:#58a6ff">read &amp; reference</strong></span>
+    <span style="color:#30363d">|</span>
+    <span>Push changes &rarr; <strong style="color:#bc8cff">auto-advance</strong></span>
+  </div>
+</section>
+
+<!-- ============================================================
      SLIDE 6: Exercise 1 intro
      ============================================================ -->
-<section class="exercise-intro" data-background="linear-gradient(135deg, #0d1117 0%, #161b22 100%)">
-  <svg width="38" height="38" viewBox="0 0 24 24" fill="#388bfd" style="opacity:0.5; margin-bottom:0.4em; display:block; margin-left:auto; margin-right:auto" aria-hidden="true">
+<section class="exercise-intro" data-background="linear-gradient(160deg, #0d1117 0%, #0d1f38 50%, #0d1117 100%)">
+  <svg width="36" height="36" viewBox="0 0 24 24" fill="#388bfd" style="opacity:0.4; margin-bottom:0.3em; display:block; margin-left:auto; margin-right:auto" aria-hidden="true">
     <path d="M12 2l2.4 7.4H22l-6.4 4.6 2.4 7.4L12 17l-6 4.4 2.4-7.4L2 9.4h7.6L12 2z"/>
   </svg>
   <span class="exercise-number">01</span>
   <h2>Prompt Engineering for GitHub Copilot</h2>
   <p>Learn how to write prompts that produce consistent, accurate results every time.</p>
-  <div style="margin-top:1.2em; font-size:0.82rem; color:#8b949e">
-    Duration: ~30 minutes &bull; File: <code style="color:#79c0ff">exercises/01-prompt-engineering/README.md</code>
-  </div>
+  <div class="cta-box">&#128073; Open your GitHub Issue to start this lab</div>
+  <p class="cta-hint">Duration: ~30 minutes &bull; Return to these slides for theory while you work</p>
 </section>
 
 <!-- ============================================================
@@ -752,16 +817,15 @@ Expected output:
 <!-- ============================================================
      SLIDE 11: Exercise 2 intro
      ============================================================ -->
-<section class="exercise-intro" data-background="linear-gradient(135deg, #0d1117 0%, #161b22 100%)">
-  <svg width="38" height="38" viewBox="0 0 24 24" fill="#388bfd" style="opacity:0.5; margin-bottom:0.4em; display:block; margin-left:auto; margin-right:auto" aria-hidden="true">
+<section class="exercise-intro" data-background="linear-gradient(160deg, #0d1117 0%, #0d1f38 50%, #0d1117 100%)">
+  <svg width="36" height="36" viewBox="0 0 24 24" fill="#388bfd" style="opacity:0.4; margin-bottom:0.3em; display:block; margin-left:auto; margin-right:auto" aria-hidden="true">
     <path d="M12 2l2.4 7.4H22l-6.4 4.6 2.4 7.4L12 17l-6 4.4 2.4-7.4L2 9.4h7.6L12 2z"/>
   </svg>
   <span class="exercise-number">02</span>
   <h2>Repository-Wide Custom Instructions</h2>
   <p>Give Copilot persistent, project-specific context that applies to every request.</p>
-  <div style="margin-top:1.2em; font-size:0.82rem; color:#8b949e">
-    Duration: ~25 minutes &bull; File: <code style="color:#79c0ff">exercises/02-custom-instructions/README.md</code>
-  </div>
+  <div class="cta-box">&#128073; Open your GitHub Issue to start this lab</div>
+  <p class="cta-hint">Duration: ~25 minutes &bull; Return to these slides for theory while you work</p>
 </section>
 
 <!-- ============================================================
@@ -869,16 +933,15 @@ Expected output:
 <!-- ============================================================
      SLIDE 16: Exercise 3 intro
      ============================================================ -->
-<section class="exercise-intro" data-background="linear-gradient(135deg, #0d1117 0%, #161b22 100%)">
-  <svg width="38" height="38" viewBox="0 0 24 24" fill="#388bfd" style="opacity:0.5; margin-bottom:0.4em; display:block; margin-left:auto; margin-right:auto" aria-hidden="true">
+<section class="exercise-intro" data-background="linear-gradient(160deg, #0d1117 0%, #0d1f38 50%, #0d1117 100%)">
+  <svg width="36" height="36" viewBox="0 0 24 24" fill="#388bfd" style="opacity:0.4; margin-bottom:0.3em; display:block; margin-left:auto; margin-right:auto" aria-hidden="true">
     <path d="M12 2l2.4 7.4H22l-6.4 4.6 2.4 7.4L12 17l-6 4.4 2.4-7.4L2 9.4h7.6L12 2z"/>
   </svg>
   <span class="exercise-number">03</span>
   <h2>Path-Specific Instructions</h2>
   <p>Apply targeted rules only to files that match a specific path or file-type pattern.</p>
-  <div style="margin-top:1.2em; font-size:0.82rem; color:#8b949e">
-    Duration: ~20 minutes &bull; File: <code style="color:#79c0ff">exercises/03-path-specific-instructions/README.md</code>
-  </div>
+  <div class="cta-box">&#128073; Open your GitHub Issue to start this lab</div>
+  <p class="cta-hint">Duration: ~20 minutes &bull; Return to these slides for theory while you work</p>
 </section>
 
 <!-- ============================================================
@@ -924,16 +987,15 @@ applyTo: "**/*.py"
 <!-- ============================================================
      SLIDE 19: Exercise 4 intro
      ============================================================ -->
-<section class="exercise-intro" data-background="linear-gradient(135deg, #0d1117 0%, #161b22 100%)">
-  <svg width="38" height="38" viewBox="0 0 24 24" fill="#388bfd" style="opacity:0.5; margin-bottom:0.4em; display:block; margin-left:auto; margin-right:auto" aria-hidden="true">
+<section class="exercise-intro" data-background="linear-gradient(160deg, #0d1117 0%, #0d1f38 50%, #0d1117 100%)">
+  <svg width="36" height="36" viewBox="0 0 24 24" fill="#388bfd" style="opacity:0.4; margin-bottom:0.3em; display:block; margin-left:auto; margin-right:auto" aria-hidden="true">
     <path d="M12 2l2.4 7.4H22l-6.4 4.6 2.4 7.4L12 17l-6 4.4 2.4-7.4L2 9.4h7.6L12 2z"/>
   </svg>
   <span class="exercise-number">04</span>
   <h2>Chat Participants, Commands, and Variables</h2>
   <p>Use special keywords to make your prompts precise and efficient without extra explanation.</p>
-  <div style="margin-top:1.2em; font-size:0.82rem; color:#8b949e">
-    Duration: ~30 minutes &bull; File: <code style="color:#79c0ff">exercises/04-copilot-chat-skills/README.md</code>
-  </div>
+  <div class="cta-box">&#128073; Open your GitHub Issue to start this lab</div>
+  <p class="cta-hint">Duration: ~30 minutes &bull; Return to these slides for theory while you work</p>
 </section>
 
 <!-- ============================================================
@@ -1045,16 +1107,15 @@ the `calculate_average` function using pytest.</code></pre>
 <!-- ============================================================
      SLIDE 24: Exercise 5 intro
      ============================================================ -->
-<section class="exercise-intro" data-background="linear-gradient(135deg, #0d1117 0%, #161b22 100%)">
-  <svg width="38" height="38" viewBox="0 0 24 24" fill="#388bfd" style="opacity:0.5; margin-bottom:0.4em; display:block; margin-left:auto; margin-right:auto" aria-hidden="true">
+<section class="exercise-intro" data-background="linear-gradient(160deg, #0d1117 0%, #0d1f38 50%, #0d1117 100%)">
+  <svg width="36" height="36" viewBox="0 0 24 24" fill="#388bfd" style="opacity:0.4; margin-bottom:0.3em; display:block; margin-left:auto; margin-right:auto" aria-hidden="true">
     <path d="M12 2l2.4 7.4H22l-6.4 4.6 2.4 7.4L12 17l-6 4.4 2.4-7.4L2 9.4h7.6L12 2z"/>
   </svg>
   <span class="exercise-number">05</span>
   <h2>Agent Instruction Files</h2>
   <p>Onboard AI coding agents so they work efficiently without extensive manual exploration.</p>
-  <div style="margin-top:1.2em; font-size:0.82rem; color:#8b949e">
-    Duration: ~20 minutes &bull; File: <code style="color:#79c0ff">exercises/05-agent-files/README.md</code>
-  </div>
+  <div class="cta-box">&#128073; Open your GitHub Issue to start this lab</div>
+  <p class="cta-hint">Duration: ~20 minutes &bull; Return to these slides for theory while you work</p>
 </section>
 
 <!-- ============================================================
@@ -1128,16 +1189,15 @@ the `calculate_average` function using pytest.</code></pre>
 <!-- ============================================================
      SLIDE 28: Exercise 6 intro
      ============================================================ -->
-<section class="exercise-intro" data-background="linear-gradient(135deg, #0d1117 0%, #161b22 100%)">
-  <svg width="38" height="38" viewBox="0 0 24 24" fill="#388bfd" style="opacity:0.5; margin-bottom:0.4em; display:block; margin-left:auto; margin-right:auto" aria-hidden="true">
+<section class="exercise-intro" data-background="linear-gradient(160deg, #0d1117 0%, #0d1f38 50%, #0d1117 100%)">
+  <svg width="36" height="36" viewBox="0 0 24 24" fill="#388bfd" style="opacity:0.4; margin-bottom:0.3em; display:block; margin-left:auto; margin-right:auto" aria-hidden="true">
     <path d="M12 2l2.4 7.4H22l-6.4 4.6 2.4 7.4L12 17l-6 4.4 2.4-7.4L2 9.4h7.6L12 2z"/>
   </svg>
   <span class="exercise-number">06</span>
   <h2>Org-Level Best Practices</h2>
   <p>Scale your Copilot configuration consistently across an entire GitHub organization.</p>
-  <div style="margin-top:1.2em; font-size:0.82rem; color:#8b949e">
-    Duration: ~25 minutes &bull; File: <code style="color:#79c0ff">exercises/06-org-level-best-practices/README.md</code>
-  </div>
+  <div class="cta-box">&#128073; Open your GitHub Issue to start this lab</div>
+  <p class="cta-hint">Duration: ~25 minutes &bull; Return to these slides for theory while you work</p>
 </section>
 
 <!-- ============================================================
