@@ -1,6 +1,6 @@
 ## Step 3: Path-Specific Instructions
 
-Path-specific instructions let you give Copilot targeted guidance for specific parts of your project, without cluttering your repository-wide instructions.
+Your repository contains both JavaScript and Python code. Copilot should follow Python conventions (4-space indentation, type annotations, Google-style docstrings) when helping with Python files, but those rules should not bleed into JavaScript files. Path-specific instructions let you apply targeted guidance only to files matching a particular pattern.
 
 ### 📖 Theory: How path-specific instructions work
 

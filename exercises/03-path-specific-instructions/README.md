@@ -21,9 +21,7 @@ For example, you might want Copilot to follow specific rules for:
 - React component files
 - Test files
 
-Path-specific instruction files use the `.instructions.md` suffix and live inside or below `.github/instructions/` in your repository.
-
-**Official documentation:** [Adding repository custom instructions for GitHub Copilot](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot)
+Path-specific instruction files use the `.instructions.md` suffix and live inside or below `.github/instructions/` in your repository. For the full reference, see [Adding repository custom instructions for GitHub Copilot](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot).
 
 ---
 
@@ -248,7 +246,3 @@ You created path-specific instruction files that apply only to files matching a 
 ## Next Steps
 
 Proceed to [Exercise 4: Copilot Chat Participants, Commands, and Variables](../04-copilot-chat-skills/README.md).
-
----
-
-**Official documentation:** [Adding repository custom instructions for GitHub Copilot](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot)

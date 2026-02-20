@@ -1,6 +1,6 @@
 ## Step 5: Agent Instruction Files
 
-Agent instruction files provide guidance to AI coding agents (such as the GitHub Copilot coding agent) that work autonomously in your repository.
+Your team has started assigning issues to the GitHub Copilot coding agent. The agent is capable but keeps making the same exploratory mistakes: it tries to run build scripts that do not exist, uses `npm install` in a repository with no `package.json`, and ignores project conventions. An `AGENTS.md` file gives the agent the context it needs before it starts work.
 
 ### 📖 Theory: What are agent instruction files?
 
