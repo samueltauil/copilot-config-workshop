@@ -4,9 +4,11 @@
 - Understand what agent instruction files are and when to use them
 - Create an `AGENTS.md` file with structured information for AI coding agents
 - Understand the difference between `AGENTS.md` and `copilot-instructions.md`
+- Configure the Copilot coding agent environment with `copilot-setup-steps.yml`
+- Assign issues to the Copilot coding agent and collaborate on its pull requests
 - Verify that the agent file is applied correctly
 
-**Duration:** ~20 minutes
+**Duration:** ~30 minutes
 
 **Prerequisites:** Complete [Exercise 2](../02-custom-instructions/README.md) before this exercise.
 
@@ -88,8 +90,9 @@ Read this file before exploring the codebase or making any changes.
 ## Repository Purpose
 
 This repository is a workshop for learning how to configure GitHub Copilot.
-It contains five exercises covering prompt engineering, custom instructions,
-path-specific instructions, Copilot Chat skills, and agent instruction files.
+It contains six exercises covering prompt engineering, custom instructions,
+path-specific instructions, Copilot Chat skills, agent instruction files,
+and org-level best practices.
 There is no application code to build or deploy.
 
 ## Repository Structure
@@ -98,6 +101,7 @@ There is no application code to build or deploy.
   with step-by-step instructions and any starter code files.
 - `.github/copilot-instructions.md` - Repository-wide Copilot custom instructions.
 - `.github/instructions/` - Path-specific Copilot instruction files.
+- `.devcontainer/devcontainer.json` - Dev container config for GitHub Codespaces.
 - `slides/index.html` - Self-contained slide deck (no build step required).
 - `AGENTS.md` - This file.
 - `README.md` - Workshop landing page.
@@ -202,6 +206,128 @@ git push
 
 ---
 
+## Step 7: The Copilot Coding Agent
+
+The GitHub Copilot coding agent is an autonomous agent that works directly on your repository through GitHub Issues and Pull Requests. Unlike Copilot Chat in your editor, the coding agent operates on GitHub's infrastructure and can handle tasks without your IDE being open.
+
+For the full reference, see [Using the Copilot coding agent](https://docs.github.com/en/copilot/using-github-copilot/using-the-copilot-coding-agent).
+
+### How the coding agent differs from Copilot in your editor
+
+| Aspect | Copilot in editor | Copilot coding agent |
+|--------|-------------------|---------------------|
+| Interface | VS Code, JetBrains, etc. | GitHub Issues and Pull Requests |
+| Work scope | Local files you have open | The entire repository |
+| Activation | Chat prompt or inline suggestion | Assign an issue to `@copilot` |
+| Output | Code suggestions in your editor | A Pull Request with commits |
+| Review | Accept/reject inline | Standard PR review process |
+
+### How the coding agent uses your configuration files
+
+When the coding agent starts work on an issue, it reads:
+
+1. `AGENTS.md` (nearest file in the directory tree)
+2. `.github/copilot-instructions.md` (repository-wide instructions)
+3. `.github/instructions/*.instructions.md` (path-specific instructions for files it modifies)
+
+A well-written `AGENTS.md` prevents common mistakes: the agent will not try to run build scripts that do not exist or use package managers that are not configured.
+
+### Step 7.1: Assign an issue to the coding agent
+
+> **Note:** This step requires a GitHub Copilot subscription that includes the coding agent feature and the setting enabled in your organization or account.
+
+1. Navigate to your repository on GitHub.
+2. Create a new issue with a clear, specific title and description:
+
+   ```
+   Title: Add a formatDate utility function
+
+   Body:
+   Create a JavaScript utility function in `exercises/01-prompt-engineering/starter.js`
+   that formats a Date object as "YYYY-MM-DD".
+
+   Requirements:
+   - The function should be named `formatDate`
+   - Accept a Date object as the only argument
+   - Return a string in "YYYY-MM-DD" format
+   - Add a JSDoc comment
+   - Do not use external libraries
+   ```
+
+3. In the Assignees section, assign the issue to **Copilot**.
+4. The coding agent creates a branch, implements the change, and opens a Pull Request.
+
+### Step 7.2: Collaborate with the coding agent
+
+Once the coding agent opens a Pull Request:
+
+1. Review the PR description. The agent explains what it did and which files it referenced.
+2. Check the session log linked in the PR for a detailed trace of the agent's actions.
+3. If the implementation needs changes, leave a PR review comment mentioning `@copilot` with your feedback:
+
+   ```
+   @copilot Please also add a test for this function that verifies the output format.
+   ```
+
+4. The agent reads your feedback and pushes additional commits.
+5. When satisfied, merge the PR using the standard review process.
+
+---
+
+## Step 8: Configure the Agent Environment with `copilot-setup-steps.yml`
+
+The coding agent runs in a cloud environment. By default, it has access to common tools, but it may need project-specific setup (installing dependencies, starting services, configuring databases). The `copilot-setup-steps.yml` workflow file tells the agent how to prepare its environment before starting work.
+
+For the full reference, see [Customizing the development environment for Copilot coding agent](https://docs.github.com/en/copilot/using-github-copilot/using-the-copilot-coding-agent#customizing-the-development-environment-for-copilot-coding-agent).
+
+### Step 8.1: Create the setup steps file
+
+1. Create a new file at `.github/workflows/copilot-setup-steps.yml`:
+
+   ```yaml
+   name: Copilot Setup Steps
+   on: workflow_dispatch
+
+   jobs:
+     setup:
+       runs-on: ubuntu-latest
+       steps:
+         - name: Checkout repository
+           uses: actions/checkout@v4
+
+         - name: Set up Node.js
+           uses: actions/setup-node@v4
+           with:
+             node-version: "20"
+
+         - name: Set up Python
+           uses: actions/setup-python@v5
+           with:
+             python-version: "3.12"
+
+         - name: Install Python dependencies
+           run: |
+             pip install pytest
+   ```
+
+2. Save the file.
+
+### Step 8.2: Understand the setup steps workflow
+
+- The workflow uses `on: workflow_dispatch` so it does not run on every push. The coding agent triggers it when needed.
+- Add steps for any tools, runtimes, or services the agent needs (databases, API keys for testing, linters).
+- Keep the setup minimal. A faster setup means the agent starts work sooner.
+
+### Step 8.3: Commit the setup file
+
+```bash
+git add .github/workflows/copilot-setup-steps.yml
+git commit -m "Add Copilot coding agent setup steps"
+git push
+```
+
+---
+
 ## Troubleshooting
 
 **The Copilot coding agent does not seem to follow my instructions:**
@@ -218,13 +344,16 @@ git push
 
 ## Summary
 
-You created `AGENTS.md` files to guide AI coding agents working in this repository. Key points:
+You created `AGENTS.md` files to guide AI coding agents and configured the coding agent environment. Key points:
 
 - `AGENTS.md` is used by AI coding agents for autonomous tasks.
 - The nearest `AGENTS.md` in the directory tree takes precedence.
 - Include: project purpose, structure, build/test commands, conventions, and constraints.
 - Keep it under two pages. Agents read it before starting work.
 - It coexists with `copilot-instructions.md` and serves a different purpose.
+- The Copilot coding agent works through GitHub Issues and Pull Requests.
+- Assign issues to `@copilot` and collaborate via PR review comments.
+- Use `copilot-setup-steps.yml` to configure the agent's cloud environment.
 
 ---
 

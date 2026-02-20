@@ -9,7 +9,9 @@ _Learn to configure and use GitHub Copilot effectively through hands-on exercise
 - **What you'll build**: A fully configured Copilot setup for a multi-language repository.
 - **Prerequisites**:
   - A GitHub account with access to GitHub Copilot
-  - Visual Studio Code with the GitHub Copilot extension installed
+  - One of the following:
+    - **GitHub Codespaces** (recommended, no local setup required)
+    - Visual Studio Code with the GitHub Copilot extension installed
 - **How long**: This exercise takes less than 2 hours to complete.
 
 In this exercise, you will:
@@ -26,6 +28,10 @@ In this exercise, you will:
 Simply copy the exercise to your account, then give your favorite Octocat (Mona) **about 20 seconds** to prepare the first lesson, then **refresh the page**.
 
 [![](https://img.shields.io/badge/Copy%20Exercise-%E2%86%92-1f883d?style=for-the-badge&logo=github&labelColor=197935)](https://github.com/new?template_owner=samueltauil&template_name=copilot-config-workshop&owner=%40me&name=skills-copilot-config-workshop&description=Exercise:+GitHub+Copilot+Configuration+Workshop&visibility=public)
+
+After copying, open your new repository and click **Code > Codespaces > Create codespace on main** for the fastest setup (no local tools required).
+
+Or clone the repository and open it in VS Code locally.
 
 <details>
 <summary>Having trouble? 🤷</summary><br/>

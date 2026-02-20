@@ -182,11 +182,6 @@ Practice creating another instruction file with a different pattern.
    - Use the built-in Node.js `assert` module (not a third-party library).
    - Prefer `assert.strictEqual` over `assert.equal`.
    - For objects and arrays, use `assert.deepStrictEqual`.
-
-   ## Setup and Teardown
-
-   - Use `beforeEach` to reset state between tests.
-   - Clean up any created files or network connections in `afterEach` or `afterAll`.
    ```
 
 3. Save the file.

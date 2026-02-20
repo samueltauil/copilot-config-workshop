@@ -343,5 +343,9 @@ You have completed all six exercises in this workshop. Here is a summary of what
 | `.github/copilot-instructions.md` | Repository-wide custom instructions for Copilot Chat |
 | `.github/instructions/python.instructions.md` | Path-specific instructions for Python files |
 | `.github/instructions/tests.instructions.md` | Path-specific instructions for test files |
+| `.github/prompts/add-tests.prompt.md` | Reusable prompt file for generating unit tests |
+| `.github/prompts/explain-architecture.prompt.md` | Reusable prompt file for architecture explanation |
+| `.github/agents/code-reviewer.agent.md` | Custom agent mode for code review |
 | `AGENTS.md` | Agent instruction file for the repository root |
 | `exercises/AGENTS.md` | Agent instruction file for the exercises subdirectory |
+| `.github/workflows/copilot-setup-steps.yml` | Coding agent environment setup |

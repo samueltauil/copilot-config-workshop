@@ -8,7 +8,7 @@
 
 **Duration:** ~30 minutes
 
-**Prerequisites:** Visual Studio Code with the GitHub Copilot extension installed and authenticated.
+**Prerequisites:** GitHub Codespaces or Visual Studio Code with the GitHub Copilot extension installed.
 
 ---
 
@@ -20,23 +20,26 @@ A prompt is a request you make to GitHub Copilot. The quality of Copilot's respo
 
 ## Setup
 
-1. Open Visual Studio Code.
+**Option A: GitHub Codespaces (recommended)**
 
-2. Open this repository folder. If you have not cloned it yet, run:
+1. Open this repository on GitHub.
+2. Click **Code > Codespaces > Create codespace on main**.
+3. Wait for the Codespace to build. Node.js, Python, and the Copilot extensions are pre-installed.
+4. Open the starter file: `exercises/01-prompt-engineering/starter.js`
+
+**Option B: Local VS Code**
+
+1. Clone the repository and open it in VS Code:
    ```bash
    git clone https://github.com/<your-username>/copilot-config-workshop.git
    cd copilot-config-workshop
    code .
    ```
+2. Open the starter file: `exercises/01-prompt-engineering/starter.js`
 
-3. Open the starter file for this exercise:
-   ```
-   exercises/01-prompt-engineering/starter.js
-   ```
+**Verify Copilot is active:**
 
-4. Verify that GitHub Copilot is active. You should see the Copilot icon in the VS Code status bar at the bottom of the screen. If it shows a warning, click it and sign in to GitHub.
-
-   > **Screenshot reference:** The Copilot status bar icon appears in the bottom-right corner of VS Code. A checkmark or the Copilot logo indicates it is active.
+Look for the Copilot icon in the VS Code status bar at the bottom of the screen. A checkmark or the Copilot logo indicates it is active. If it shows a warning, click it and sign in to GitHub.
 
 ---
 

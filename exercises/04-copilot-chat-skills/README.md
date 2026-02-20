@@ -5,10 +5,12 @@
 - Use slash commands (`/`) to trigger common actions efficiently
 - Use chat variables (`#`) to add specific context to your prompts
 - Use the `@github` participant to access GitHub-specific skills
+- Create reusable prompt files (`.prompt.md`) for repeatable workflows
+- Create custom agent modes (`.agent.md`) with specialized behavior
 
-**Duration:** ~30 minutes
+**Duration:** ~40 minutes
 
-**Prerequisites:** Visual Studio Code with the GitHub Copilot extension installed and authenticated.
+**Prerequisites:** GitHub Codespaces or Visual Studio Code with the GitHub Copilot extension installed.
 
 ---
 
@@ -28,7 +30,7 @@ These keywords reduce the amount of context you need to explain in natural langu
 
 ## Setup
 
-1. Open this repository in VS Code.
+1. Open this repository in a Codespace or in VS Code locally.
 2. Open the starter file:
    ```
    exercises/04-copilot-chat-skills/starter.py
@@ -234,11 +236,201 @@ Copilot provides quick actions through the right-click context menu in VS Code.
 
 ---
 
+## Part 6: Reusable Prompt Files (`.prompt.md`)
+
+Prompt files let you save prompts as reusable files in your repository. You invoke them with the `/` command in Copilot Chat, turning complex multi-step prompts into one-click actions. See [Using prompt files](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot#creating-prompt-files) for the full reference.
+
+### How prompt files work
+
+- Prompt files use the `.prompt.md` suffix and live in `.github/prompts/` by default.
+- Each file contains a YAML front matter block followed by Markdown content.
+- You select them via the `/` command in Copilot Chat.
+- Prompt files can reference workspace files using Markdown links to provide additional context.
+
+### Key front matter fields
+
+| Field | Description |
+|-------|-------------|
+| `description` | Short text shown in the prompt picker |
+| `agent` | The agent to use (e.g., `agent` for Agent Mode) |
+| `argument-hint` | Hint text shown to the user when selecting the prompt |
+
+### Step 6.1: Create a prompt file
+
+1. Create the prompts directory:
+
+   ```bash
+   mkdir .github/prompts
+   ```
+
+2. Create a new file at `.github/prompts/add-tests.prompt.md`:
+
+   ```markdown
+   ---
+   description: Generate unit tests for a module
+   agent: agent
+   argument-hint: Provide the file path to test
+   ---
+
+   # Generate Unit Tests
+
+   Your goal is to generate comprehensive unit tests for the specified module.
+
+   ## Steps
+
+   1. Read the target file provided by the user.
+   2. Identify all exported functions and classes.
+   3. Generate unit tests that cover:
+      - Normal inputs
+      - Edge cases (empty input, null values)
+      - Error conditions
+   4. Use the project's test runner and conventions from the repository instructions.
+   5. Save the test file alongside the source with a `.test` suffix.
+   ```
+
+3. Save the file.
+
+### Step 6.2: Create a second prompt file
+
+Create `.github/prompts/explain-architecture.prompt.md`:
+
+```markdown
+---
+description: Explain the architecture of the current project
+agent: agent
+---
+
+# Explain Project Architecture
+
+Analyze the repository and provide a summary of:
+
+1. The overall project structure and purpose.
+2. Key directories and their roles.
+3. How the main components interact.
+4. Any configuration or instruction files that shape developer workflow.
+
+Reference the [repository instructions](../../.github/copilot-instructions.md) for project context.
+```
+
+### Step 6.3: Test your prompt file
+
+1. Open Copilot Chat.
+2. Type `/` in the prompt box.
+3. You should see your prompt files listed (e.g., `add-tests`, `explain-architecture`).
+4. Select `explain-architecture` and press `Enter`.
+5. Copilot executes the prompt and provides a structured response.
+
+**Validation:** The response should reference actual files and directories in the repository.
+
+### Prompt files vs. instructions files
+
+| Aspect | Instruction files (`.instructions.md`) | Prompt files (`.prompt.md`) |
+|--------|---------------------------------------|----------------------------|
+| Focus | **How** tasks should be done (conventions, rules) | **What** task to perform (reusable workflows) |
+| Activation | Automatic when a matching file is open | Manual via `/` command |
+| Location | `.github/instructions/` | `.github/prompts/` |
+| Use case | Coding standards and style rules | Repeatable multi-step tasks |
+
+### Step 6.4: Commit your work
+
+```bash
+git add .github/prompts/
+git commit -m "Add reusable prompt files for Copilot Chat"
+git push
+```
+
+---
+
+## Part 7: Custom Agent Modes (`.agent.md`)
+
+Custom agent modes change how Copilot Chat behaves entirely. Instead of using the default Copilot personality, you create a specialized agent with specific tools, response styles, and even domain expertise. See [Creating custom agents](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot#creating-custom-agents) for the full reference.
+
+### How custom agents work
+
+- Agent files use the `.agent.md` suffix and live in `.github/agents/` by default.
+- Each file defines a specialized persona with a name, description, available tools, and behavior rules.
+- You select them from the agent dropdown in Copilot Chat (instead of the default Copilot).
+
+### Key front matter fields
+
+| Field | Description |
+|-------|-------------|
+| `name` | Display name in the agent picker |
+| `description` | Short description of what the agent does |
+| `tools` | Array of tools the agent can use (e.g., `["search", "web"]`) |
+
+### Step 7.1: Create a custom agent
+
+1. Create the agents directory:
+
+   ```bash
+   mkdir .github/agents
+   ```
+
+2. Create a new file at `.github/agents/code-reviewer.agent.md`:
+
+   ```markdown
+   ---
+   name: code-reviewer
+   description: Reviews code for quality, security, and best practices
+   tools: ["search"]
+   ---
+
+   # Code Review Agent
+
+   You are a code review assistant. Follow this response format for every review:
+
+   ## Response Format
+
+   Every response follows this structure:
+
+   **SUMMARY:** One-sentence overview of the code.
+   **ISSUES:** Numbered list of problems found (severity: high/medium/low).
+   **SUGGESTIONS:** Specific improvements with code examples.
+   **VERDICT:** APPROVE, REQUEST CHANGES, or NEEDS DISCUSSION.
+
+   ## Review Rules
+
+   - Check for security vulnerabilities (injection, hardcoded secrets, missing validation).
+   - Verify error handling covers all failure paths.
+   - Flag any code that does not follow the project conventions.
+   - Keep feedback constructive and specific.
+   - Always suggest a fix, not only identify the problem.
+   ```
+
+3. Save the file.
+
+### Step 7.2: Test your custom agent
+
+1. Open Copilot Chat.
+2. Look at the agent/mode dropdown at the top of the Chat panel (it may show "Copilot" or "Agent" by default).
+3. Select your `code-reviewer` agent from the list.
+4. Open `exercises/04-copilot-chat-skills/starter.py` and select all the code.
+5. Ask:
+
+   ```
+   Review this code
+   ```
+
+6. The response should follow the structured format you defined (SUMMARY, ISSUES, SUGGESTIONS, VERDICT).
+
+**Validation:** The agent should use the exact response format defined in the agent file, not a generic Copilot response.
+
+### Step 7.3: Commit your work
+
+```bash
+git add .github/agents/
+git commit -m "Add custom agent mode for code review"
+git push
+```
+
+---
+
 ## Summary
 
-You used the three types of Copilot Chat special keywords:
+You used the three types of Copilot Chat special keywords and two types of custom files:
 
-| Keyword | Example | What it does |
+| Feature | Example | What it does |
 |---------|---------|-------------|
 | `@workspace` | `@workspace Where is X?` | Searches all workspace files |
 | `@github` | `@github What skills are available?` | Accesses GitHub-specific skills |
@@ -249,6 +441,8 @@ You used the three types of Copilot Chat special keywords:
 | `#file` | `#file:app.py ...` | Attaches a specific file as context |
 | `#selection` | `#selection ...` | Attaches selected code as context |
 | `#codebase` | `#codebase ...` | Searches the full workspace |
+| Prompt files | `.github/prompts/add-tests.prompt.md` | Reusable multi-step prompts via `/` |
+| Custom agents | `.github/agents/code-reviewer.agent.md` | Specialized Copilot personalities |
 
 ---
 

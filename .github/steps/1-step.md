@@ -17,7 +17,7 @@ A prompt is a request you make to GitHub Copilot. The quality of Copilot's respo
 
 ### ⌨️ Activity: Practice prompt strategies
 
-1. Open Visual Studio Code and open this repository.
+1. Open this repository in a GitHub Codespace or in VS Code locally.
 
 1. Open the starter file: `exercises/01-prompt-engineering/starter.js`
 

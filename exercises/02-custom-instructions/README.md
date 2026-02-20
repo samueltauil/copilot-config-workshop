@@ -7,7 +7,7 @@
 
 **Duration:** ~25 minutes
 
-**Prerequisites:** Completion of [Exercise 1](../01-prompt-engineering/README.md) is recommended but not required.
+**Prerequisites:** Completion of [Exercise 1](../01-prompt-engineering/README.md) is recommended but not required. GitHub Codespaces or Visual Studio Code with the GitHub Copilot extension installed.
 
 ---
 
@@ -32,7 +32,7 @@ They are **not** used for inline code completion suggestions (the ghost text tha
 
 ## Setup
 
-1. Open your forked copy of this repository in Visual Studio Code.
+1. Open this repository in a Codespace or in VS Code locally.
 2. Confirm that the `.github` directory exists at the root of the repository. If it does not, create it:
    ```bash
    mkdir .github

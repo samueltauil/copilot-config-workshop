@@ -34,8 +34,9 @@ An `AGENTS.md` file should help an agent answer these questions without needing 
     ## Repository Purpose
 
     This repository is a workshop for learning how to configure GitHub Copilot.
-    It contains exercises covering prompt engineering, custom instructions,
-    path-specific instructions, Copilot Chat skills, and agent instruction files.
+    It contains six exercises covering prompt engineering, custom instructions,
+    path-specific instructions, Copilot Chat skills, agent instruction files,
+    and org-level best practices.
     There is no application code to build or deploy.
 
     ## Repository Structure
@@ -44,6 +45,7 @@ An `AGENTS.md` file should help an agent answer these questions without needing 
       with step-by-step instructions and any starter code files.
     - `.github/copilot-instructions.md` - Repository-wide Copilot custom instructions.
     - `.github/instructions/` - Path-specific Copilot instruction files.
+    - `.devcontainer/devcontainer.json` - Dev container config for GitHub Codespaces.
     - `slides/index.html` - Self-contained slide deck (no build step required).
     - `AGENTS.md` - This file.
     - `README.md` - Workshop landing page.
@@ -78,6 +80,10 @@ An `AGENTS.md` file should help an agent answer these questions without needing 
 
 1. Optionally, create a subdirectory-level `AGENTS.md` in `exercises/` to give agents more specific guidance for that part of the project.
 
+1. Create `.github/workflows/copilot-setup-steps.yml` to configure the coding agent's cloud environment with the tools and runtimes your project needs.
+
+1. Try assigning an issue to the Copilot coding agent by adding `@copilot` as the assignee on a GitHub issue.
+
 1. Follow the full step-by-step instructions in [exercises/05-agent-files/README.md](../../exercises/05-agent-files/README.md) to complete this exercise.
 
 <details>
@@ -86,5 +92,7 @@ An `AGENTS.md` file should help an agent answer these questions without needing 
 - Confirm that `AGENTS.md` is at the repository root.
 - Check that the file is committed and pushed (the Copilot coding agent reads the committed version, not uncommitted local changes).
 - Both `AGENTS.md` and `copilot-instructions.md` can coexist; they are used by different tools.
+- The `copilot-setup-steps.yml` workflow uses `on: workflow_dispatch` so it only runs when the coding agent triggers it.
+- The coding agent reads committed files, not uncommitted local changes.
 
 </details>

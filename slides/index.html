@@ -356,7 +356,7 @@
   <h1 style="color:#ffffff; font-size:2.3rem">GitHub Copilot<br>Configuration Workshop</h1>
   <div class="divider"></div>
   <p style="color:#c9d1d9; margin-top:0.7em; font-size:1rem">
-    Prompt engineering &bull; Custom instructions &bull; Path-specific rules &bull; Agent files &bull; Org-level practices
+    Prompt engineering &bull; Custom instructions &bull; Path-specific rules &bull; Prompt files &bull; Agent modes &bull; Coding agent &bull; Org-level practices
   </p>
   <p style="font-size:0.72rem; color:#484f58; margin-top:2.5em">
     Based on official GitHub documentation &bull; Open-source &bull; No additional tools required
@@ -447,8 +447,7 @@
       <h3>Prerequisites</h3>
       <ul>
         <li>An active GitHub Copilot subscription</li>
-        <li>Visual Studio Code installed</li>
-        <li>The GitHub Copilot VS Code extension</li>
+        <li>GitHub Codespaces (recommended) or VS Code with the Copilot extension</li>
         <li>Basic Git and GitHub familiarity</li>
       </ul>
     </div>
@@ -501,7 +500,7 @@
     </div>
   </div>
   <p style="font-size:0.83rem; color:var(--gh-gray); margin-top:1.2em">
-    Each exercise: 20&ndash;30 minutes &bull; Total: approximately 2&ndash;3 hours
+    Each exercise: 20&ndash;40 minutes &bull; Total: approximately 2&ndash;3 hours
   </p>
 </section>
 
@@ -520,25 +519,19 @@
   <div class="step">
     <div class="step-num">2</div>
     <div class="step-content">
-      Clone your fork locally:<br>
+      <strong>Option A (recommended):</strong> Click <strong>Code &gt; Codespaces &gt; Create codespace on main</strong>. No local setup required.<br>
+      <strong>Option B:</strong> Clone locally and open in VS Code:<br>
       <code>git clone https://github.com/&lt;your-username&gt;/copilot-config-workshop.git</code>
     </div>
   </div>
   <div class="step">
     <div class="step-num">3</div>
     <div class="step-content">
-      Open the repository in VS Code:<br>
-      <code>cd copilot-config-workshop &amp;&amp; code .</code>
+      Verify that the Copilot icon is active in the status bar (bottom right). Sign in to GitHub if prompted.
     </div>
   </div>
   <div class="step">
     <div class="step-num">4</div>
-    <div class="step-content">
-      Verify that the Copilot icon is active in the VS Code status bar (bottom right). Sign in to GitHub if prompted.
-    </div>
-  </div>
-  <div class="step">
-    <div class="step-num">5</div>
     <div class="step-content">
       Open <code>exercises/01-prompt-engineering/README.md</code> and begin Exercise 1.
     </div>
@@ -828,7 +821,7 @@ applyTo: "**/*.py"
   <h2>Chat Participants, Commands, and Variables</h2>
   <p>Use special keywords to make your prompts precise and efficient without extra explanation.</p>
   <div style="margin-top:1.2em; font-size:0.82rem; color:#8b949e">
-    Duration: ~30 minutes &bull; File: <code style="color:#79c0ff">exercises/04-copilot-chat-skills/README.md</code>
+    Duration: ~40 minutes &bull; File: <code style="color:#79c0ff">exercises/04-copilot-chat-skills/README.md</code>
   </div>
 </section>
 
@@ -939,19 +932,136 @@ the `calculate_average` function using pytest.</code></pre>
 </section>
 
 <!-- ============================================================
-     SLIDE 24: Exercise 5 intro
+     SLIDE 24: Exercise 4 - Prompt files
+     ============================================================ -->
+<section>
+  <h2>Reusable Prompt Files (<code>.prompt.md</code>)</h2>
+  <p style="font-size:0.9rem">Save complex prompts as files and invoke them with <code>/</code> in Copilot Chat.</p>
+  <div class="two-col" style="margin-top:0.5em">
+    <div>
+      <p style="font-weight:600; font-size:0.88rem">How they work</p>
+      <ul style="font-size:0.83rem">
+        <li>Files live in <code>.github/prompts/</code> with <code>.prompt.md</code> suffix</li>
+        <li>YAML front matter defines <code>description</code>, <code>agent</code>, and <code>argument-hint</code></li>
+        <li>Markdown body contains the reusable prompt instructions</li>
+        <li>Reference workspace files with Markdown links for extra context</li>
+      </ul>
+    </div>
+    <div>
+      <pre style="font-size:0.68rem"><code class="language-markdown">---
+description: Generate unit tests
+agent: agent
+argument-hint: File path to test
+---
+
+# Generate Unit Tests
+
+1. Read the target file.
+2. Identify all exported functions.
+3. Generate tests that cover:
+   - Normal inputs
+   - Edge cases
+   - Error conditions
+4. Use the project's test runner.</code></pre>
+    </div>
+  </div>
+  <div class="note" style="margin-top:0.7em">
+    <strong>Instructions vs Prompts:</strong> Instructions define <em>how</em> tasks should be done (conventions). Prompts define <em>what</em> task to perform (reusable workflows).
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 25: Exercise 4 - Custom agents
+     ============================================================ -->
+<section>
+  <h2>Custom Agent Modes (<code>.agent.md</code>)</h2>
+  <p style="font-size:0.9rem">Create specialized Copilot personalities with specific tools, response formats, and domain expertise.</p>
+  <div class="two-col" style="margin-top:0.5em">
+    <div>
+      <p style="font-weight:600; font-size:0.88rem">How they work</p>
+      <ul style="font-size:0.83rem">
+        <li>Files live in <code>.github/agents/</code> with <code>.agent.md</code> suffix</li>
+        <li>YAML front matter defines <code>name</code>, <code>description</code>, and <code>tools</code></li>
+        <li>Body defines the agent's personality, rules, and response format</li>
+        <li>Select from the agent dropdown in Copilot Chat</li>
+      </ul>
+    </div>
+    <div>
+      <pre style="font-size:0.68rem"><code class="language-markdown">---
+name: code-reviewer
+description: Reviews code quality
+tools: ["search"]
+---
+
+# Code Review Agent
+
+## Response Format
+**SUMMARY:** One-sentence overview.
+**ISSUES:** Numbered list (severity).
+**SUGGESTIONS:** Fixes with examples.
+**VERDICT:** APPROVE or CHANGES.</code></pre>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 26: Exercise 4 - Customization file comparison
+     ============================================================ -->
+<section>
+  <h2>Copilot Customization Files at a Glance</h2>
+  <table>
+    <thead>
+      <tr><th style="width:25%">File Type</th><th style="width:25%">Location</th><th style="width:20%">Activation</th><th>Purpose</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>copilot-instructions.md</code></td>
+        <td><code>.github/</code></td>
+        <td>Automatic (all Chat)</td>
+        <td>Repository-wide coding conventions</td>
+      </tr>
+      <tr>
+        <td><code>*.instructions.md</code></td>
+        <td><code>.github/instructions/</code></td>
+        <td>Automatic (matching files)</td>
+        <td>File-type-specific rules</td>
+      </tr>
+      <tr>
+        <td><code>*.prompt.md</code></td>
+        <td><code>.github/prompts/</code></td>
+        <td>Manual (<code>/</code> command)</td>
+        <td>Reusable multi-step workflows</td>
+      </tr>
+      <tr>
+        <td><code>*.agent.md</code></td>
+        <td><code>.github/agents/</code></td>
+        <td>Manual (agent dropdown)</td>
+        <td>Specialized Copilot personalities</td>
+      </tr>
+      <tr>
+        <td><code>AGENTS.md</code></td>
+        <td>Anywhere in repo</td>
+        <td>Automatic (coding agent)</td>
+        <td>Onboard autonomous agents</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ============================================================
+     SLIDE 27: Exercise 5 intro
      ============================================================ -->
 <section class="exercise-intro" data-background="linear-gradient(135deg, #0d1117 0%, #1F2328 100%)">
   <span class="exercise-number">05</span>
   <h2>Agent Instruction Files</h2>
   <p>Onboard AI coding agents so they work efficiently without extensive manual exploration.</p>
   <div style="margin-top:1.2em; font-size:0.82rem; color:#8b949e">
-    Duration: ~20 minutes &bull; File: <code style="color:#79c0ff">exercises/05-agent-files/README.md</code>
+    Duration: ~30 minutes &bull; File: <code style="color:#79c0ff">exercises/05-agent-files/README.md</code>
   </div>
 </section>
 
 <!-- ============================================================
-     SLIDE 25: Exercise 5 - What is AGENTS.md
+     SLIDE 28: Exercise 5 - What is AGENTS.md
      ============================================================ -->
 <section>
   <h2>What Is <code>AGENTS.md</code>?</h2>
@@ -968,7 +1078,7 @@ the `calculate_average` function using pytest.</code></pre>
 </section>
 
 <!-- ============================================================
-     SLIDE 26: Exercise 5 - Comparison
+     SLIDE 29: Exercise 5 - Comparison
      ============================================================ -->
 <section>
   <h2><code>AGENTS.md</code> vs <code>copilot-instructions.md</code></h2>
@@ -987,7 +1097,7 @@ the `calculate_average` function using pytest.</code></pre>
 </section>
 
 <!-- ============================================================
-     SLIDE 27: Exercise 5 - What to include
+     SLIDE 30: Exercise 5 - What to include
      ============================================================ -->
 <section>
   <h2>What to Include in <code>AGENTS.md</code></h2>
@@ -1019,7 +1129,59 @@ the `calculate_average` function using pytest.</code></pre>
 </section>
 
 <!-- ============================================================
-     SLIDE 28: Exercise 6 intro
+     SLIDE 31: Exercise 5 - Coding agent
+     ============================================================ -->
+<section>
+  <h2>The Copilot Coding Agent</h2>
+  <p style="font-size:0.9rem">An autonomous agent that works on your repository through GitHub Issues and Pull Requests.</p>
+  <table>
+    <thead>
+      <tr><th style="width:20%">Aspect</th><th>Copilot in Editor</th><th>Copilot Coding Agent</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Interface</td><td>VS Code, JetBrains, etc.</td><td>GitHub Issues and PRs</td></tr>
+      <tr><td>Activation</td><td>Chat prompt or inline suggestion</td><td>Assign an issue to <code>@copilot</code></td></tr>
+      <tr><td>Work scope</td><td>Local files you have open</td><td>The entire repository</td></tr>
+      <tr><td>Output</td><td>Code suggestions in your editor</td><td>A Pull Request with commits</td></tr>
+      <tr><td>Collaboration</td><td>Accept/reject inline</td><td>PR review + <code>@copilot</code> mentions</td></tr>
+    </tbody>
+  </table>
+  <div class="note" style="margin-top:0.7em">
+    The coding agent reads <code>AGENTS.md</code>, <code>copilot-instructions.md</code>, and path-specific instructions before writing any code.
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 32: Exercise 5 - Setup steps
+     ============================================================ -->
+<section>
+  <h2>Agent Environment: <code>copilot-setup-steps.yml</code></h2>
+  <p style="font-size:0.9rem">Configure the coding agent's cloud environment with the tools your project needs.</p>
+  <pre><code class="language-yaml">name: Copilot Setup Steps
+on: workflow_dispatch
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install pytest</code></pre>
+  <div class="note" style="margin-top:0.7em">
+    Uses <code>workflow_dispatch</code> so it only runs when the coding agent triggers it, not on every push.
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 33: Exercise 6 intro
      ============================================================ -->
 <section class="exercise-intro" data-background="linear-gradient(135deg, #0d1117 0%, #1F2328 100%)">
   <span class="exercise-number">06</span>
@@ -1031,7 +1193,7 @@ the `calculate_average` function using pytest.</code></pre>
 </section>
 
 <!-- ============================================================
-     SLIDE 29: Exercise 6 - The org .github repo
+     SLIDE 34: Exercise 6 - The org .github repo
      ============================================================ -->
 <section>
   <h2>The Org-Level <code>.github</code> Repository</h2>
@@ -1054,7 +1216,7 @@ the `calculate_average` function using pytest.</code></pre>
 </section>
 
 <!-- ============================================================
-     SLIDE 30: Exercise 6 - Configuration file hierarchy
+     SLIDE 35: Exercise 6 - Configuration file hierarchy
      ============================================================ -->
 <section>
   <h2>Configuration File Hierarchy</h2>
@@ -1092,7 +1254,7 @@ the `calculate_average` function using pytest.</code></pre>
 </section>
 
 <!-- ============================================================
-     SLIDE 31: Exercise 6 - Best practices
+     SLIDE 36: Exercise 6 - Best practices
      ============================================================ -->
 <section>
   <h2>Org-Level Best Practices</h2>
@@ -1122,7 +1284,7 @@ the `calculate_average` function using pytest.</code></pre>
 </section>
 
 <!-- ============================================================
-     SLIDE 32: Summary of all files created
+     SLIDE 37: Summary of all files created
      ============================================================ -->
 <section>
   <h2>What You Built</h2>
@@ -1147,14 +1309,24 @@ the `calculate_average` function using pytest.</code></pre>
         <td>Path-specific instructions for test files</td>
       </tr>
       <tr>
+        <td><code>.github/prompts/add-tests.prompt.md</code></td>
+        <td>04</td>
+        <td>Reusable prompt for generating unit tests</td>
+      </tr>
+      <tr>
+        <td><code>.github/agents/code-reviewer.agent.md</code></td>
+        <td>04</td>
+        <td>Custom agent mode for code review</td>
+      </tr>
+      <tr>
         <td><code>AGENTS.md</code></td>
         <td>05</td>
         <td>Agent instructions for the repository root</td>
       </tr>
       <tr>
-        <td><code>exercises/AGENTS.md</code></td>
+        <td><code>.github/workflows/copilot-setup-steps.yml</code></td>
         <td>05</td>
-        <td>Agent instructions scoped to the exercises directory</td>
+        <td>Coding agent environment setup</td>
       </tr>
       <tr>
         <td>Org <code>.github/copilot-instructions.md</code></td>
@@ -1166,51 +1338,37 @@ the `calculate_average` function using pytest.</code></pre>
 </section>
 
 <!-- ============================================================
-     SLIDE 33: Official documentation references
+     SLIDE 38: Official documentation references
      ============================================================ -->
 <section>
-  <h2>Official Documentation</h2>
-  <ul style="font-size:0.83rem">
-    <li>
-      <a href="https://docs.github.com/en/copilot/about-github-copilot/what-is-github-copilot">
-        About GitHub Copilot
-      </a>
-    </li>
-    <li>
-      <a href="https://docs.github.com/en/copilot/using-github-copilot/copilot-chat/prompt-engineering-for-copilot-chat">
-        Prompt engineering for GitHub Copilot Chat
-      </a>
-    </li>
-    <li>
-      <a href="https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot">
-        Adding repository custom instructions for GitHub Copilot
-      </a>
-    </li>
-    <li>
-      <a href="https://docs.github.com/en/copilot/using-github-copilot/asking-github-copilot-questions-in-your-ide">
-        Asking GitHub Copilot questions in your IDE
-      </a>
-    </li>
-    <li>
-      <a href="https://docs.github.com/en/copilot/using-github-copilot/github-copilot-chat-cheat-sheet">
-        GitHub Copilot Chat cheat sheet
-      </a>
-    </li>
-    <li>
-      <a href="https://docs.github.com/en/copilot/using-github-copilot/best-practices-for-using-github-copilot">
-        Best practices for using GitHub Copilot
-      </a>
-    </li>
-    <li>
-      <a href="https://docs.github.com/en/copilot/managing-copilot/managing-github-copilot-in-your-organization">
-        Managing GitHub Copilot in your organization
-      </a>
-    </li>
-  </ul>
+  <h2>Official Documentation &amp; Further Learning</h2>
+  <div class="two-col">
+    <div>
+      <p style="font-weight:600; font-size:0.88rem">Documentation</p>
+      <ul style="font-size:0.78rem">
+        <li><a href="https://docs.github.com/en/copilot/about-github-copilot/what-is-github-copilot">About GitHub Copilot</a></li>
+        <li><a href="https://docs.github.com/en/copilot/using-github-copilot/copilot-chat/prompt-engineering-for-copilot-chat">Prompt engineering for Copilot Chat</a></li>
+        <li><a href="https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot">Adding repository custom instructions</a></li>
+        <li><a href="https://docs.github.com/en/copilot/using-github-copilot/asking-github-copilot-questions-in-your-ide">Asking Copilot questions in your IDE</a></li>
+        <li><a href="https://docs.github.com/en/copilot/using-github-copilot/github-copilot-chat-cheat-sheet">Copilot Chat cheat sheet</a></li>
+        <li><a href="https://docs.github.com/en/copilot/using-github-copilot/best-practices-for-using-github-copilot">Best practices for using Copilot</a></li>
+        <li><a href="https://docs.github.com/en/copilot/managing-copilot/managing-github-copilot-in-your-organization">Managing Copilot in your organization</a></li>
+      </ul>
+    </div>
+    <div>
+      <p style="font-weight:600; font-size:0.88rem">GitHub Skills Courses</p>
+      <ul style="font-size:0.78rem">
+        <li><a href="https://github.com/skills/getting-started-with-github-copilot">Getting Started with GitHub Copilot</a></li>
+        <li><a href="https://github.com/skills/customize-your-github-copilot-experience">Customize Your GitHub Copilot Experience</a></li>
+        <li><a href="https://github.com/skills/expand-your-team-with-copilot">Expand Your Team with Copilot</a> (coding agent)</li>
+        <li><a href="https://github.com/skills/integrate-mcp-with-copilot">Integrate MCP with Copilot</a></li>
+      </ul>
+    </div>
+  </div>
 </section>
 
 <!-- ============================================================
-     SLIDE 34: End
+     SLIDE 39: End
      ============================================================ -->
 <section class="title-slide" data-background="linear-gradient(135deg, #1F2328 0%, #0d1117 60%, #161b22 100%)">
   <svg class="gh-mark" viewBox="0 0 98 96" xmlns="http://www.w3.org/2000/svg" aria-label="GitHub">
@@ -1222,7 +1380,7 @@ the `calculate_average` function using pytest.</code></pre>
     You can now configure GitHub Copilot at every level:
   </p>
   <p style="color:#8b949e; font-size:0.88rem">
-    per-prompt &bull; per-file-type &bull; repository-wide &bull; for AI agents &bull; organization-wide
+    per-prompt &bull; per-file-type &bull; prompt files &bull; custom agents &bull; repository-wide &bull; for coding agents &bull; organization-wide
   </p>
   <p style="margin-top:2em; font-size:0.78rem; color:#484f58">
     Repository:
