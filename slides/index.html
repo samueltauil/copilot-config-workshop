@@ -318,6 +318,24 @@
       font-weight: 700;
       letter-spacing: 0.05em;
     }
+
+    /* ---- SDLC phase badge ---- */
+    .sdlc-phase {
+      display: inline-block;
+      border-radius: 20px;
+      padding: 1px 9px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+
+    .sdlc-phase.plan     { background: #f0e6ff; color: #6e40c9; border: 1px solid #d2b4ff; }
+    .sdlc-phase.implement { background: #ddf4ff; color: #0550ae; border: 1px solid #a8d8ff; }
+    .sdlc-phase.test     { background: #d1f8e0; color: #0f6c30; border: 1px solid #9fdfc0; }
+    .sdlc-phase.review   { background: #fff1e5; color: #8a3600; border: 1px solid #f5c07e; }
+    .sdlc-phase.document { background: #f6f8fa; color: #444c56; border: 1px solid #d0d7de; }
+    .sdlc-phase.maintain { background: #ffebcc; color: #7a4100; border: 1px solid #ffc370; }
   </style>
 </head>
 <body>
@@ -337,7 +355,7 @@
   </div>
   <h1 style="color:#ffffff; font-size:2.3rem">GitHub Copilot<br>Configuration Workshop</h1>
   <div class="divider"></div>
-  <p style="color:#8b949e; margin-top:0.7em; font-size:1rem">
+  <p style="color:#c9d1d9; margin-top:0.7em; font-size:1rem">
     Prompt engineering &bull; Custom instructions &bull; Path-specific rules &bull; Agent files &bull; Org-level practices
   </p>
   <p style="font-size:0.72rem; color:#484f58; margin-top:2.5em">
@@ -373,6 +391,50 @@
   <div class="note" style="margin-top:0.9em">
     <strong>Key insight:</strong> The quality of Copilot's output depends heavily on the context you provide. This workshop teaches you how to provide better context.
   </div>
+</section>
+
+<!-- ============================================================
+     Copilot Across the SDLC
+     ============================================================ -->
+<section>
+  <h2>GitHub Copilot Across the SDLC</h2>
+  <table>
+    <thead>
+      <tr><th style="width:22%">SDLC Phase</th><th style="width:30%">Copilot Feature</th><th>How Copilot Helps</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="sdlc-phase plan">Plan &amp; Design</span></td>
+        <td>Copilot Chat (<code>@workspace</code>)</td>
+        <td>Explore architecture options, generate project scaffolding, and draft technical specs</td>
+      </tr>
+      <tr>
+        <td><span class="sdlc-phase implement">Implement</span></td>
+        <td>Inline completions + Chat</td>
+        <td>Autocomplete functions, generate boilerplate, and suggest idiomatic patterns for your stack</td>
+      </tr>
+      <tr>
+        <td><span class="sdlc-phase test">Test</span></td>
+        <td><code>/tests</code>, <code>#file</code></td>
+        <td>Generate unit and integration test suites from existing function signatures</td>
+      </tr>
+      <tr>
+        <td><span class="sdlc-phase review">Review</span></td>
+        <td><code>/explain</code>, <code>/fix</code></td>
+        <td>Explain unfamiliar code during reviews and surface potential bugs before merge</td>
+      </tr>
+      <tr>
+        <td><span class="sdlc-phase document">Document</span></td>
+        <td><code>/doc</code></td>
+        <td>Generate JSDoc comments, Python docstrings, and README sections from code</td>
+      </tr>
+      <tr>
+        <td><span class="sdlc-phase maintain">Maintain</span></td>
+        <td><code>@workspace</code>, Chat</td>
+        <td>Diagnose regressions, refactor legacy code, and update configuration or dependencies</td>
+      </tr>
+    </tbody>
+  </table>
 </section>
 
 <!-- ============================================================
@@ -439,7 +501,7 @@
     </div>
   </div>
   <p style="font-size:0.83rem; color:var(--gh-gray); margin-top:1.2em">
-    Each exercise: 20&ndash;30 minutes &bull; Total: approximately 2.5 hours
+    Each exercise: 20&ndash;30 minutes &bull; Total: approximately 2&ndash;3 hours
   </p>
 </section>
 
@@ -537,6 +599,9 @@
       <tr><td>6</td><td>Experiment and iterate</td><td>Follow up in the same conversation to refine results</td></tr>
     </tbody>
   </table>
+  <div class="note" style="margin-top:0.7em">
+    These strategies apply across every SDLC phase: writing implementation code, generating tests, requesting documentation, or explaining code during review.
+  </div>
 </section>
 
 <!-- ============================================================
@@ -834,15 +899,15 @@ available in Copilot?</code></pre>
   <h2>Slash Commands (<code>/</code>)</h2>
   <table>
     <thead>
-      <tr><th style="width:22%">Command</th><th>Action</th></tr>
+      <tr><th style="width:20%">Command</th><th>Action</th><th style="width:22%">SDLC Phase</th></tr>
     </thead>
     <tbody>
-      <tr><td><code>/explain</code></td><td>Explains the selected code or file in plain language</td></tr>
-      <tr><td><code>/fix</code></td><td>Analyzes and suggests a fix for a bug in the selected code</td></tr>
-      <tr><td><code>/tests</code></td><td>Generates unit tests for the selected code</td></tr>
-      <tr><td><code>/doc</code></td><td>Adds documentation comments (JSDoc, docstrings) to the selection</td></tr>
-      <tr><td><code>/new</code></td><td>Scaffolds a new file, project, or component structure</td></tr>
-      <tr><td><code>/clear</code></td><td>Starts a new chat session, clearing previous context</td></tr>
+      <tr><td><code>/explain</code></td><td>Explains the selected code or file in plain language</td><td><span class="sdlc-phase review">Review</span> <span class="sdlc-phase maintain">Maintain</span></td></tr>
+      <tr><td><code>/fix</code></td><td>Analyzes and suggests a fix for a bug in the selected code</td><td><span class="sdlc-phase implement">Implement</span> <span class="sdlc-phase test">Test</span></td></tr>
+      <tr><td><code>/tests</code></td><td>Generates unit tests for the selected code</td><td><span class="sdlc-phase test">Test</span></td></tr>
+      <tr><td><code>/doc</code></td><td>Adds documentation comments (JSDoc, docstrings) to the selection</td><td><span class="sdlc-phase document">Document</span></td></tr>
+      <tr><td><code>/new</code></td><td>Scaffolds a new file, project, or component structure</td><td><span class="sdlc-phase plan">Plan &amp; Design</span></td></tr>
+      <tr><td><code>/clear</code></td><td>Starts a new chat session, clearing previous context</td><td><em style="color:var(--gh-gray);font-size:0.85em">any phase</em></td></tr>
     </tbody>
   </table>
   <p style="font-size:0.8rem; color:var(--gh-gray); margin-top:0.8em">
@@ -983,8 +1048,8 @@ the `calculate_average` function using pytest.</code></pre>
     <div class="step-num">3</div>
     <div class="step-content">Place Copilot configuration files using the same directory structure as repo-level files.</div>
   </div>
-  <div class="note" style="margin-top:0.7em">
-    <strong>Precedence rule:</strong> Repo-level configuration always takes precedence over org-level configuration. When a repo defines its own <code>copilot-instructions.md</code>, the org-level file is not merged &mdash; the repo-level file is used exclusively.
+  <div class="note orange" style="margin-top:0.7em">
+    <strong>Important:</strong> Repo-level configuration always takes precedence and does <em>not</em> merge with org-level files. When a repo defines its own <code>copilot-instructions.md</code>, the org-level file is ignored entirely for that repo. For example, if your org provides a standard instructions file and a repo adds its own, only the repo-level file is used. Plan your org-level content as a fallback baseline, not as additions.
   </div>
 </section>
 
@@ -1052,7 +1117,7 @@ the `calculate_average` function using pytest.</code></pre>
     </div>
   </div>
   <div class="note" style="margin-top:0.9em">
-    Avoid duplicating instructions across levels. Duplication causes maintenance overhead and can create contradictory guidance for Copilot.
+    Org-level files are the right place to enforce consistent SDLC practices across all repositories: shared coding standards, testing conventions, security rules, and documentation expectations. Repo-level files then handle project-specific variation within that baseline.
   </div>
 </section>
 
