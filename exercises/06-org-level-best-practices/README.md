@@ -1,0 +1,353 @@
+# Exercise 6: Org-Level Best Practices for Copilot Configuration
+
+**Learning objectives:**
+
+- Understand how Copilot configuration files are organized at the organization level
+- Identify when to use org-level vs. repo-level configuration
+- Apply naming conventions and file organization strategies for managing multiple repositories
+- Avoid conflicts and duplication between org-level and repo-level instruction files
+- Understand the hierarchy and precedence of configuration files at both levels
+
+**Duration:** ~25 minutes
+
+**Prerequisites:** Complete exercises 2, 3, and 5 before this exercise, as they introduce all the configuration files covered here.
+
+---
+
+## Background
+
+GitHub Copilot configuration files can exist at the organization level in addition to individual repositories. When you manage many repositories, maintaining a consistent Copilot configuration across all of them is important for productivity and code quality. This exercise explains how to structure that configuration using GitHub's organization-level `.github` repository.
+
+**Official documentation:** [Adding repository custom instructions for GitHub Copilot](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot)
+
+---
+
+## The Org-Level `.github` Repository
+
+GitHub supports a special repository named `.github` within an organization. Files placed in this repository serve as organization-wide defaults. When a repository in the organization does not define its own version of a configuration file, GitHub uses the org-level file as the default.
+
+To create or access the org-level `.github` repository:
+
+1. Navigate to your organization on GitHub.
+2. Create a repository named exactly `.github`.
+3. Place configuration files in the repository following the same directory structure as repo-level files.
+
+---
+
+## Configuration File Hierarchy
+
+The following table shows where each Copilot configuration file can live and how the levels interact.
+
+| File | Repo level path | Org level path |
+|------|----------------|----------------|
+| `copilot-instructions.md` | `.github/copilot-instructions.md` | `.github/copilot-instructions.md` in the org's `.github` repo |
+| Path-specific instructions | `.github/instructions/*.instructions.md` | `.github/instructions/*.instructions.md` in the org's `.github` repo |
+| `AGENTS.md` | Repository root or any subdirectory | Root of the org's `.github` repo |
+| `copilot-agents.yml` | `.github/copilot-agents.yml` | `.github/copilot-agents.yml` in the org's `.github` repo |
+
+**Key precedence rule:** Repo-level configuration takes precedence over org-level configuration. When a repo defines its own `copilot-instructions.md`, the org-level file is not merged with it. The repo-level file is used exclusively for that repository.
+
+---
+
+## When to Use Org-Level Configuration
+
+### Use org-level configuration when:
+
+- The same conventions apply across most or all repositories (language standards, security policies, documentation requirements).
+- You want to establish a baseline that individual teams can override.
+- You manage many repositories and cannot maintain per-repo configuration files.
+- A new repository should start with sensible defaults without manual setup.
+
+### Use repo-level configuration when:
+
+- The repository has specialized conventions that differ from the org default.
+- The repository uses a different language, framework, or toolchain.
+- The repository serves a different audience (for example, a public open-source project vs. an internal tool).
+- A team needs more granular control over Copilot's behavior for their specific project.
+
+---
+
+## Best Practices for `copilot-instructions.md`
+
+### Org-level file
+
+Focus the org-level `copilot-instructions.md` on standards that apply universally:
+
+```markdown
+# Org-Level Custom Instructions
+
+## Security
+
+- Never include secrets, API keys, or credentials in code suggestions.
+- Flag any hardcoded connection strings or passwords as a security concern.
+
+## Documentation
+
+- All public APIs must include documentation comments.
+- Reference the official documentation when suggesting usage of third-party libraries.
+
+## Code Review
+
+- Suggest error handling for all I/O operations and network calls.
+- Flag missing null or undefined checks in critical code paths.
+```
+
+### Repo-level file
+
+Focus the repo-level file on project-specific context that does not belong in a shared org policy:
+
+```markdown
+# Project Custom Instructions
+
+## Language and Runtime
+
+- This project uses TypeScript 5+ with strict mode enabled.
+- Target: Node.js 22 for the backend, modern browsers for the frontend.
+
+## Architecture
+
+- This project uses the repository pattern for data access.
+- Business logic lives in the `src/services/` directory.
+- Data models are defined in `src/models/`.
+
+## Testing
+
+- Use Vitest for unit and integration tests.
+- Test files live alongside source files with the `.test.ts` suffix.
+```
+
+### What to avoid
+
+- Do not repeat org-level content in repo-level files. The repo-level `copilot-instructions.md` replaces the org-level one; it does not add to it.
+- Do not include team-specific instructions in the org-level file. Team-specific rules belong in the repo.
+- Do not add instructions that conflict with each other within the same file.
+
+---
+
+## Best Practices for Path-Specific Instruction Files
+
+### Naming conventions
+
+Use consistent names across the organization:
+
+| Pattern | File name |
+|---------|-----------|
+| All Python files | `python.instructions.md` |
+| All TypeScript files | `typescript.instructions.md` |
+| All SQL files | `sql.instructions.md` |
+| Test files | `tests.instructions.md` |
+| Documentation files | `docs.instructions.md` |
+| Infrastructure-as-code files | `terraform.instructions.md` |
+
+### Org-level vs. repo-level path-specific files
+
+- Org-level files set baseline rules for a file type across all repositories.
+- Repo-level files can supplement org-level files for the same pattern; both sets of instructions are active when a file matches.
+- Avoid overlapping `applyTo` patterns between org and repo files where possible. When both match, Copilot receives the combined content, which can produce conflicting instructions.
+
+### Example structure
+
+Org-level (in the org's `.github` repository):
+
+```
+.github/
+  instructions/
+    python.instructions.md    # Org-wide Python standards
+    security.instructions.md  # Org-wide security rules for all files
+```
+
+Repo-level (in an individual repository):
+
+```
+.github/
+  instructions/
+    python.instructions.md    # Repo-specific Python rules (combined with org-level for this repo)
+    data-models.instructions.md  # Repo-specific instructions for data model files
+```
+
+---
+
+## Best Practices for `AGENTS.md`
+
+### Org-level `AGENTS.md`
+
+The org-level `AGENTS.md` describes organization-wide conventions and constraints:
+
+```markdown
+# Agent Instructions (Org Level)
+
+## Organization Conventions
+
+- All code changes must pass the CI pipeline before merging.
+- Do not modify files in the `vendor/` or `third-party/` directories.
+- Follow the branching strategy: feature branches from `main`, named `feature/<ticket-id>-description`.
+
+## Prohibited Actions
+
+- Do not commit secrets or credentials.
+- Do not modify GitHub Actions workflow files without explicit approval in the issue.
+- Do not change dependency versions without verifying compatibility.
+```
+
+### Repo-level `AGENTS.md`
+
+The repo-level `AGENTS.md` provides project-specific context the agent needs to work efficiently:
+
+```markdown
+# Agent Instructions
+
+## Repository Purpose
+
+This service handles payment processing for the e-commerce platform.
+
+## Build and Test
+
+- Install dependencies: `npm install`
+- Run tests: `npm test`
+- Run linter: `npm run lint`
+- Build for production: `npm run build`
+
+## Architecture
+
+- `src/handlers/` - HTTP request handlers
+- `src/services/` - Business logic
+- `src/models/` - Database models (uses Prisma ORM)
+```
+
+### Hierarchy
+
+The nearest `AGENTS.md` in the directory tree takes precedence over files higher up. This allows:
+
+- Repository root `AGENTS.md` to provide general repo context
+- Subdirectory `AGENTS.md` files to provide more specific guidance for that part of the project
+
+---
+
+## Best Practices for Custom Agents (`copilot-agents.yml`)
+
+Custom agents extend Copilot Chat with specialized behaviors. The same org-level vs. repo-level distinction applies.
+
+### Naming conventions
+
+- Org-level agents: prefix the agent name with the organization name to avoid conflicts.
+  - Example: `acme-security-reviewer`, `acme-docs-generator`
+- Repo-level agents: use descriptive names scoped to the project.
+  - Example: `payment-validator`, `schema-migrator`
+
+### Hierarchy
+
+- Org-level agents are available in all repositories in the organization.
+- Repo-level agents are available only in the repository where they are defined.
+- If both an org-level and a repo-level agent have the same name, the repo-level agent takes precedence in that repository.
+
+---
+
+## Best Practices Summary
+
+| Practice | Details |
+|----------|---------|
+| Scope org-level instructions to universal rules | Avoid repo-specific details in the org-level file |
+| Do not repeat org-level content in repo-level files | Repo-level files replace, not extend, the org-level file |
+| Use consistent naming for path-specific files | Follow the `topic.instructions.md` naming pattern |
+| Prefix org-level agent names with the org name | Prevents name conflicts with repo-level agents |
+| Audit loaded instructions regularly | Use the **Used n references** panel in Copilot Chat |
+| Document the org-level file location | Help contributors find where org defaults are defined |
+| Test instructions with representative prompts | Verify behavior after changes at either level |
+
+---
+
+## Step 1: Audit Your Current Configuration
+
+1. Review the files you created in previous exercises:
+   - `.github/copilot-instructions.md`
+   - `.github/instructions/python.instructions.md`
+   - `AGENTS.md`
+
+2. For each file, identify which instructions are truly universal (suitable for org level) and which are project-specific (suitable for repo level only).
+
+3. Add a comment at the top of each file to document its intended scope:
+
+   ```markdown
+   > **Scope:** This file applies to all files in this repository.
+   > An org-level version of this file would contain: security policies, documentation standards.
+   ```
+
+---
+
+## Step 2: Design an Org-Level Configuration
+
+For this step, you do not need to create an actual org-level repository. Instead, plan what the org-level files would contain.
+
+1. Open a new file at `exercises/06-org-level-best-practices/org-level-example/copilot-instructions.md`.
+
+2. Write a sample org-level `copilot-instructions.md` file. Focus on rules that would apply to every repository in an organization.
+
+3. Open a new file at `exercises/06-org-level-best-practices/org-level-example/instructions/security.instructions.md`.
+
+4. Add content that applies security-focused instructions to all files (use `applyTo: "**/*"`).
+
+---
+
+## Step 3: Compare Org-Level and Repo-Level Files
+
+1. Place your existing `.github/copilot-instructions.md` content and your new org-level example side by side.
+
+2. Identify content that appears in both files and decide which level it belongs at.
+
+3. Refactor the files so that:
+   - The org-level file contains only universal rules.
+   - The repo-level file contains only project-specific rules.
+   - There is no duplicated content between the two.
+
+---
+
+## Troubleshooting
+
+**The org-level instructions do not seem to apply to my repository:**
+
+- Confirm the org-level repository is named exactly `.github` under your organization.
+- Confirm the file path within the org's `.github` repo matches the expected path (for example, `.github/copilot-instructions.md` within the `.github` repo corresponds to `.github/copilot-instructions.md` at the org level).
+- If the repository has its own `copilot-instructions.md`, the repo-level file takes precedence and the org-level file is not used for that repository.
+
+**Both org-level and repo-level path-specific files are loaded, but they conflict:**
+
+- Review the combined instructions using the **Used n references** panel in Copilot Chat.
+- Refactor the org-level file to remove any rules that conflict with repo-level rules.
+- If the conflict is intentional (the repo overrides an org rule), document the reason in both files.
+
+**I cannot find the org-level `.github` repository:**
+
+- Only organization owners can create the org-level `.github` repository.
+- Navigate to `github.com/<your-org>` and look for the `.github` repository in the list of repositories.
+- If it does not exist, create it by clicking **New repository** and naming it `.github`.
+
+---
+
+## Summary
+
+Key points from this exercise:
+
+- The org-level `.github` repository stores default Copilot configuration files that apply to all repositories in the organization.
+- Repo-level configuration files always take precedence over org-level files; there is no merging.
+- Scope org-level instructions to universal rules; keep project-specific rules in repo-level files.
+- Use consistent naming for path-specific instruction files across the organization.
+- Prefix org-level custom agent names to avoid conflicts with repo-level agents.
+- Audit loaded instructions using the **Used n references** panel in Copilot Chat.
+
+---
+
+## Workshop Complete
+
+You have completed all six exercises in this workshop. Here is a summary of what you built:
+
+| File | Purpose |
+|------|---------|
+| `.github/copilot-instructions.md` | Repository-wide custom instructions for Copilot Chat |
+| `.github/instructions/python.instructions.md` | Path-specific instructions for Python files |
+| `.github/instructions/tests.instructions.md` | Path-specific instructions for test files |
+| `AGENTS.md` | Agent instruction file for the repository root |
+| `exercises/AGENTS.md` | Agent instruction file for the exercises subdirectory |
+
+---
+
+**Official documentation:** [Adding repository custom instructions for GitHub Copilot](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot)
