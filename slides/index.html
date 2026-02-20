@@ -309,6 +309,38 @@
       margin-right: 0.3em;
     }
 
+    /* ---- Stats grid ---- */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.9em;
+      margin: 0.6em 0;
+    }
+
+    .stat-card {
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      padding: 1em 0.7em;
+      background: #161b22;
+      text-align: center;
+    }
+
+    .stat-num {
+      display: block;
+      font-size: 2rem;
+      font-weight: 800;
+      color: #58a6ff;
+      line-height: 1.1;
+    }
+
+    .stat-label {
+      display: block;
+      font-size: 0.73rem;
+      color: #8b949e;
+      margin-top: 0.3em;
+      line-height: 1.35;
+    }
+
     /* ---- Section divider ---- */
     .divider {
       width: 48px;
@@ -399,6 +431,52 @@
   <div class="note" style="margin-top:0.9em">
     <strong>Key insight:</strong> The quality of Copilot's output depends heavily on the context you provide. This workshop teaches you how to provide better context.
   </div>
+</section>
+
+<!-- ============================================================
+     Copilot by the Numbers
+     ============================================================ -->
+<section>
+  <h2>Copilot by the Numbers</h2>
+  <div class="stat-grid">
+    <div class="stat-card">
+      <span class="stat-num">55%</span>
+      <span class="stat-label">faster at completing coding tasks in controlled studies</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">88%</span>
+      <span class="stat-label">of developers report feeling more focused</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">74%</span>
+      <span class="stat-label">say Copilot lets them focus on more satisfying work</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">46%</span>
+      <span class="stat-label">of new code written by Copilot in supported languages</span>
+    </div>
+  </div>
+  <div class="stat-grid" style="margin-top:0">
+    <div class="stat-card">
+      <span class="stat-num">73%</span>
+      <span class="stat-label">stay in the flow longer with Copilot active</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">75%</span>
+      <span class="stat-label">feel more fulfilled with their job when using Copilot</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">~15%</span>
+      <span class="stat-label">higher pull request merge rate in enterprise teams</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">30%</span>
+      <span class="stat-label">average suggestion acceptance rate by developers</span>
+    </div>
+  </div>
+  <p style="font-size:0.68rem; color:#484f58; margin-top:0.6em; text-align:right">
+    Sources: <a href="https://github.blog/news-insights/research/research-quantifying-github-copilots-impact-on-developer-productivity-and-happiness/" style="color:#484f58">GitHub Research Blog</a> &bull; <a href="https://cacm.acm.org/research/measuring-github-copilots-impact-on-productivity/" style="color:#484f58">ACM Research 2024</a>
+  </p>
 </section>
 
 <!-- ============================================================
@@ -521,34 +599,34 @@
   <div class="step">
     <div class="step-num">1</div>
     <div class="step-content">
-      Fork the workshop repository to your GitHub account at
-      <a href="https://github.com/samueltauil/copilot-config-workshop">github.com/samueltauil/copilot-config-workshop</a>.
+      Go to
+      <a href="https://github.com/samueltauil/copilot-config-workshop">github.com/samueltauil/copilot-config-workshop</a>
+      and click <strong>Use this template</strong> &rarr; <strong>Create a new repository</strong>.
     </div>
   </div>
   <div class="step">
     <div class="step-num">2</div>
     <div class="step-content">
-      Clone your fork locally:<br>
-      <code>git clone https://github.com/&lt;your-username&gt;/copilot-config-workshop.git</code>
+      Name your repository and click <strong>Create repository</strong>. GitHub Actions runs automatically in the background.
     </div>
   </div>
   <div class="step">
     <div class="step-num">3</div>
     <div class="step-content">
-      Open the repository in VS Code:<br>
-      <code>cd copilot-config-workshop &amp;&amp; code .</code>
+      Open the <strong>Issues</strong> tab of your new repo. A new issue appears with the instructions for Step 1 — this is your exercise guide.
     </div>
   </div>
   <div class="step">
     <div class="step-num">4</div>
     <div class="step-content">
-      Verify that the Copilot icon is active in the VS Code status bar (bottom right). Sign in to GitHub if prompted.
+      Clone your repository and open it in VS Code:<br>
+      <code>git clone https://github.com/&lt;your-username&gt;/copilot-config-workshop.git &amp;&amp; code copilot-config-workshop</code>
     </div>
   </div>
   <div class="step">
     <div class="step-num">5</div>
     <div class="step-content">
-      Open <code>exercises/01-prompt-engineering/README.md</code> and begin Exercise 1.
+      Follow the instructions in the Issue. After each step, push your changes — GitHub Actions detects completion and posts the next step automatically.
     </div>
   </div>
 </section>
