@@ -75,7 +75,7 @@ Follow these practices to keep org-level and repository-level files from conflic
 1. Review the configuration files you have created in previous steps:
     - `.github/copilot-instructions.md`
     - `.github/instructions/python.instructions.md`
-    - `AGENTS.md`
+    - `.github/agents/*.agent.md`
 
 1. For each file, write a one-sentence comment at the top (as a Markdown blockquote) that describes its scope:
 

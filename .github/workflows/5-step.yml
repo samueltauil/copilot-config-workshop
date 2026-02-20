@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - "AGENTS.md"
+      - ".github/agents/**"
 
 permissions:
   contents: read
@@ -57,12 +57,16 @@ jobs:
           file: exercise-toolkit/markdown-templates/step-feedback/checking-work.md
           edit-mode: replace
 
-      - name: Check if AGENTS.md exists
-        id: check-agents-md
+      - name: Check if a custom agent file exists
+        id: check-agent-file
         continue-on-error: true
-        uses: skills/exercise-toolkit/actions/file-exists@v0.8.1
-        with:
-          file: AGENTS.md
+        run: |
+          if ls .github/agents/*.agent.md 1> /dev/null 2>&1; then
+            echo "Found custom agent file(s)"
+          else
+            echo "No custom agent files found"
+            exit 1
+          fi
 
       - name: Update comment - step results
         uses: GrantBirki/comment@v2.1.1
@@ -75,8 +79,8 @@ jobs:
           vars: |
             step_number: 5
             results_table:
-              - description: "Created AGENTS.md at the repository root"
-                passed: ${{ steps.check-agents-md.outcome == 'success' }}
+              - description: "Created a custom agent file in .github/agents/"
+                passed: ${{ steps.check-agent-file.outcome == 'success' }}
 
       - name: Fail job if not all checks passed
         if: contains(steps.*.outcome, 'failure')

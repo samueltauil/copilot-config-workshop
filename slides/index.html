@@ -492,7 +492,7 @@
     </div>
     <div class="toc-item">
       <span class="toc-num">05</span>
-      Agent Instruction Files
+      Creating Custom Agents
     </div>
     <div class="toc-item">
       <span class="toc-num">06</span>
@@ -1053,130 +1053,131 @@ tools: ["search"]
      ============================================================ -->
 <section class="exercise-intro" data-background="linear-gradient(135deg, #0d1117 0%, #1F2328 100%)">
   <span class="exercise-number">05</span>
-  <h2>Agent Instruction Files</h2>
-  <p>Onboard AI coding agents so they work efficiently without extensive manual exploration.</p>
+  <h2>Creating Custom Agents</h2>
+  <p>Build specialized Copilot agents for testing, debugging, planning, and more.</p>
   <div style="margin-top:1.2em; font-size:0.82rem; color:#8b949e">
     Duration: ~30 minutes &bull; File: <code style="color:#79c0ff">exercises/05-agent-files/README.md</code>
   </div>
 </section>
 
 <!-- ============================================================
-     SLIDE 28: Exercise 5 - What is AGENTS.md
+     SLIDE 28: Exercise 5 - What is a custom agent
      ============================================================ -->
 <section>
-  <h2>What Is <code>AGENTS.md</code>?</h2>
+  <h2>What Are Custom Agents?</h2>
   <ul style="font-size:0.9rem">
-    <li>A plain Markdown file that AI coding agents read <em>before</em> starting any work</li>
-    <li>Can be placed anywhere in the repository; the nearest file in the directory tree takes precedence</li>
-    <li>Used by the GitHub Copilot coding agent for autonomous, multi-step tasks</li>
-    <li>Complements <code>copilot-instructions.md</code>, which guides interactive Chat sessions</li>
-    <li>Other agent formats include <code>CLAUDE.md</code> (Anthropic) and <code>GEMINI.md</code> (Google)</li>
+    <li>Specialized Copilot assistants with their own identity, tools, and behavior</li>
+    <li>Defined as <code>.agent.md</code> files with YAML frontmatter and a Markdown prompt</li>
+    <li>Stored in <code>.github/agents/</code> for workspace scope or in your user profile for global scope</li>
+    <li>Available in VS Code, JetBrains, Eclipse, Xcode, and on GitHub.com with the coding agent</li>
+    <li>Create agents for testing, debugging, planning, code review, documentation, and more</li>
   </ul>
   <div class="note" style="margin-top:0.9em">
-    An agent that reads a clear <code>AGENTS.md</code> can start contributing immediately without exploring the entire codebase first.
+    Custom agents go beyond instructions: they create an entirely new Copilot personality with restricted (or expanded) tool access.
   </div>
 </section>
 
 <!-- ============================================================
-     SLIDE 29: Exercise 5 - Comparison
+     SLIDE 29: Exercise 5 - Agent file format
      ============================================================ -->
 <section>
-  <h2><code>AGENTS.md</code> vs <code>copilot-instructions.md</code></h2>
-  <table>
+  <h2>Anatomy of a <code>.agent.md</code> File</h2>
+  <pre><code class="language-yaml">---
+name: test-specialist
+description: Focuses on test coverage and testing best practices
+tools: ["read", "edit", "search", "runTests"]
+---
+
+You are a testing specialist. Your responsibilities:
+
+- Analyze existing tests and identify coverage gaps
+- Write unit tests, integration tests, and end-to-end tests
+- Focus only on test files. Do not modify production code.</code></pre>
+  <table style="font-size:0.78rem; margin-top:0.7em">
     <thead>
-      <tr><th style="width:20%">Aspect</th><th><code>copilot-instructions.md</code></th><th><code>AGENTS.md</code></th></tr>
+      <tr><th>Property</th><th>Required</th><th>Description</th></tr>
     </thead>
     <tbody>
-      <tr><td>Used by</td><td>Copilot Chat (interactive sessions)</td><td>AI coding agents (autonomous tasks)</td></tr>
-      <tr><td>Location</td><td><code>.github/</code> directory only</td><td>Anywhere in the repository tree</td></tr>
-      <tr><td>Scope</td><td>Repository-wide for all Chat</td><td>Nearest file in the directory tree</td></tr>
-      <tr><td>Purpose</td><td>Guide conversational responses</td><td>Onboard agents to work efficiently</td></tr>
-      <tr><td>Coexist?</td><td colspan="2" style="text-align:center">Yes &mdash; both files can be present simultaneously and serve complementary roles</td></tr>
+      <tr><td><code>name</code></td><td>No</td><td>Display name (defaults to filename)</td></tr>
+      <tr><td><code>description</code></td><td>Yes</td><td>Brief explanation shown in the agent dropdown</td></tr>
+      <tr><td><code>tools</code></td><td>No</td><td>List of tools to restrict access (omit for all)</td></tr>
+      <tr><td><code>model</code></td><td>No</td><td>AI model to use (VS Code and JetBrains only)</td></tr>
     </tbody>
   </table>
 </section>
 
 <!-- ============================================================
-     SLIDE 30: Exercise 5 - What to include
+     SLIDE 30: Exercise 5 - Comparison table
      ============================================================ -->
 <section>
-  <h2>What to Include in <code>AGENTS.md</code></h2>
+  <h2>Custom Agents vs Other Copilot Files</h2>
+  <table style="font-size:0.78rem">
+    <thead>
+      <tr><th>File</th><th>Purpose</th><th>Used by</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>.agent.md</code></td><td>Define specialized agents with tools and behaviors</td><td>Copilot Chat + coding agent</td></tr>
+      <tr><td><code>copilot-instructions.md</code></td><td>Repository-wide context for all interactions</td><td>Copilot Chat (interactive)</td></tr>
+      <tr><td><code>.instructions.md</code></td><td>Path-specific rules for certain file types</td><td>Copilot Chat (matching files)</td></tr>
+      <tr><td><code>.prompt.md</code></td><td>Reusable prompt templates</td><td>Copilot Chat (manual invocation)</td></tr>
+      <tr><td><code>AGENTS.md</code></td><td>Repository onboarding for autonomous agents</td><td>AI coding agents</td></tr>
+    </tbody>
+  </table>
+  <div class="note" style="margin-top:0.7em">
+    All five file types can coexist in the same repository. Each serves a different purpose.
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 31: Exercise 5 - Where to store agents
+     ============================================================ -->
+<section>
+  <h2>Where to Store Custom Agents</h2>
+  <table>
+    <thead>
+      <tr><th style="width:30%">Location</th><th>Scope</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>.github/agents/</code> in a repo</td><td>Available in that repository (workspace)</td></tr>
+      <tr><td>VS Code user profile folder</td><td>Available across all your workspaces (personal)</td></tr>
+      <tr><td><code>.github-private</code> repository</td><td>Available across all repos in the organization</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:0.88rem; margin-top:1em">Custom agents also work with the <strong>Copilot coding agent</strong> on GitHub.com. When assigning an issue to Copilot, select a specific agent from the dropdown to control how the coding agent approaches the task.</p>
+  <div class="note" style="margin-top:0.7em">
+    Explore 100+ community agents at <a href="https://github.com/github/awesome-copilot" style="color:#58a6ff">github/awesome-copilot</a>
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 32: Exercise 5 - Best practices
+     ============================================================ -->
+<section>
+  <h2>Tips for Effective Agents</h2>
   <div class="two-col">
     <div>
-      <p style="font-weight:600; font-size:0.88rem">Essential sections</p>
+      <p style="font-weight:600; font-size:0.88rem">Do</p>
       <ul style="font-size:0.83rem">
-        <li>Project purpose and overview</li>
-        <li>How to build the project</li>
-        <li>How to run tests</li>
-        <li>How to run the linter</li>
-        <li>Directory structure</li>
+        <li>Give the agent a clear role and identity</li>
+        <li>Restrict tools to what the task needs</li>
+        <li>Structure prompts with Markdown headings</li>
+        <li>Use descriptive, lowercase filenames</li>
+        <li>Test with representative prompts</li>
       </ul>
     </div>
     <div>
-      <p style="font-weight:600; font-size:0.88rem">Additional guidance</p>
+      <p style="font-weight:600; font-size:0.88rem">Avoid</p>
       <ul style="font-size:0.83rem">
-        <li>Coding conventions to follow</li>
-        <li>Things to avoid or not modify</li>
-        <li>Known tricky areas or gotchas</li>
-        <li>How to verify changes</li>
-        <li>Relevant links or references</li>
+        <li>Vague identities ("Help with code")</li>
+        <li>Omitting the <code>description</code> property</li>
+        <li>Prompts over 30,000 characters</li>
+        <li>Granting all tools to focused agents</li>
+        <li>Skipping testing before sharing</li>
       </ul>
     </div>
   </div>
   <div class="note" style="margin-top:0.9em">
-    Target length: 60&ndash;150 lines (about 1&ndash;2 pages). The agent reads this before any other exploration, so brevity and clarity are essential.
-  </div>
-</section>
-
-<!-- ============================================================
-     SLIDE 31: Exercise 5 - Coding agent
-     ============================================================ -->
-<section>
-  <h2>The Copilot Coding Agent</h2>
-  <p style="font-size:0.9rem">An autonomous agent that works on your repository through GitHub Issues and Pull Requests.</p>
-  <table>
-    <thead>
-      <tr><th style="width:20%">Aspect</th><th>Copilot in Editor</th><th>Copilot Coding Agent</th></tr>
-    </thead>
-    <tbody>
-      <tr><td>Interface</td><td>VS Code, JetBrains, etc.</td><td>GitHub Issues and PRs</td></tr>
-      <tr><td>Activation</td><td>Chat prompt or inline suggestion</td><td>Assign an issue to <code>@copilot</code></td></tr>
-      <tr><td>Work scope</td><td>Local files you have open</td><td>The entire repository</td></tr>
-      <tr><td>Output</td><td>Code suggestions in your editor</td><td>A Pull Request with commits</td></tr>
-      <tr><td>Collaboration</td><td>Accept/reject inline</td><td>PR review + <code>@copilot</code> mentions</td></tr>
-    </tbody>
-  </table>
-  <div class="note" style="margin-top:0.7em">
-    The coding agent reads <code>AGENTS.md</code>, <code>copilot-instructions.md</code>, and path-specific instructions before writing any code.
-  </div>
-</section>
-
-<!-- ============================================================
-     SLIDE 32: Exercise 5 - Setup steps
-     ============================================================ -->
-<section>
-  <h2>Agent Environment: <code>copilot-setup-steps.yml</code></h2>
-  <p style="font-size:0.9rem">Configure the coding agent's cloud environment with the tools your project needs.</p>
-  <pre><code class="language-yaml">name: Copilot Setup Steps
-on: workflow_dispatch
-
-jobs:
-  setup:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - run: pip install pytest</code></pre>
-  <div class="note" style="margin-top:0.7em">
-    Uses <code>workflow_dispatch</code> so it only runs when the coding agent triggers it, not on every push.
+    A planning agent should not execute code. A documentation agent should not modify source files. Use tool restrictions to enforce boundaries.
   </div>
 </section>
 

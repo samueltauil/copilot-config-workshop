@@ -1,359 +1,339 @@
-# Exercise 5: Agent Instruction Files
+# Exercise 5: Creating Custom Agents for GitHub Copilot
 
 **Learning objectives:**
-- Understand what agent instruction files are and when to use them
-- Create an `AGENTS.md` file with structured information for AI coding agents
-- Understand the difference between `AGENTS.md` and `copilot-instructions.md`
-- Configure the Copilot coding agent environment with `copilot-setup-steps.yml`
-- Assign issues to the Copilot coding agent and collaborate on its pull requests
-- Verify that the agent file is applied correctly
+
+- Understand what custom agents are and how they differ from other Copilot customization files
+- Create custom agent profiles (`.agent.md`) with YAML frontmatter and prompt instructions
+- Configure agent properties: name, description, tools, and model
+- Use custom agents in VS Code and on GitHub.com
+- Explore real-world custom agent examples from the community
 
 **Duration:** ~30 minutes
 
-**Prerequisites:** Complete [Exercise 2](../02-custom-instructions/README.md) before this exercise.
+**Prerequisites:** Complete [Exercise 4](../04-copilot-chat-skills/README.md) before this exercise.
 
 ---
 
 ## Background
 
-Agent instruction files provide guidance to AI coding agents (such as the GitHub Copilot coding agent) that work autonomously in your repository. Unlike Copilot Chat custom instructions (which guide Copilot in interactive sessions), agent instruction files are designed for agents that complete multi-step tasks independently.
+Custom agents allow you to create specialized AI assistants tailored to specific tasks in your development workflow. Each custom agent has its own identity, tools, and behavioral instructions. You can create agents for testing, code review, planning, debugging, documentation, and more.
 
-When an AI agent opens a repository, it reads the nearest `AGENTS.md` file in the directory tree. The agent uses this file to understand how to work efficiently in the repository without extensive exploration. For the full reference, see [Adding repository custom instructions for GitHub Copilot](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot).
+A custom agent is a Markdown file with the `.agent.md` suffix. It contains YAML frontmatter that defines the agent's properties and a Markdown body that serves as the agent's system prompt. Custom agents are available in VS Code, JetBrains IDEs, Eclipse, Xcode, and on GitHub.com with the Copilot coding agent.
 
----
-
-## Types of Agent Instruction Files
-
-The official documentation describes the following agent instruction file formats:
-
-| File | Location | Scope |
-|------|----------|-------|
-| `AGENTS.md` | Anywhere in the repository | Nearest file in the directory tree takes precedence |
-| `CLAUDE.md` | Repository root | Applies to Claude-based agents |
-| `GEMINI.md` | Repository root | Applies to Gemini-based agents |
-
-For the GitHub Copilot coding agent, `AGENTS.md` is the recommended format. This exercise focuses on `AGENTS.md`.
+For the full reference, see [Creating custom agents for Copilot coding agent](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents).
 
 ---
 
-## Difference Between `AGENTS.md` and `copilot-instructions.md`
+## Custom Agents vs Other Copilot Files
 
-| Aspect | `copilot-instructions.md` | `AGENTS.md` |
-|--------|--------------------------|------------|
-| Used by | Copilot Chat (interactive) | AI coding agents (autonomous) |
-| Format | Plain Markdown | Plain Markdown |
-| Location | `.github/copilot-instructions.md` | Anywhere in the repository tree |
-| Purpose | Guide responses in conversations | Onboard agents to work efficiently |
+| File | Purpose | Used by |
+|------|---------|---------|
+| `.agent.md` | Define specialized agents with specific tools and behaviors | Copilot Chat (IDE) + Copilot coding agent (GitHub.com) |
+| `copilot-instructions.md` | Repository-wide context for all Copilot interactions | Copilot Chat (interactive sessions) |
+| `.instructions.md` | Path-specific rules for certain file types | Copilot Chat (when matching files are open) |
+| `.prompt.md` | Reusable prompt templates for common tasks | Copilot Chat (invoked manually) |
+| `AGENTS.md` | Repository onboarding context for autonomous agents | AI coding agents (autonomous tasks) |
 
-Both files can coexist in the same repository and serve complementary purposes.
-
----
-
-## What to Include in `AGENTS.md`
-
-An `AGENTS.md` file should help an agent answer these questions without needing to explore the repository:
-
-1. What is this project and what does it do?
-2. How do I build the project?
-3. How do I run the tests?
-4. How do I run the linter?
-5. What conventions should I follow when making changes?
-6. What should I avoid doing?
-7. Are there any known limitations or tricky areas?
-
-Keep the file focused and concise. Two pages (approximately 100-150 lines) is a good target. An agent reads this file before starting work, so longer is not always better.
+Custom agents go further than instructions or prompts: they create an entirely new Copilot personality with a defined name, description, and restricted (or expanded) tool access.
 
 ---
 
-## Step 1: Create the `AGENTS.md` File
+## Anatomy of a Custom Agent File
 
-1. In VS Code, create a new file at the root of the repository:
-   ```bash
-   touch AGENTS.md
-   ```
-2. Open the file.
-
----
-
-## Step 2: Write the Agent Instructions
-
-Copy the following template into `AGENTS.md` and update each section to match your repository.
-
-For this workshop repository, you can use the content as written since it is accurate for this project:
+A custom agent file has two parts: YAML frontmatter and a Markdown prompt body.
 
 ```markdown
-# Agent Instructions
+---
+name: test-specialist
+description: Focuses on test coverage and testing best practices
+tools: ["read", "edit", "search", "runTests"]
+---
 
-This file provides guidance to AI coding agents working in this repository.
-Read this file before exploring the codebase or making any changes.
+You are a testing specialist. Your responsibilities:
 
-## Repository Purpose
-
-This repository is a workshop for learning how to configure GitHub Copilot.
-It contains six exercises covering prompt engineering, custom instructions,
-path-specific instructions, Copilot Chat skills, agent instruction files,
-and org-level best practices.
-There is no application code to build or deploy.
-
-## Repository Structure
-
-- `exercises/` - One subdirectory per exercise, each containing a `README.md`
-  with step-by-step instructions and any starter code files.
-- `.github/copilot-instructions.md` - Repository-wide Copilot custom instructions.
-- `.github/instructions/` - Path-specific Copilot instruction files.
-- `.devcontainer/devcontainer.json` - Dev container config for GitHub Codespaces.
-- `slides/index.html` - Self-contained slide deck (no build step required).
-- `AGENTS.md` - This file.
-- `README.md` - Workshop landing page.
-
-## Build and Test
-
-This repository contains no application code, build system, or test runner.
-There is nothing to compile, bundle, or run.
-
-To verify that Markdown files are well-formed, you may use any Markdown linter.
-No linter is pre-configured in this repository.
-
-## Conventions
-
-- All prose is written in US English.
-- Markdown headings use ATX style (`#`, `##`).
-- Code blocks include a language identifier (e.g., ```bash, ```js).
-- Relative links are used for cross-references within the repository.
-- Exercise numbers are zero-padded (e.g., `01`, `02`).
-
-## Constraints
-
-- Do not add build tools, package managers, or runtime dependencies.
-- Do not rename or delete exercise directories.
-- Do not modify the slide deck structure (only content inside slides may change).
-- Keep this file under 150 lines.
+- Analyze existing tests and identify coverage gaps
+- Write unit tests, integration tests, and end-to-end tests
+- Review test quality and suggest improvements
+- Focus only on test files. Do not modify production code.
 ```
 
-3. Save the file.
+### YAML frontmatter properties
 
-   > **Screenshot reference:** The `AGENTS.md` file appears in the root directory in the VS Code Explorer panel, alongside `README.md`. The file is open and shows the Markdown content with sections for repository purpose, structure, build and test, conventions, and constraints.
+| Property | Required | Description |
+|----------|----------|-------------|
+| `name` | No | Display name for the agent. Defaults to the filename without the `.agent.md` suffix. |
+| `description` | Yes | A brief explanation of what the agent does. Appears in the agent dropdown. |
+| `tools` | No | List of tools the agent can use. Omit to grant access to all available tools. |
+| `model` | No | The AI model the agent should use (VS Code and JetBrains only). |
+
+### Where to store agent files
+
+| Location | Scope |
+|----------|-------|
+| `.github/agents/` in a repository | Available in that repository (workspace) |
+| VS Code user profile folder | Available across all your workspaces (personal) |
+| `.github-private` repository (org) | Available across all repositories in the organization |
 
 ---
 
-## Step 3: Understand How the Agent Uses This File
+## Step 1: Create a Test Specialist Agent
 
-When the GitHub Copilot coding agent is assigned to an issue or pull request in this repository, it will:
+This agent focuses exclusively on writing and improving tests. It has access to all tools by omitting the `tools` property.
 
-1. Read `AGENTS.md` from the repository root.
-2. Use the information to understand the project structure without exploring every file.
-3. Follow the conventions and constraints listed.
-4. Use the build and test instructions to validate its changes before submitting them.
+1. Create the directory and file:
 
-You do not need to configure anything to enable this behavior. The Copilot coding agent reads `AGENTS.md` automatically when it is present.
-
----
-
-## Step 4: Create a Subdirectory-Level `AGENTS.md`
-
-You can also place `AGENTS.md` files in subdirectories to give agents more specific guidance for that part of the project. The nearest `AGENTS.md` file in the directory tree takes precedence over files higher up.
-
-1. Create a subdirectory-level agent file:
    ```bash
-   touch exercises/AGENTS.md
+   mkdir -p .github/agents
    ```
 
-2. Add the following content:
+2. Create a new file at `.github/agents/test-specialist.agent.md`:
+
    ```markdown
-   # Agent Instructions (exercises/)
+   ---
+   name: test-specialist
+   description: Focuses on test coverage, quality, and testing best practices without modifying production code
+   ---
 
-   This subdirectory contains the workshop exercises. Each exercise is in its own
-   numbered directory (e.g., `01-prompt-engineering/`).
+   You are a testing specialist focused on improving code quality through
+   comprehensive testing. Your responsibilities:
 
-   ## When Modifying Exercises
+   - Analyze existing tests and identify coverage gaps
+   - Write unit tests, integration tests, and end-to-end tests following
+     best practices
+   - Review test quality and suggest improvements for maintainability
+   - Ensure tests are isolated, deterministic, and well-documented
+   - Focus only on test files and avoid modifying production code unless
+     specifically requested
 
-   - Each exercise directory contains a `README.md` with step-by-step instructions.
-   - Starter code files (e.g., `starter.js`, `starter.py`) are intentionally minimal.
-   - Do not add dependencies or build steps to individual exercise directories.
-   - Preserve the structure: one `README.md` per exercise directory.
-
-   ## Validation
-
-   Review the `README.md` for each modified exercise to confirm that:
-   - All step numbers are sequential.
-   - All file paths referenced in the steps exist.
-   - All commands shown in code blocks are correct.
+   Always include clear test descriptions and use appropriate testing
+   patterns for the language and framework.
    ```
 
 3. Save the file.
+
+---
+
+## Step 2: Create an Implementation Planner Agent
+
+This agent creates technical plans without writing code. It restricts tools to reading, searching, and editing only.
+
+1. Create a new file at `.github/agents/implementation-planner.agent.md`:
+
+   ```markdown
+   ---
+   name: implementation-planner
+   description: Creates detailed implementation plans and technical specifications in Markdown format
+   tools: ["read", "search", "edit"]
+   ---
+
+   You are a technical planning specialist focused on creating comprehensive
+   implementation plans. Your responsibilities:
+
+   - Analyze requirements and break them down into actionable tasks
+   - Create detailed technical specifications and architecture documentation
+   - Generate implementation plans with clear steps, dependencies, and
+     milestones
+   - Document API designs, data models, and system interactions
+   - Create Markdown files with structured plans that development teams
+     can follow
+
+   Always structure your plans with clear headings, task breakdowns, and
+   acceptance criteria. Include considerations for testing, deployment,
+   and potential risks. Focus on creating thorough documentation rather
+   than implementing code.
+   ```
+
+2. Save the file.
+
+---
+
+## Step 3: Create a Debug Agent
+
+This agent follows a structured debugging process. It has access to terminal, testing, and editing tools.
+
+1. Create a new file at `.github/agents/debug.agent.md`:
+
+   ```markdown
+   ---
+   name: debug
+   description: Systematically identifies, analyzes, and resolves bugs using a structured debugging process
+   tools: ["read", "edit", "search", "runInTerminal", "runTests", "problems"]
+   ---
+
+   You are in debug mode. Follow this structured process:
+
+   ## Phase 1: Assess
+   - Read error messages, stack traces, or failure reports
+   - Reproduce the bug by running the application or tests
+   - Document the expected vs actual behavior
+
+   ## Phase 2: Investigate
+   - Trace the code execution path leading to the bug
+   - Check for common issues: null references, off-by-one errors,
+     race conditions, incorrect assumptions
+   - Form specific hypotheses about the root cause
+
+   ## Phase 3: Fix
+   - Make targeted, minimal changes to address the root cause
+   - Follow existing code patterns and conventions
+   - Consider edge cases and potential side effects
+
+   ## Phase 4: Verify
+   - Run tests to verify the fix resolves the issue
+   - Run broader test suites to ensure no regressions
+   - Summarize what you fixed and why
+
+   Be systematic. Do not jump to solutions. Always reproduce and
+   understand the bug before attempting to fix it.
+   ```
+
+2. Save the file.
+
+---
+
+## Step 4: Use Your Custom Agents in VS Code
+
+1. Open GitHub Copilot Chat in VS Code.
+2. At the bottom of the chat view, click the agent dropdown.
+3. Your custom agents appear in the list with the names you defined.
+4. Select **test-specialist** and ask it to analyze test coverage:
+
+   ```
+   Look at exercises/01-prompt-engineering/starter.js and suggest what tests
+   should be written for the existing functions.
+   ```
+
+5. Switch to **implementation-planner** and ask it to plan a feature:
+
+   ```
+   Create an implementation plan for adding a new exercise about MCP servers
+   to this workshop.
+   ```
+
+6. Switch to **debug** and try a debugging prompt:
+
+   ```
+   There is a bug in this code. The function returns undefined instead of
+   the expected result. Help me debug it.
+   ```
+
+Each agent responds differently because it has a different system prompt, tool access, and behavioral focus.
 
 ---
 
 ## Step 5: Review the Example File
 
-This repository includes a fully-written example `AGENTS.md` for reference:
+This repository includes an example custom agent for reference:
 
 ```
-exercises/05-agent-files/example-AGENTS.md
+exercises/05-agent-files/example-agent.agent.md
 ```
 
-Open and read through it. It shows how a real application project would structure its agent instructions, including commands for building and running tests.
+Open and read through it. It shows a code reviewer agent with a structured review process, restricted tools, and specific output formatting instructions.
 
 ---
 
-## Step 6: Commit Your Work
+## Step 6: Explore the Community Collection
 
-```bash
-git add AGENTS.md exercises/AGENTS.md
-git commit -m "Add agent instruction files"
-git push
-```
+The [awesome-copilot](https://github.com/github/awesome-copilot) repository on GitHub contains a growing collection of community-contributed custom agents. Browse the `agents/` directory to find agents for:
+
+- **Language experts:** C#, Python, Rust, Java, Go, Ruby, Swift, PHP, and more
+- **Framework specialists:** Next.js, React, Laravel, Drupal, .NET MAUI, Electron
+- **DevOps and infrastructure:** GitHub Actions, Kubernetes, Azure IaC, Terraform
+- **Planning and architecture:** Blueprint mode, implementation plans, PRDs, ADRs
+- **Testing:** Playwright, polyglot test suites, browser testing
+- **Specialized tasks:** Accessibility audits, security reviews, code tours, documentation
+
+To use a community agent in your project:
+
+1. Find an agent file in the [agents directory](https://github.com/github/awesome-copilot/tree/main/agents).
+2. Copy its content into a new `.agent.md` file in your `.github/agents/` directory.
+3. Customize the prompt and tool list to match your project's needs.
 
 ---
 
-## Step 7: The Copilot Coding Agent
+## Step 7: Use Custom Agents on GitHub.com
 
-The GitHub Copilot coding agent is an autonomous agent that works directly on your repository through GitHub Issues and Pull Requests. Unlike Copilot Chat in your editor, the coding agent operates on GitHub's infrastructure and can handle tasks without your IDE being open.
+Custom agents also work with the Copilot coding agent on GitHub.com. When you assign an issue to Copilot, you can select a specific custom agent to handle the task.
 
-For the full reference, see [Using the Copilot coding agent](https://docs.github.com/en/copilot/using-github-copilot/using-the-copilot-coding-agent).
+> **Note:** This step requires a GitHub Copilot subscription that includes the coding agent feature.
 
-### How the coding agent differs from Copilot in your editor
-
-| Aspect | Copilot in editor | Copilot coding agent |
-|--------|-------------------|---------------------|
-| Interface | VS Code, JetBrains, etc. | GitHub Issues and Pull Requests |
-| Work scope | Local files you have open | The entire repository |
-| Activation | Chat prompt or inline suggestion | Assign an issue to `@copilot` |
-| Output | Code suggestions in your editor | A Pull Request with commits |
-| Review | Accept/reject inline | Standard PR review process |
-
-### How the coding agent uses your configuration files
-
-When the coding agent starts work on an issue, it reads:
-
-1. `AGENTS.md` (nearest file in the directory tree)
-2. `.github/copilot-instructions.md` (repository-wide instructions)
-3. `.github/instructions/*.instructions.md` (path-specific instructions for files it modifies)
-
-A well-written `AGENTS.md` prevents common mistakes: the agent will not try to run build scripts that do not exist or use package managers that are not configured.
-
-### Step 7.1: Assign an issue to the coding agent
-
-> **Note:** This step requires a GitHub Copilot subscription that includes the coding agent feature and the setting enabled in your organization or account.
-
-1. Navigate to your repository on GitHub.
-2. Create a new issue with a clear, specific title and description:
+1. Navigate to [github.com/copilot/agents](https://github.com/copilot/agents) to see your available agents.
+2. Create a new issue with a clear task for the coding agent:
 
    ```
-   Title: Add a formatDate utility function
+   Title: Add unit tests for the formatDate function
 
    Body:
-   Create a JavaScript utility function in `exercises/01-prompt-engineering/starter.js`
-   that formats a Date object as "YYYY-MM-DD".
+   Write unit tests for the `formatDate` function in
+   `exercises/01-prompt-engineering/starter.js`.
 
    Requirements:
-   - The function should be named `formatDate`
-   - Accept a Date object as the only argument
-   - Return a string in "YYYY-MM-DD" format
-   - Add a JSDoc comment
-   - Do not use external libraries
+   - Test valid Date objects
+   - Test edge cases (end of year, leap year)
+   - Use clear test descriptions
    ```
 
-3. In the Assignees section, assign the issue to **Copilot**.
-4. The coding agent creates a branch, implements the change, and opens a Pull Request.
-
-### Step 7.2: Collaborate with the coding agent
-
-Once the coding agent opens a Pull Request:
-
-1. Review the PR description. The agent explains what it did and which files it referenced.
-2. Check the session log linked in the PR for a detailed trace of the agent's actions.
-3. If the implementation needs changes, leave a PR review comment mentioning `@copilot` with your feedback:
-
-   ```
-   @copilot Please also add a test for this function that verifies the output format.
-   ```
-
-4. The agent reads your feedback and pushes additional commits.
-5. When satisfied, merge the PR using the standard review process.
+3. When assigning the issue to **Copilot**, select your **test-specialist** agent from the agents dropdown.
+4. The coding agent uses your custom agent's prompt and tool restrictions when implementing the task.
+5. Review the resulting Pull Request and collaborate with `@copilot` via review comments.
 
 ---
 
-## Step 8: Configure the Agent Environment with `copilot-setup-steps.yml`
-
-The coding agent runs in a cloud environment. By default, it has access to common tools, but it may need project-specific setup (installing dependencies, starting services, configuring databases). The `copilot-setup-steps.yml` workflow file tells the agent how to prepare its environment before starting work.
-
-For the full reference, see [Customizing the development environment for Copilot coding agent](https://docs.github.com/en/copilot/using-github-copilot/using-the-copilot-coding-agent#customizing-the-development-environment-for-copilot-coding-agent).
-
-### Step 8.1: Create the setup steps file
-
-1. Create a new file at `.github/workflows/copilot-setup-steps.yml`:
-
-   ```yaml
-   name: Copilot Setup Steps
-   on: workflow_dispatch
-
-   jobs:
-     setup:
-       runs-on: ubuntu-latest
-       steps:
-         - name: Checkout repository
-           uses: actions/checkout@v4
-
-         - name: Set up Node.js
-           uses: actions/setup-node@v4
-           with:
-             node-version: "20"
-
-         - name: Set up Python
-           uses: actions/setup-python@v5
-           with:
-             python-version: "3.12"
-
-         - name: Install Python dependencies
-           run: |
-             pip install pytest
-   ```
-
-2. Save the file.
-
-### Step 8.2: Understand the setup steps workflow
-
-- The workflow uses `on: workflow_dispatch` so it does not run on every push. The coding agent triggers it when needed.
-- Add steps for any tools, runtimes, or services the agent needs (databases, API keys for testing, linters).
-- Keep the setup minimal. A faster setup means the agent starts work sooner.
-
-### Step 8.3: Commit the setup file
+## Step 8: Commit Your Agents
 
 ```bash
-git add .github/workflows/copilot-setup-steps.yml
-git commit -m "Add Copilot coding agent setup steps"
+git add .github/agents/
+git commit -m "Add custom agents for testing, planning, and debugging"
 git push
 ```
+
+---
+
+## Tips for Designing Effective Agents
+
+- **Be specific about the role.** A clear identity ("You are a testing specialist") produces better results than a vague one ("Help with code").
+- **Restrict tools when appropriate.** A planning agent should not execute code. A documentation agent should not modify source files. Use the `tools` property to enforce boundaries.
+- **Structure the prompt with headings.** Agents follow structured instructions more reliably than free-form text.
+- **Keep prompts under 30,000 characters.** This is the maximum allowed by the platform.
+- **Test with representative tasks.** Try several prompts to verify the agent behaves as expected before sharing it with your team.
+- **Use descriptive filenames.** The filename becomes the default agent name. Use lowercase with hyphens: `test-specialist.agent.md`, not `TestSpecialist.agent.md`.
 
 ---
 
 ## Troubleshooting
 
-**The Copilot coding agent does not seem to follow my instructions:**
-- Confirm that `AGENTS.md` is at the repository root or in the relevant subdirectory.
-- Check that the file is committed and pushed (the agent reads the committed version, not uncommitted local changes).
-- Review the agent's pull request description to see which files it referenced.
+**My custom agent does not appear in the agent dropdown:**
 
-**I have both `AGENTS.md` and `copilot-instructions.md`. Which one is used?**
-- `AGENTS.md` is used by the Copilot coding agent (autonomous tasks).
-- `copilot-instructions.md` is used by Copilot Chat (interactive sessions).
-- Both can coexist and are used independently for their respective purposes.
+- Confirm the file is in `.github/agents/` and has the `.agent.md` suffix.
+- Check that the YAML frontmatter is valid (correct indentation, no missing colons).
+- Verify the `description` property is present. It is required.
+- In VS Code, try reopening the chat panel or reloading the window.
+
+**The agent does not follow its instructions:**
+
+- Review the prompt for clarity. Shorter, more direct instructions work better.
+- Check that the `tools` list includes the tools the agent needs.
+- Verify the file is saved and committed (the coding agent on GitHub reads committed files).
+
+**I want the agent available across all my workspaces:**
+
+- In VS Code, select **User profile** as the location when creating the agent.
+- The agent file is stored in your VS Code user profile folder, not in the repository.
 
 ---
 
 ## Summary
 
-You created `AGENTS.md` files to guide AI coding agents and configured the coding agent environment. Key points:
+You created custom agent profiles to specialize Copilot for different tasks. Key points:
 
-- `AGENTS.md` is used by AI coding agents for autonomous tasks.
-- The nearest `AGENTS.md` in the directory tree takes precedence.
-- Include: project purpose, structure, build/test commands, conventions, and constraints.
-- Keep it under two pages. Agents read it before starting work.
-- It coexists with `copilot-instructions.md` and serves a different purpose.
-- The Copilot coding agent works through GitHub Issues and Pull Requests.
-- Assign issues to `@copilot` and collaborate via PR review comments.
-- Use `copilot-setup-steps.yml` to configure the agent's cloud environment.
+- Custom agents are `.agent.md` files with YAML frontmatter and a Markdown prompt body.
+- Store agents in `.github/agents/` for workspace scope or in your user profile for global scope.
+- Use the `description` property (required) to explain what the agent does.
+- Use the `tools` property to restrict which capabilities the agent can use.
+- Agents work in VS Code, JetBrains IDEs, and on GitHub.com with the coding agent.
+- The [awesome-copilot](https://github.com/github/awesome-copilot) community collection has dozens of ready-to-use agents.
+- Design agents with clear roles, structured prompts, and appropriate tool restrictions.
 
 ---
 
