@@ -8,6 +8,8 @@ small starter code files used in exercises.
 
 - `exercises/` - Workshop exercises, one subdirectory per exercise
 - `.github/instructions/` - Path-specific Copilot instruction examples
+- `.github/steps/` - Step content files for the GitHub Skills framework
+- `.github/workflows/` - GitHub Actions workflows for step gating
 - `slides/index.html` - Self-contained HTML slide deck
 - `AGENTS.md` - Agent instruction file
 

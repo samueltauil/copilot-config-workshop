@@ -230,17 +230,9 @@ You created `AGENTS.md` files to guide AI coding agents working in this reposito
 
 ---
 
-## Workshop Complete
+## Next Steps
 
-You have completed all five exercises in this workshop. Here is a summary of what you built:
-
-| File | Purpose |
-|------|---------|
-| `.github/copilot-instructions.md` | Repository-wide custom instructions for Copilot Chat |
-| `.github/instructions/python.instructions.md` | Path-specific instructions for Python files |
-| `.github/instructions/tests.instructions.md` | Path-specific instructions for test files |
-| `AGENTS.md` | Agent instruction file for the repository root |
-| `exercises/AGENTS.md` | Agent instruction file for the exercises subdirectory |
+Proceed to [Exercise 6: Org-Level Best Practices](../06-org-level-best-practices/README.md).
 
 ---
 
