@@ -22,11 +22,7 @@ Copilot Chat supports three types of special keywords that make prompts more pre
 | `/` | Slash command | Triggers a specific action |
 | `#` | Chat variable | Attaches specific context to the prompt |
 
-These keywords reduce the amount of context you need to explain in natural language and give Copilot a clearer, more structured input.
-
-**Official documentation:** [Asking GitHub Copilot questions in your IDE](https://docs.github.com/en/copilot/using-github-copilot/asking-github-copilot-questions-in-your-ide)
-
-**Cheat sheet:** [GitHub Copilot Chat cheat sheet](https://docs.github.com/en/copilot/using-github-copilot/github-copilot-chat-cheat-sheet)
+These keywords reduce the amount of context you need to explain in natural language and give Copilot a clearer, more structured input. See [Asking GitHub Copilot questions in your IDE](https://docs.github.com/en/copilot/using-github-copilot/asking-github-copilot-questions-in-your-ide) and the [GitHub Copilot Chat cheat sheet](https://docs.github.com/en/copilot/using-github-copilot/github-copilot-chat-cheat-sheet) for a full reference.
 
 ---
 
@@ -259,9 +255,3 @@ You used the three types of Copilot Chat special keywords:
 ## Next Steps
 
 Proceed to [Exercise 5: Agent Instruction Files](../05-agent-files/README.md).
-
----
-
-**Official documentation:**
-- [Asking GitHub Copilot questions in your IDE](https://docs.github.com/en/copilot/using-github-copilot/asking-github-copilot-questions-in-your-ide)
-- [GitHub Copilot Chat cheat sheet](https://docs.github.com/en/copilot/using-github-copilot/github-copilot-chat-cheat-sheet)

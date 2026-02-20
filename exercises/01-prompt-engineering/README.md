@@ -14,9 +14,7 @@
 
 ## Background
 
-A prompt is a request you make to GitHub Copilot. The quality of Copilot's response depends heavily on how you write your prompt. GitHub's official prompt engineering guide identifies several strategies that consistently improve results. This exercise walks you through each strategy with concrete examples.
-
-**Official documentation:** [Prompt engineering for GitHub Copilot Chat](https://docs.github.com/en/copilot/using-github-copilot/copilot-chat/prompt-engineering-for-copilot-chat)
+A prompt is a request you make to GitHub Copilot. The quality of Copilot's response depends heavily on how you write your prompt. The [prompt engineering guide](https://docs.github.com/en/copilot/using-github-copilot/copilot-chat/prompt-engineering-for-copilot-chat) identifies several strategies that consistently improve results. This exercise walks you through each strategy with concrete examples.
 
 ---
 
@@ -263,7 +261,3 @@ In this exercise you applied six prompt engineering strategies:
 ## Next Steps
 
 Proceed to [Exercise 2: Repository-Wide Custom Instructions](../02-custom-instructions/README.md).
-
----
-
-**Official documentation:** [Prompt engineering for GitHub Copilot Chat](https://docs.github.com/en/copilot/using-github-copilot/copilot-chat/prompt-engineering-for-copilot-chat)

@@ -16,9 +16,7 @@
 
 Agent instruction files provide guidance to AI coding agents (such as the GitHub Copilot coding agent) that work autonomously in your repository. Unlike Copilot Chat custom instructions (which guide Copilot in interactive sessions), agent instruction files are designed for agents that complete multi-step tasks independently.
 
-When an AI agent opens a repository, it reads the nearest `AGENTS.md` file in the directory tree. The agent uses this file to understand how to work efficiently in the repository without extensive exploration.
-
-**Official documentation:** [Adding repository custom instructions for GitHub Copilot](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot)
+When an AI agent opens a repository, it reads the nearest `AGENTS.md` file in the directory tree. The agent uses this file to understand how to work efficiently in the repository without extensive exploration. For the full reference, see [Adding repository custom instructions for GitHub Copilot](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot).
 
 ---
 
@@ -233,7 +231,3 @@ You created `AGENTS.md` files to guide AI coding agents working in this reposito
 ## Next Steps
 
 Proceed to [Exercise 6: Org-Level Best Practices](../06-org-level-best-practices/README.md).
-
----
-
-**Official documentation:** [Adding repository custom instructions for GitHub Copilot](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot)

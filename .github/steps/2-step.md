@@ -1,6 +1,6 @@
 ## Step 2: Repository-Wide Custom Instructions
 
-Repository-wide custom instructions give GitHub Copilot persistent, project-specific context that applies to every Copilot Chat request in your repository.
+Copilot is giving your team inconsistent suggestions. One developer gets ES module syntax; another gets CommonJS. You need a way to set project-wide defaults once so every team member gets consistent help. [Repository-wide custom instructions](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot) let you do exactly that.
 
 ### 📖 Theory: What are custom instructions?
 

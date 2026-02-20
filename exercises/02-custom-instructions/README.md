@@ -15,9 +15,7 @@
 
 Repository-wide custom instructions allow you to give GitHub Copilot persistent guidance that applies to every request made in the context of a repository. Instead of repeating the same context in every prompt (such as "use TypeScript", "follow our error handling patterns", or "this project uses PostgreSQL"), you write it once in a file and Copilot picks it up automatically.
 
-The file is named `copilot-instructions.md` and must be placed in the `.github` directory at the root of your repository.
-
-**Official documentation:** [Adding repository custom instructions for GitHub Copilot](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot)
+The file is named `copilot-instructions.md` and must be placed in the `.github` directory at the root of your repository. See [Adding repository custom instructions for GitHub Copilot](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot) for the full reference.
 
 ---
 
@@ -206,7 +204,3 @@ You created a `copilot-instructions.md` file that gives Copilot persistent, proj
 ## Next Steps
 
 Proceed to [Exercise 3: Path-Specific Instructions](../03-path-specific-instructions/README.md).
-
----
-
-**Official documentation:** [Adding repository custom instructions for GitHub Copilot](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot)

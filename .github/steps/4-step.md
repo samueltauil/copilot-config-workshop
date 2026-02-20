@@ -1,6 +1,6 @@
 ## Step 4: Copilot Chat Participants, Commands, and Variables
 
-Copilot Chat supports three types of special keywords that make prompts more precise and efficient.
+You are spending too much time writing long prompts to explain what file you mean, what code you want explained, or what tests you need. Copilot Chat provides three types of special keywords, called [participants, commands, and variables](https://docs.github.com/en/copilot/using-github-copilot/asking-github-copilot-questions-in-your-ide), that let you express that context quickly and precisely.
 
 ### 📖 Theory: Chat participants, slash commands, and chat variables
 
