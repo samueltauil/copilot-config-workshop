@@ -42,7 +42,7 @@ explore the full codebase on each request.
 - Prefer explicit return types on exported functions.
 - Do not use `any`. If the type is unknown, use `unknown` and narrow it.
 - Use interface declarations for object shapes. Use type aliases for unions and intersections.
-- Enable strict mode is active; write code compatible with `"strict": true`.
+- Strict mode is active; write code compatible with `"strict": true`.
 
 ---
 

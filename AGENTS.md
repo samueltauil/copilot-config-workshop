@@ -18,6 +18,7 @@ and org-level best practices. There is no application code to build or deploy.
 - `.github/steps/` - Step content files for the GitHub Skills framework.
 - `.github/workflows/` - GitHub Actions workflows that gate step progression.
 - `slides/index.html` - Self-contained HTML slide deck (no build step required).
+- `.devcontainer/devcontainer.json` - Dev container config for GitHub Codespaces.
 - `AGENTS.md` - This file.
 - `README.md` - Workshop landing page.
 - `LICENSE` - MIT license.

@@ -1,6 +1,6 @@
 ## Step 4: Copilot Chat Participants, Commands, and Variables
 
-Copilot Chat supports three types of special keywords that make prompts more precise and efficient.
+You are spending too much time writing long prompts to explain what file you mean, what code you want explained, or what tests you need. Copilot Chat provides three types of special keywords, called [participants, commands, and variables](https://docs.github.com/en/copilot/using-github-copilot/asking-github-copilot-questions-in-your-ide), that let you express that context quickly and precisely.
 
 ### 📖 Theory: Chat participants, slash commands, and chat variables
 
@@ -30,9 +30,9 @@ These keywords reduce the amount of context you need to explain in natural langu
 - `#selection` - Attaches selected code as context
 - `#codebase` - Searches across all workspace files
 
-### ⌨️ Activity: Use participants, commands, and variables
+### ⌨️ Activity: Use participants, commands, variables, prompt files, and custom agents
 
-1. Open this repository in VS Code.
+1. Open this repository in a Codespace or in VS Code locally.
 
 1. Open the starter file: `exercises/04-copilot-chat-skills/starter.py`
 
@@ -62,6 +62,10 @@ These keywords reduce the amount of context you need to explain in natural langu
 
 1. Try inline chat: click on a line in `starter.py`, press `Ctrl+I` (Windows/Linux) or `Cmd+I` (macOS), and type a prompt directly in the editor.
 
+1. Create a reusable prompt file at `.github/prompts/add-tests.prompt.md` with a YAML front matter block. Then type `/` in the Chat input to invoke it.
+
+1. Create a custom agent at `.github/agents/code-reviewer.agent.md` with a response format and review rules. Select it from the agent dropdown in Copilot Chat.
+
 1. Follow the full step-by-step instructions in [exercises/04-copilot-chat-skills/README.md](../../exercises/04-copilot-chat-skills/README.md) to complete all parts of this exercise.
 
 <details>
@@ -71,5 +75,7 @@ These keywords reduce the amount of context you need to explain in natural langu
 - If a participant is not available, check that your Copilot extension is up to date.
 - Slash commands appear as you type `/` in the Copilot Chat input box.
 - Chat variables appear as you type `#` in the Copilot Chat input box.
+- Prompt files must end with `.prompt.md` and live in `.github/prompts/`.
+- Agent files must end with `.agent.md` and live in `.github/agents/`.
 
 </details>

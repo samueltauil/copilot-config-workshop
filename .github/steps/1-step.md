@@ -1,10 +1,10 @@
 ## Step 1: Prompt Engineering for GitHub Copilot
 
-Effective prompts are the foundation of productive Copilot interactions. In this step, you practice six prompt engineering strategies from the official GitHub documentation.
+Your team is adopting GitHub Copilot, and the results have been inconsistent. Some requests produce exactly what you need; others produce generic code that misses the mark. The difference comes down to how you phrase your prompts. In this step, you practice six [prompt engineering](https://docs.github.com/en/copilot/using-github-copilot/copilot-chat/prompt-engineering-for-copilot-chat) strategies that consistently improve Copilot's responses.
 
 ### 📖 Theory: What makes a good prompt?
 
-A prompt is a request you make to GitHub Copilot. The quality of Copilot's response depends heavily on how you write your prompt. Six strategies consistently improve results:
+A prompt is a request you make to GitHub Copilot. The quality of Copilot's response depends heavily on how you write your prompt. Six strategies consistently improve results.
 
 | Strategy | Description |
 |----------|-------------|
@@ -17,7 +17,7 @@ A prompt is a request you make to GitHub Copilot. The quality of Copilot's respo
 
 ### ⌨️ Activity: Practice prompt strategies
 
-1. Open Visual Studio Code and open this repository.
+1. Open this repository in a GitHub Codespace or in VS Code locally.
 
 1. Open the starter file: `exercises/01-prompt-engineering/starter.js`
 

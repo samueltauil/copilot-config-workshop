@@ -7,7 +7,7 @@
 
 **Duration:** ~25 minutes
 
-**Prerequisites:** Completion of [Exercise 1](../01-prompt-engineering/README.md) is recommended but not required.
+**Prerequisites:** Completion of [Exercise 1](../01-prompt-engineering/README.md) is recommended but not required. GitHub Codespaces or Visual Studio Code with the GitHub Copilot extension installed.
 
 ---
 
@@ -15,9 +15,7 @@
 
 Repository-wide custom instructions allow you to give GitHub Copilot persistent guidance that applies to every request made in the context of a repository. Instead of repeating the same context in every prompt (such as "use TypeScript", "follow our error handling patterns", or "this project uses PostgreSQL"), you write it once in a file and Copilot picks it up automatically.
 
-The file is named `copilot-instructions.md` and must be placed in the `.github` directory at the root of your repository.
-
-**Official documentation:** [Adding repository custom instructions for GitHub Copilot](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot)
+The file is named `copilot-instructions.md` and must be placed in the `.github` directory at the root of your repository. See [Adding repository custom instructions for GitHub Copilot](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot) for the full reference.
 
 ---
 
@@ -34,7 +32,7 @@ They are **not** used for inline code completion suggestions (the ghost text tha
 
 ## Setup
 
-1. Open your forked copy of this repository in Visual Studio Code.
+1. Open this repository in a Codespace or in VS Code locally.
 2. Confirm that the `.github` directory exists at the root of the repository. If it does not, create it:
    ```bash
    mkdir .github
@@ -206,7 +204,3 @@ You created a `copilot-instructions.md` file that gives Copilot persistent, proj
 ## Next Steps
 
 Proceed to [Exercise 3: Path-Specific Instructions](../03-path-specific-instructions/README.md).
-
----
-
-**Official documentation:** [Adding repository custom instructions for GitHub Copilot](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot)
