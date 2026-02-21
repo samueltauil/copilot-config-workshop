@@ -6,34 +6,45 @@
   <title>GitHub Copilot Configuration Workshop</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
   <style>
     :root {
-      --gh-blue: #0969da;
-      --gh-blue-dark: #0550ae;
-      --gh-blue-muted: #ddf4ff;
-      --gh-green: #1a7f37;
-      --gh-purple: #8250df;
-      --gh-orange: #bc4c00;
-      --gh-gray: #656d76;
-      --gh-gray-light: #f6f8fa;
-      --gh-border: #d0d7de;
-      --gh-text: #1F2328;
-      --gh-navy: #1a1a2e;
-      --ms-blue: #0078d4;
-      --r-heading-color: var(--gh-navy);
-      --r-link-color: var(--gh-blue);
-      --r-link-color-hover: var(--gh-blue-dark);
-      --r-selection-background-color: var(--gh-blue);
+      --gh-blue: #58a6ff;
+      --gh-blue-dark: #388bfd;
+      --gh-blue-muted: #1c3a5e;
+      --gh-green: #3fb950;
+      --gh-purple: #bc8cff;
+      --gh-orange: #ffa657;
+      --gh-gray: #8b949e;
+      --gh-gray-light: #161b22;
+      --gh-border: #30363d;
+      --gh-text: #e6edf3;
+      --gh-navy: #0d1117;
+      --r-background-color: #0d1117;
+      --r-main-color: #c9d1d9;
+      --r-heading-color: #e6edf3;
+      --r-link-color: #58a6ff;
+      --r-link-color-hover: #79c0ff;
+      --r-selection-background-color: #388bfd;
       --r-main-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
       --r-heading-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
       --r-code-font: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-      --r-background-color: #ffffff;
     }
 
     .reveal {
       font-size: 1.55rem;
+    }
+
+    body,
+    .reveal,
+    .reveal .backgrounds {
+      background-color: #0d1117 !important;
+    }
+
+    .reveal .slides section {
+      overflow-y: auto;
+      padding-bottom: 4px !important;
     }
 
     .reveal h1 {
@@ -43,57 +54,95 @@
     }
 
     .reveal h2 {
-      font-size: 1.55rem;
-      color: var(--gh-blue);
-      border-bottom: 2px solid var(--gh-border);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #58a6ff;
+      border-bottom: 1px solid #21262d;
       padding-bottom: 0.3em;
       margin-bottom: 0.6em;
+      letter-spacing: -0.01em;
     }
 
     .reveal h3 {
       font-size: 1.1rem;
-      color: var(--gh-gray);
+      color: #8b949e;
     }
 
     .reveal .slide-number {
       font-size: 0.75rem;
-      background: rgba(0,0,0,0.15);
-      color: var(--gh-gray);
+      background: rgba(255,255,255,0.05);
+      color: #8b949e;
       border-radius: 4px;
       padding: 2px 6px;
     }
 
-    /* ---- Title slide dark background ---- */
+    /* ---- Title slide ---- */
     .title-slide {
-      background: linear-gradient(135deg, #1F2328 0%, #0d1117 60%, #161b22 100%) !important;
+      background: linear-gradient(135deg, #0d1117 0%, #161b22 60%, #1a1f2e 100%) !important;
       color: #ffffff;
+      text-align: center;
+    }
+
+    .title-slide h1 {
+      font-size: 2.8rem !important;
+      font-weight: 800 !important;
+      background: linear-gradient(135deg, #ffffff 30%, #79c0ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.15 !important;
     }
 
     .title-slide h2 {
-      color: #79c0ff;
-      border-bottom-color: rgba(255,255,255,0.15);
+      color: #58a6ff;
+      border-bottom-color: rgba(255,255,255,0.08);
     }
 
-    /* ---- Exercise intro dark header ---- */
+    /* ---- Exercise intro ---- */
     .exercise-intro {
-      background: linear-gradient(135deg, #0d1117 0%, #1F2328 100%) !important;
+      background: linear-gradient(160deg, #0d1117 0%, #0d1f38 50%, #0d1117 100%) !important;
       color: #ffffff;
+      text-align: center;
     }
 
     .exercise-intro h2 {
       color: #79c0ff;
-      border-bottom-color: rgba(255,255,255,0.2);
+      border-bottom: none;
+      font-size: 1.8rem !important;
+      font-weight: 700;
+      margin-bottom: 0.4em;
     }
 
     .exercise-intro p {
       color: #c9d1d9;
+      font-size: 1rem;
+    }
+
+    /* ---- CTA box for "Start Lab" ---- */
+    .cta-box {
+      display: inline-block;
+      background: linear-gradient(90deg, rgba(56,139,253,0.18), rgba(56,139,253,0.06));
+      border: 1px solid #388bfd;
+      border-radius: 8px;
+      padding: 0.55em 1.4em;
+      margin-top: 1em;
+      font-size: 0.88rem;
+      color: #79c0ff;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .cta-hint {
+      font-size: 0.72rem;
+      color: #484f58;
+      margin-top: 0.5em;
     }
 
     /* ---- Labels ---- */
     .label {
       display: inline-block;
       background: var(--gh-blue);
-      color: white;
+      color: #0d1117;
       border-radius: 20px;
       padding: 3px 12px;
       font-size: 0.72rem;
@@ -106,71 +155,74 @@
     .label.green  { background: var(--gh-green); }
     .label.purple { background: var(--gh-purple); }
     .label.orange { background: var(--gh-orange); }
-    .label.gray   { background: var(--gh-gray); }
-    .label.white  { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: #fff; }
+    .label.gray   { background: #30363d; color: #8b949e; }
+    .label.white  { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #c9d1d9; }
 
     /* ---- Tables ---- */
     .reveal table {
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       width: 100%;
       border-collapse: collapse;
       margin: 0;
+      outline: 1px solid #30363d;
     }
 
     .reveal table th {
-      background: var(--gh-gray-light);
-      color: var(--gh-navy);
+      background: #161b22;
+      color: #e6edf3;
       font-weight: 600;
       text-align: left;
     }
 
     .reveal table td,
     .reveal table th {
-      border: 1px solid var(--gh-border);
-      padding: 7px 13px;
+      border: 1px solid #30363d;
+      padding: 5px 11px;
       vertical-align: top;
     }
 
     .reveal table tbody tr:hover {
-      background: #f0f6fc;
+      background: #1c2128;
     }
 
     /* ---- Code ---- */
     .reveal pre {
       box-shadow: none;
-      border: 1px solid var(--gh-border);
+      border: 1px solid #30363d;
       border-radius: 6px;
       margin: 0.5em 0;
     }
 
     .reveal code:not(pre code) {
-      background: var(--gh-gray-light);
-      border: 1px solid var(--gh-border);
+      background: #161b22;
+      border: 1px solid #30363d;
       border-radius: 4px;
       padding: 1px 5px;
-      color: var(--gh-blue-dark);
+      color: #79c0ff;
       font-size: 0.88em;
     }
 
     /* ---- Notes / callouts ---- */
     .note {
-      background: var(--gh-blue-muted);
-      border-left: 4px solid var(--gh-blue);
-      border-radius: 4px;
-      padding: 10px 16px;
-      margin: 0.75em 0;
-      font-size: 0.88rem;
+      background: transparent;
+      border-left: 2px solid #30363d;
+      padding: 4px 10px;
+      margin: 0.5em 0;
+      font-size: 0.75rem;
       text-align: left;
+      color: #8b949e;
+    }
+
+    .note strong {
+      color: #8b949e;
     }
 
     .note.green {
-      background: #d1f8e0;
-      border-left-color: var(--gh-green);
+      border-left-color: #3fb950;
     }
 
     .note.orange {
-      background: #fff1e5;
-      border-left-color: var(--gh-orange);
+      border-left-color: #ffa657;
     }
 
     /* ---- Two-column layout ---- */
@@ -183,24 +235,27 @@
 
     /* ---- Cards ---- */
     .card {
-      border: 1px solid var(--gh-border);
+      border: 1px solid #30363d;
+      border-left: 3px solid #388bfd;
       border-radius: 8px;
       padding: 1em 1.1em;
-      background: var(--gh-gray-light);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      background: linear-gradient(135deg, #161b22 0%, #0d1117 100%);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      position: relative;
     }
 
     .card h3 {
       margin-top: 0;
       margin-bottom: 0.4em;
       font-size: 0.95rem;
-      color: var(--gh-blue);
+      color: #58a6ff;
     }
 
     .card p,
     .card ul {
       font-size: 0.82rem;
       margin: 0;
+      color: #c9d1d9;
     }
 
     .card ul {
@@ -209,12 +264,13 @@
 
     /* ---- Large exercise number ---- */
     .exercise-number {
-      font-size: 4rem;
+      font-size: 6rem;
       font-weight: 800;
-      color: rgba(255,255,255,0.15);
+      color: rgba(88,166,255,0.12);
       display: block;
-      margin-bottom: 0.05em;
+      margin-bottom: 0em;
       line-height: 1;
+      letter-spacing: -0.04em;
     }
 
     /* ---- Numbered steps ---- */
@@ -232,19 +288,20 @@
       justify-content: center;
       min-width: 1.9em;
       height: 1.9em;
-      background: var(--gh-blue);
-      color: white;
+      background: #1c3a5e;
+      color: #58a6ff;
       border-radius: 50%;
       font-size: 0.82rem;
       font-weight: 700;
       flex-shrink: 0;
-      box-shadow: 0 0 0 3px rgba(9,105,218,0.15);
+      border: 1px solid #388bfd;
     }
 
     .step-content {
       font-size: 0.88rem;
       padding-top: 0.25em;
       line-height: 1.5;
+      color: #c9d1d9;
     }
 
     .reveal ul {
@@ -260,24 +317,25 @@
     }
 
     .toc-item {
-      border: 1px solid var(--gh-border);
+      border: 1px solid #30363d;
       border-radius: 8px;
       padding: 0.8em;
-      background: var(--gh-gray-light);
+      background: #161b22;
       text-align: center;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-      transition: box-shadow 0.2s;
+      color: #c9d1d9;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
 
     .toc-item:hover {
-      box-shadow: 0 2px 8px rgba(9,105,218,0.15);
+      border-color: #388bfd;
+      box-shadow: 0 0 0 3px rgba(56,139,253,0.1);
     }
 
     .toc-num {
       display: block;
       font-size: 1.6rem;
       font-weight: 800;
-      color: var(--gh-blue);
+      color: #58a6ff;
       margin-bottom: 0.15em;
     }
 
@@ -298,11 +356,43 @@
       margin-right: 0.3em;
     }
 
+    /* ---- Stats grid ---- */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.9em;
+      margin: 0.6em 0;
+    }
+
+    .stat-card {
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      padding: 1em 0.7em;
+      background: #161b22;
+      text-align: center;
+    }
+
+    .stat-num {
+      display: block;
+      font-size: 2rem;
+      font-weight: 800;
+      color: #58a6ff;
+      line-height: 1.1;
+    }
+
+    .stat-label {
+      display: block;
+      font-size: 0.73rem;
+      color: #8b949e;
+      margin-top: 0.3em;
+      line-height: 1.35;
+    }
+
     /* ---- Section divider ---- */
     .divider {
       width: 48px;
-      height: 4px;
-      background: var(--gh-blue);
+      height: 3px;
+      background: linear-gradient(90deg, #388bfd, #58a6ff);
       border-radius: 2px;
       margin: 0.6em auto;
     }
@@ -310,8 +400,8 @@
     /* ---- Tier badge ---- */
     .tier {
       display: inline-block;
-      background: linear-gradient(90deg, #8250df, #0969da);
-      color: white;
+      background: linear-gradient(90deg, #bc8cff, #58a6ff);
+      color: #0d1117;
       border-radius: 20px;
       padding: 3px 14px;
       font-size: 0.72rem;
@@ -330,12 +420,12 @@
       white-space: nowrap;
     }
 
-    .sdlc-phase.plan     { background: #f0e6ff; color: #6e40c9; border: 1px solid #d2b4ff; }
-    .sdlc-phase.implement { background: #ddf4ff; color: #0550ae; border: 1px solid #a8d8ff; }
-    .sdlc-phase.test     { background: #d1f8e0; color: #0f6c30; border: 1px solid #9fdfc0; }
-    .sdlc-phase.review   { background: #fff1e5; color: #8a3600; border: 1px solid #f5c07e; }
-    .sdlc-phase.document { background: #f6f8fa; color: #444c56; border: 1px solid #d0d7de; }
-    .sdlc-phase.maintain { background: #ffebcc; color: #7a4100; border: 1px solid #ffc370; }
+    .sdlc-phase.plan     { background: #2d1a5e; color: #bc8cff; border: 1px solid #6e3eb5; }
+    .sdlc-phase.implement { background: #1c3a5e; color: #58a6ff; border: 1px solid #388bfd; }
+    .sdlc-phase.test     { background: #1a3d2b; color: #3fb950; border: 1px solid #2ea043; }
+    .sdlc-phase.review   { background: #3d2200; color: #ffa657; border: 1px solid #d97828; }
+    .sdlc-phase.document { background: #1c2128; color: #8b949e; border: 1px solid #30363d; }
+    .sdlc-phase.maintain { background: #3d2200; color: #ffa657; border: 1px solid #d97828; }
   </style>
 </head>
 <body>
@@ -345,21 +435,17 @@
 <!-- ============================================================
      SLIDE 1: Title
      ============================================================ -->
-<section class="title-slide" data-background="linear-gradient(135deg, #1F2328 0%, #0d1117 60%, #161b22 100%)">
-  <br>
-  <svg class="gh-mark" viewBox="0 0 98 96" xmlns="http://www.w3.org/2000/svg" aria-label="GitHub">
+<section class="title-slide" data-background="linear-gradient(135deg, #0d1117 0%, #161b22 60%, #1a1f2e 100%)">
+  <svg class="gh-mark" viewBox="0 0 98 96" xmlns="http://www.w3.org/2000/svg" aria-label="GitHub" style="display:block; margin:0 auto 0.6em; width:64px; height:64px;">
     <path fill-rule="evenodd" clip-rule="evenodd" d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z"/>
   </svg>
-  <div style="margin-bottom: 0.4em">
-    <span class="label white">Professional Workshop</span>
-  </div>
-  <h1 style="color:#ffffff; font-size:2.3rem">GitHub Copilot<br>Configuration Workshop</h1>
+  <h1>GitHub Copilot<br>Configuration Workshop</h1>
   <div class="divider"></div>
-  <p style="color:#c9d1d9; margin-top:0.7em; font-size:1rem">
-    Prompt engineering &bull; Custom instructions &bull; Path-specific rules &bull; Prompt files &bull; Agent modes &bull; Coding agent &bull; Org-level practices
+  <p style="color:#8b949e; margin-top:0.7em; font-size:1rem">
+    Prompt engineering &bull; Custom instructions &bull; Path-specific rules &bull; Prompt files &bull; Custom agents &bull; Org-level practices
   </p>
-  <p style="font-size:0.72rem; color:#484f58; margin-top:2.5em">
-    Based on official GitHub documentation &bull; Open-source &bull; No additional tools required
+  <p style="font-size:0.72rem; color:#484f58; margin-top:2em">
+    Open-source &bull; No additional tools required
   </p>
 </section>
 
@@ -391,6 +477,52 @@
   <div class="note" style="margin-top:0.9em">
     <strong>Key insight:</strong> The quality of Copilot's output depends heavily on the context you provide. This workshop teaches you how to provide better context.
   </div>
+</section>
+
+<!-- ============================================================
+     Copilot by the Numbers
+     ============================================================ -->
+<section>
+  <h2>Copilot by the Numbers</h2>
+  <div class="stat-grid">
+    <div class="stat-card">
+      <span class="stat-num">55%</span>
+      <span class="stat-label">faster at completing coding tasks in controlled studies</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">88%</span>
+      <span class="stat-label">of developers report feeling more focused</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">74%</span>
+      <span class="stat-label">say Copilot lets them focus on more satisfying work</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">46%</span>
+      <span class="stat-label">of new code written by Copilot in supported languages</span>
+    </div>
+  </div>
+  <div class="stat-grid" style="margin-top:0">
+    <div class="stat-card">
+      <span class="stat-num">73%</span>
+      <span class="stat-label">stay in the flow longer with Copilot active</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">75%</span>
+      <span class="stat-label">feel more fulfilled with their job when using Copilot</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">~15%</span>
+      <span class="stat-label">higher pull request merge rate in enterprise teams</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num">30%</span>
+      <span class="stat-label">average suggestion acceptance rate by developers</span>
+    </div>
+  </div>
+  <p style="font-size:0.68rem; color:#484f58; margin-top:0.6em; text-align:right">
+    Sources: <a href="https://github.blog/news-insights/research/research-quantifying-github-copilots-impact-on-developer-productivity-and-happiness/" style="color:#484f58">GitHub Research Blog</a> &bull; <a href="https://cacm.acm.org/research/measuring-github-copilots-impact-on-productivity/" style="color:#484f58">ACM Research 2024</a>
+  </p>
 </section>
 
 <!-- ============================================================
@@ -512,12 +644,25 @@
   <div class="step">
     <div class="step-num">1</div>
     <div class="step-content">
-      Fork the workshop repository to your GitHub account at
-      <a href="https://github.com/samueltauil/copilot-config-workshop">github.com/samueltauil/copilot-config-workshop</a>.
+      Go to
+      <a href="https://github.com/samueltauil/copilot-config-workshop">github.com/samueltauil/copilot-config-workshop</a>
+      and click <strong>Use this template</strong> &rarr; <strong>Create a new repository</strong>.
     </div>
   </div>
   <div class="step">
     <div class="step-num">2</div>
+    <div class="step-content">
+      Name your repository and click <strong>Create repository</strong>. GitHub Actions runs automatically in the background.
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-content">
+      Open the <strong>Issues</strong> tab of your new repo. A new issue appears with the instructions for Step 1 — this is your exercise guide.
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-num">4</div>
     <div class="step-content">
       <strong>Option A (recommended):</strong> Click <strong>Code &gt; Codespaces &gt; Create codespace on main</strong>. No local setup required.<br>
       <strong>Option B:</strong> Clone locally and open in VS Code:<br>
@@ -525,29 +670,51 @@
     </div>
   </div>
   <div class="step">
-    <div class="step-num">3</div>
+    <div class="step-num">5</div>
     <div class="step-content">
-      Verify that the Copilot icon is active in the status bar (bottom right). Sign in to GitHub if prompted.
+      Follow the instructions in the Issue. After each step, push your changes — GitHub Actions detects completion and posts the next step automatically.
     </div>
   </div>
-  <div class="step">
-    <div class="step-num">4</div>
-    <div class="step-content">
-      Open <code>exercises/01-prompt-engineering/README.md</code> and begin Exercise 1.
+</section>
+
+<!-- ============================================================
+     How to Use These Slides
+     ============================================================ -->
+<section>
+  <h2>How to Use These Slides</h2>
+  <div class="two-col">
+    <div class="card" style="border-left-color: #3fb950;">
+      <h3 style="color:#3fb950">&#9312; Do the lab first</h3>
+      <p>Each exercise section starts with a <strong>dark intro slide</strong>. When you see it, stop here and open your GitHub Issue — that's where the step-by-step lab instructions live.</p>
+      <p style="margin-top:0.6em">Push your changes. GitHub Actions automatically posts the next step.</p>
     </div>
+    <div class="card" style="border-left-color: #58a6ff;">
+      <h3 style="color:#58a6ff">&#9313; Use slides as reference</h3>
+      <p>The slides that follow each intro cover the <strong>theory and concepts</strong> behind each feature. Return to them while doing the lab, or use them as a reference after.</p>
+      <p style="margin-top:0.6em">Slides do not replace the Issue — they add context and depth.</p>
+    </div>
+  </div>
+  <div style="margin-top:1.1em; display:flex; align-items:center; justify-content:center; gap:1.5em; font-size:0.82rem; color:#8b949e">
+    <span>Dark intro slide &rarr; <strong style="color:#3fb950">go to Issue</strong></span>
+    <span style="color:#30363d">|</span>
+    <span>Light content slides &rarr; <strong style="color:#58a6ff">read &amp; reference</strong></span>
+    <span style="color:#30363d">|</span>
+    <span>Push changes &rarr; <strong style="color:#bc8cff">auto-advance</strong></span>
   </div>
 </section>
 
 <!-- ============================================================
      SLIDE 6: Exercise 1 intro
      ============================================================ -->
-<section class="exercise-intro" data-background="linear-gradient(135deg, #0d1117 0%, #1F2328 100%)">
+<section class="exercise-intro" data-background="linear-gradient(160deg, #0d1117 0%, #0d1f38 50%, #0d1117 100%)">
+  <svg width="36" height="36" viewBox="0 0 24 24" fill="#388bfd" style="opacity:0.4; margin-bottom:0.3em; display:block; margin-left:auto; margin-right:auto" aria-hidden="true">
+    <path d="M12 2l2.4 7.4H22l-6.4 4.6 2.4 7.4L12 17l-6 4.4 2.4-7.4L2 9.4h7.6L12 2z"/>
+  </svg>
   <span class="exercise-number">01</span>
   <h2>Prompt Engineering for GitHub Copilot</h2>
   <p>Learn how to write prompts that produce consistent, accurate results every time.</p>
-  <div style="margin-top:1.2em; font-size:0.82rem; color:#8b949e">
-    Duration: ~30 minutes &bull; File: <code style="color:#79c0ff">exercises/01-prompt-engineering/README.md</code>
-  </div>
+  <div class="cta-box">&#128073; Open your GitHub Issue to start this lab</div>
+  <p class="cta-hint">Duration: ~30 minutes &bull; Return to these slides for theory while you work</p>
 </section>
 
 <!-- ============================================================
@@ -650,13 +817,15 @@ Expected output:
 <!-- ============================================================
      SLIDE 11: Exercise 2 intro
      ============================================================ -->
-<section class="exercise-intro" data-background="linear-gradient(135deg, #0d1117 0%, #1F2328 100%)">
+<section class="exercise-intro" data-background="linear-gradient(160deg, #0d1117 0%, #0d1f38 50%, #0d1117 100%)">
+  <svg width="36" height="36" viewBox="0 0 24 24" fill="#388bfd" style="opacity:0.4; margin-bottom:0.3em; display:block; margin-left:auto; margin-right:auto" aria-hidden="true">
+    <path d="M12 2l2.4 7.4H22l-6.4 4.6 2.4 7.4L12 17l-6 4.4 2.4-7.4L2 9.4h7.6L12 2z"/>
+  </svg>
   <span class="exercise-number">02</span>
   <h2>Repository-Wide Custom Instructions</h2>
   <p>Give Copilot persistent, project-specific context that applies to every request.</p>
-  <div style="margin-top:1.2em; font-size:0.82rem; color:#8b949e">
-    Duration: ~25 minutes &bull; File: <code style="color:#79c0ff">exercises/02-custom-instructions/README.md</code>
-  </div>
+  <div class="cta-box">&#128073; Open your GitHub Issue to start this lab</div>
+  <p class="cta-hint">Duration: ~25 minutes &bull; Return to these slides for theory while you work</p>
 </section>
 
 <!-- ============================================================
@@ -764,13 +933,15 @@ Expected output:
 <!-- ============================================================
      SLIDE 16: Exercise 3 intro
      ============================================================ -->
-<section class="exercise-intro" data-background="linear-gradient(135deg, #0d1117 0%, #1F2328 100%)">
+<section class="exercise-intro" data-background="linear-gradient(160deg, #0d1117 0%, #0d1f38 50%, #0d1117 100%)">
+  <svg width="36" height="36" viewBox="0 0 24 24" fill="#388bfd" style="opacity:0.4; margin-bottom:0.3em; display:block; margin-left:auto; margin-right:auto" aria-hidden="true">
+    <path d="M12 2l2.4 7.4H22l-6.4 4.6 2.4 7.4L12 17l-6 4.4 2.4-7.4L2 9.4h7.6L12 2z"/>
+  </svg>
   <span class="exercise-number">03</span>
   <h2>Path-Specific Instructions</h2>
   <p>Apply targeted rules only to files that match a specific path or file-type pattern.</p>
-  <div style="margin-top:1.2em; font-size:0.82rem; color:#8b949e">
-    Duration: ~20 minutes &bull; File: <code style="color:#79c0ff">exercises/03-path-specific-instructions/README.md</code>
-  </div>
+  <div class="cta-box">&#128073; Open your GitHub Issue to start this lab</div>
+  <p class="cta-hint">Duration: ~20 minutes &bull; Return to these slides for theory while you work</p>
 </section>
 
 <!-- ============================================================
@@ -816,13 +987,15 @@ applyTo: "**/*.py"
 <!-- ============================================================
      SLIDE 19: Exercise 4 intro
      ============================================================ -->
-<section class="exercise-intro" data-background="linear-gradient(135deg, #0d1117 0%, #1F2328 100%)">
+<section class="exercise-intro" data-background="linear-gradient(160deg, #0d1117 0%, #0d1f38 50%, #0d1117 100%)">
+  <svg width="36" height="36" viewBox="0 0 24 24" fill="#388bfd" style="opacity:0.4; margin-bottom:0.3em; display:block; margin-left:auto; margin-right:auto" aria-hidden="true">
+    <path d="M12 2l2.4 7.4H22l-6.4 4.6 2.4 7.4L12 17l-6 4.4 2.4-7.4L2 9.4h7.6L12 2z"/>
+  </svg>
   <span class="exercise-number">04</span>
   <h2>Chat Participants, Commands, and Variables</h2>
   <p>Use special keywords to make your prompts precise and efficient without extra explanation.</p>
-  <div style="margin-top:1.2em; font-size:0.82rem; color:#8b949e">
-    Duration: ~40 minutes &bull; File: <code style="color:#79c0ff">exercises/04-copilot-chat-skills/README.md</code>
-  </div>
+  <div class="cta-box">&#128073; Open your GitHub Issue to start this lab</div>
+  <p class="cta-hint">Duration: ~40 minutes &bull; Return to these slides for theory while you work</p>
 </section>
 
 <!-- ============================================================
@@ -1184,13 +1357,15 @@ You are a testing specialist. Your responsibilities:
 <!-- ============================================================
      SLIDE 33: Exercise 6 intro
      ============================================================ -->
-<section class="exercise-intro" data-background="linear-gradient(135deg, #0d1117 0%, #1F2328 100%)">
+<section class="exercise-intro" data-background="linear-gradient(160deg, #0d1117 0%, #0d1f38 50%, #0d1117 100%)">
+  <svg width="36" height="36" viewBox="0 0 24 24" fill="#388bfd" style="opacity:0.4; margin-bottom:0.3em; display:block; margin-left:auto; margin-right:auto" aria-hidden="true">
+    <path d="M12 2l2.4 7.4H22l-6.4 4.6 2.4 7.4L12 17l-6 4.4 2.4-7.4L2 9.4h7.6L12 2z"/>
+  </svg>
   <span class="exercise-number">06</span>
   <h2>Org-Level Best Practices</h2>
   <p>Scale your Copilot configuration consistently across an entire GitHub organization.</p>
-  <div style="margin-top:1.2em; font-size:0.82rem; color:#8b949e">
-    Duration: ~25 minutes &bull; File: <code style="color:#79c0ff">exercises/06-org-level-best-practices/README.md</code>
-  </div>
+  <div class="cta-box">&#128073; Open your GitHub Issue to start this lab</div>
+  <p class="cta-hint">Duration: ~25 minutes &bull; Return to these slides for theory while you work</p>
 </section>
 
 <!-- ============================================================
@@ -1371,11 +1546,11 @@ You are a testing specialist. Your responsibilities:
 <!-- ============================================================
      SLIDE 39: End
      ============================================================ -->
-<section class="title-slide" data-background="linear-gradient(135deg, #1F2328 0%, #0d1117 60%, #161b22 100%)">
+<section class="title-slide" data-background="linear-gradient(135deg, #0d1117 0%, #161b22 60%, #1a1f2e 100%)">
   <svg class="gh-mark" viewBox="0 0 98 96" xmlns="http://www.w3.org/2000/svg" aria-label="GitHub">
     <path fill-rule="evenodd" clip-rule="evenodd" d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z"/>
   </svg>
-  <h2 style="color:#79c0ff; border-bottom-color:rgba(255,255,255,0.15)">Workshop Complete</h2>
+  <h2 style="color:#58a6ff; border-bottom-color:rgba(255,255,255,0.08)">Workshop Complete</h2>
   <div class="divider"></div>
   <p style="color:#c9d1d9; font-size:0.95rem; margin-top:0.8em">
     You can now configure GitHub Copilot at every level:
