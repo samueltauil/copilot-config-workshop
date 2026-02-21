@@ -41,7 +41,7 @@ The following table shows where each Copilot configuration file can live and how
 | `copilot-instructions.md` | `.github/copilot-instructions.md` | `.github/copilot-instructions.md` in the org's `.github` repository |
 | Path-specific instructions | `.github/instructions/*.instructions.md` | `.github/instructions/*.instructions.md` in the org's `.github` repository |
 | `AGENTS.md` | Repository root or any subdirectory | Root of the org's `.github` repository |
-| `copilot-agents.yml` | `.github/copilot-agents.yml` | `.github/copilot-agents.yml` in the org's `.github` repository |
+| Custom agents (`.agent.md`) | `.github/agents/*.agent.md` | `.github/agents/*.agent.md` in the org's `.github` repository or the `.github-private` repository |
 
 **Key precedence rule:** Repository-level configuration takes precedence over org-level configuration. When a repository defines its own `copilot-instructions.md`, the org-level file is not merged with it. The repository-level file is used exclusively for that repository.
 
@@ -221,20 +221,28 @@ The nearest `AGENTS.md` in the directory tree takes precedence over files higher
 
 ---
 
-## Best Practices for Custom Agents (`copilot-agents.yml`)
+## Best Practices for Custom Agents (`.agent.md`)
 
-Custom agents extend Copilot Chat with specialized behaviors. The same org-level vs. repository-level distinction applies.
+Custom agents are `.agent.md` files that create specialized Copilot assistants with their own name, description, tools, and behavioral prompt. The same org-level vs. repository-level distinction applies.
 
 ### Naming conventions
 
-- Org-level agents: prefix the agent name with the organization name to avoid conflicts.
-  - Example: `acme-security-reviewer`, `acme-docs-generator`
-- Repository-level agents: use descriptive names scoped to the project.
-  - Example: `payment-validator`, `schema-migrator`
+- Org-level agents: prefix the filename with the organization name to avoid conflicts.
+  - Example: `acme-security-reviewer.agent.md`, `acme-docs-generator.agent.md`
+- Repository-level agents: use descriptive filenames scoped to the project.
+  - Example: `payment-validator.agent.md`, `schema-migrator.agent.md`
+
+### Where to store agents
+
+| Location | Scope |
+|----------|-------|
+| `.github/agents/` in a repository | Available in that repository (workspace) |
+| VS Code user profile folder | Available across all your workspaces (personal) |
+| `.github-private` repository (org) | Available across all repositories in the organization |
 
 ### Hierarchy
 
-- Org-level agents are available in all repositories in the organization.
+- Org-level agents (in `.github-private`) are available in all repositories in the organization.
 - Repository-level agents are available only in the repository where they are defined.
 - If both an org-level and a repository-level agent have the same name, the repository-level agent takes precedence in that repository.
 
@@ -247,7 +255,7 @@ Custom agents extend Copilot Chat with specialized behaviors. The same org-level
 | Scope org-level instructions to universal rules | Avoid repository-specific details in the org-level file |
 | Do not repeat org-level content in repository-level files | Repository-level files replace, not extend, the org-level file |
 | Use consistent naming for path-specific files | Follow the `topic.instructions.md` naming pattern |
-| Prefix org-level agent names with the org name | Prevents name conflicts with repository-level agents |
+| Prefix org-level agent filenames with the org name | Prevents name conflicts with repository-level agents |
 | Audit loaded instructions regularly | Use the **Used n references** panel in Copilot Chat |
 | Document the org-level file location | Help contributors find where org defaults are defined |
 | Test instructions with representative prompts | Verify behavior after changes at either level |
@@ -259,7 +267,7 @@ Custom agents extend Copilot Chat with specialized behaviors. The same org-level
 1. Review the files you created in previous exercises:
    - `.github/copilot-instructions.md`
    - `.github/instructions/python.instructions.md`
-   - `AGENTS.md`
+   - `.github/agents/*.agent.md`
 
 2. For each file, identify which instructions are truly universal (suitable for org level) and which are project-specific (suitable for repository level only).
 
@@ -329,7 +337,7 @@ Key points from this exercise:
 - Repository-level configuration files always take precedence over org-level files; there is no merging.
 - Scope org-level instructions to universal rules; keep project-specific rules in repository-level files.
 - Use consistent naming for path-specific instruction files across the organization.
-- Prefix org-level custom agent names to avoid conflicts with repository-level agents.
+- Prefix org-level custom agent filenames to avoid conflicts with repository-level agents.
 - Audit loaded instructions using the **Used n references** panel in Copilot Chat.
 
 ---
@@ -345,7 +353,7 @@ You have completed all six exercises in this workshop. Here is a summary of what
 | `.github/instructions/tests.instructions.md` | Path-specific instructions for test files |
 | `.github/prompts/add-tests.prompt.md` | Reusable prompt file for generating unit tests |
 | `.github/prompts/explain-architecture.prompt.md` | Reusable prompt file for architecture explanation |
-| `.github/agents/code-reviewer.agent.md` | Custom agent mode for code review |
-| `AGENTS.md` | Agent instruction file for the repository root |
-| `exercises/AGENTS.md` | Agent instruction file for the exercises subdirectory |
-| `.github/workflows/copilot-setup-steps.yml` | Coding agent environment setup |
+| `.github/agents/code-reviewer.agent.md` | Custom agent for code review |
+| `.github/agents/test-specialist.agent.md` | Custom agent for test coverage and quality |
+| `.github/agents/implementation-planner.agent.md` | Custom agent for technical planning |
+| `.github/agents/debug.agent.md` | Custom agent for structured debugging |
