@@ -1,206 +1,309 @@
-# Exercise 2: Repository-Wide Custom Instructions
+# Exercise 02: Custom Instructions — Build an Architect Agent
 
-**Learning objectives:**
-- Understand what repository-wide custom instructions are and when to use them
-- Create a `.github/copilot-instructions.md` file from scratch
-- Verify that Copilot uses your custom instructions in responses
+**SDLC Phase: Design & Architecture**
 
-**Duration:** ~25 minutes
+In this exercise you create repository-wide custom instructions and build an **Architect Agent** that turns a project plan into a data schema. You learn how `.github/copilot-instructions.md` works, what to include in it, and how to verify that Copilot loads it.
 
-**Prerequisites:** Completion of [Exercise 1](../01-prompt-engineering/README.md) is recommended but not required. GitHub Codespaces or Visual Studio Code with the GitHub Copilot extension installed.
+**Duration:** ~30 minutes
 
 ---
 
-## Background
+## Learning Objectives
 
-Repository-wide custom instructions allow you to give GitHub Copilot persistent guidance that applies to every request made in the context of a repository. Instead of repeating the same context in every prompt (such as "use TypeScript", "follow our error handling patterns", or "this project uses PostgreSQL"), you write it once in a file and Copilot picks it up automatically.
-
-The file is named `copilot-instructions.md` and must be placed in the `.github` directory at the root of your repository. See [Adding repository custom instructions for GitHub Copilot](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot) for the full reference.
+- Understand what repository-wide custom instructions do and when Copilot loads them
+- Create a `.github/copilot-instructions.md` file with project conventions
+- Know what to include and what to avoid in custom instructions
+- Build an Architect Agent that reads a project plan and produces a data schema
+- Verify Copilot references your instructions using the **Used n references** panel
 
 ---
 
-## What Custom Instructions Support
+## Prerequisites
 
-Repository-wide custom instructions are used by the following Copilot features (as of the current documentation):
+- Completion of [Exercise 01](../01-prompt-engineering/README.md) (you need `docs/project-plan.md`)
+- GitHub Codespaces or VS Code with the GitHub Copilot extension installed
+- The `.github/agents/` directory exists from Exercise 01
 
-- Copilot Chat in VS Code, Visual Studio, JetBrains IDEs, and on GitHub.com
+---
+
+## Understanding Custom Instructions
+
+### What are custom instructions?
+
+The file `.github/copilot-instructions.md` gives Copilot persistent, project-wide context. Instead of repeating "use ES modules" or "follow our error handling patterns" in every prompt, you write it once. Copilot applies it automatically to every relevant interaction.
+
+### Where does the file live?
+
+The file must be at `.github/copilot-instructions.md` in the repository root. The path is case-sensitive on Linux and macOS.
+
+### When does Copilot load it?
+
+Copilot loads custom instructions for:
+
+- Copilot Chat in VS Code, Visual Studio, JetBrains IDEs, and GitHub.com
 - Copilot code review
 
-They are **not** used for inline code completion suggestions (the ghost text that appears as you type). For inline completions, the content of open files provides context.
+Custom instructions do **not** apply to inline completion suggestions (ghost text). For inline completions, open files provide context.
 
----
+### What to include
 
-## Setup
+- Language and runtime requirements
+- Code style conventions (indentation, quotes, variable declarations)
+- Error handling patterns
+- Testing conventions and tools
+- Project-specific data models or terminology
 
-1. Open this repository in a Codespace or in VS Code locally.
-2. Confirm that the `.github` directory exists at the root of the repository. If it does not, create it:
-   ```bash
-   mkdir .github
-   ```
+### What to avoid
+
+- References to specific files or code paths (use path-specific instructions for that)
+- Instructions that conflict with each other
+- Overly long content (the file is included in every request)
+- Instructions about Copilot behavior (e.g., "always explain your code")
+
+See the [official documentation](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot) for the full reference.
 
 ---
 
 ## Step 1: Create the Custom Instructions File
 
-1. In VS Code, create a new file at:
-   ```
-   .github/copilot-instructions.md
-   ```
-   You can do this in the VS Code Explorer panel (left sidebar) by right-clicking the `.github` folder and selecting **New File**, or by running:
+1. Open your repository in a Codespace or in VS Code locally.
+
+2. Create the file at `.github/copilot-instructions.md`. You can right-click the `.github` folder in the Explorer panel and select **New File**, or run:
+
    ```bash
    touch .github/copilot-instructions.md
    ```
 
-2. Open the file. It should be empty.
+3. Open `docs/project-plan.md` from Exercise 01. Review the technology choices and conventions your Planner Agent defined.
 
-   > **Screenshot reference:** The Explorer panel in VS Code shows the `.github` folder containing `copilot-instructions.md`. The file tab is open and the editor area shows an empty file.
+4. Open `.github/copilot-instructions.md` and add the following content. Adjust it if your project plan specifies different conventions:
+
+   ```markdown
+   # Task Manager — Project Conventions
+
+   ## Language and Runtime
+
+   - JavaScript, Node.js 20+.
+   - Use ES module syntax (`import`/`export`), not CommonJS (`require`).
+
+   ## Code Style
+
+   - Use 2-space indentation.
+   - Use single quotes for strings.
+   - Use `const` by default; use `let` only when reassignment is needed. Never use `var`.
+   - Add JSDoc comments to all exported functions and classes.
+
+   ## Error Handling
+
+   - Use `try/catch` blocks around operations that may fail.
+   - Throw `Error` objects with descriptive messages. Do not throw plain strings.
+   - Log errors with `console.error`, not `console.log`.
+
+   ## Data Model
+
+   - The Task entity has: id, title, description, status (todo/in-progress/done),
+     priority (low/medium/high), createdAt, updatedAt.
+   - Store all data in memory using plain JavaScript data structures.
+
+   ## Testing
+
+   - Use the built-in Node.js `assert` module.
+   - Test files end with `.test.js`.
+   - Each test function tests exactly one behavior.
+
+   ## Dependencies
+
+   - Do not add external dependencies.
+   - Use only built-in Node.js modules (fs, path, assert, crypto, etc.).
+   ```
+
+5. Save the file.
 
 ---
 
-## Step 2: Write Your Custom Instructions
+## Step 2: Verify Copilot Uses Your Instructions
 
-Custom instructions are written in plain Markdown. They should contain information about your project that you would otherwise repeat in every prompt.
+1. Open Copilot Chat in VS Code (click the chat icon in the sidebar or press `Ctrl+Alt+I`).
 
-**Guidelines from the official documentation:**
-- Do not include instructions that refer to specific code (use path-specific instructions for that, covered in Exercise 3).
-- Keep instructions concise - they are included in every request.
-- Focus on coding conventions, tools, and project context.
-- Avoid instructions that conflict with each other.
+2. Select **Ask** mode and type:
 
-Copy the following example into `.github/copilot-instructions.md`:
+   ```
+   Write a function that creates a new task object with default values.
+   ```
 
-```markdown
-# Project Custom Instructions
+3. Review the response. It should follow your conventions:
 
-## Language and Runtime
+   - ES module syntax (`export`)
+   - Single quotes for strings
+   - `const` for variable declarations
+   - JSDoc comment on the function
+   - A `try/catch` block if the function performs error-prone operations
 
-- This project uses JavaScript (Node.js 20+).
-- Use ES module syntax (`import`/`export`) rather than CommonJS (`require`).
-- Target environments: Node.js for backend files, modern browsers for frontend files.
+4. Click the **Used n references** link at the top of the response. Expand the list and confirm `.github/copilot-instructions.md` appears.
 
-## Code Style
+   If you see your instructions file listed, Copilot loaded them.
 
-- Use 2-space indentation.
-- Use single quotes for strings.
-- Use `const` for variables that are not reassigned; use `let` otherwise. Never use `var`.
-- Add JSDoc comments to all exported functions.
+5. Open a new chat thread and try a prompt that contradicts your instructions:
 
-## Error Handling
+   ```
+   Write a function that reads a JSON file using require() and var.
+   ```
 
-- Always use `try/catch` blocks around async operations.
-- Throw `Error` objects with descriptive messages. Do not throw plain strings.
-- Log errors using `console.error`, not `console.log`.
-
-## Testing
-
-- Write tests using the built-in Node.js `assert` module.
-- Test file names should end in `.test.js`.
-- Each test function should test exactly one behavior.
-```
-
-3. Save the file (`Ctrl+S` on Windows/Linux, `Cmd+S` on macOS).
+   Copilot follows your explicit request. Custom instructions set defaults but do not override direct prompts.
 
 ---
 
-## Step 3: Verify That Copilot Uses Your Instructions
+## Step 3: Create the Architect Agent
 
-1. Open Copilot Chat in VS Code (click the chat icon in the sidebar, or press `Ctrl+Alt+I` on Windows/Linux, `Cmd+Shift+I` on macOS).
+The Architect Agent reads a project plan and produces a data schema with file structure. It bridges the gap between planning (Exercise 01) and implementation (Exercise 03).
 
-2. Ask the following question:
+1. Create a new file at `.github/agents/architect.agent.md` with this content:
+
+   ```markdown
+   ---
+   name: architect
+   description: Reads a project plan and produces a detailed data schema and file structure
+   tools: ["edit", "search", "read"]
+   ---
+
+   You are a software architect. Given a project plan, you produce a detailed
+   technical design document.
+
+   ## Output structure
+
+   1. **Data models** — for each entity, list every property with its type,
+      whether it is required, and any validation rules.
+   2. **File structure** — show the complete directory tree with a one-line
+      description of each file's purpose.
+   3. **Module responsibilities** — describe what each module exports and
+      how modules depend on each other.
+   4. **Error handling strategy** — list the error types and where they
+      are thrown.
+
+   ## Rules
+
+   - Follow the conventions in `.github/copilot-instructions.md`.
+   - Keep the design minimal. Only include what the project plan requires.
+   - Save the design document to `docs/schema.md`.
    ```
-   Write a function that fetches a list of users from a REST API endpoint and returns the response body as parsed JSON.
-   ```
 
-3. Review the response. Based on the custom instructions you wrote, the response should:
-   - Use `import`/`export` syntax (not `require`)
-   - Use `const` for variable declarations
-   - Include a `try/catch` block
-   - Include a JSDoc comment
+2. Save the file.
 
-4. To confirm that Copilot loaded your instructions, look at the **Used n references** link at the top of the Copilot response. Click it to expand the list.
+### How the agent file works
 
-   > **Screenshot reference:** After Copilot responds, there is a dropdown link labeled "Used 2 references" (or similar number) at the top of the response. Clicking it expands a list of files, including `.github/copilot-instructions.md`. This confirms Copilot read your instructions.
-
-   If you see `.github/copilot-instructions.md` listed in the references, the instructions are working correctly.
+- The YAML front matter (`name`, `description`, `tools`) registers the agent in Copilot Chat.
+- The `tools` array grants the agent permission to edit files, search the workspace, and read files.
+- The Markdown body is the system prompt. It tells the agent what role to play and what rules to follow.
+- The agent automatically inherits your custom instructions from `.github/copilot-instructions.md`.
 
 ---
 
-## Step 4: Test the Instructions with a Contrast Prompt
+## Step 4: Generate the Data Schema
 
-To see the difference your instructions make, temporarily observe what happens without them.
+1. In Copilot Chat, select **architect** from the agent dropdown.
 
-1. Start a new chat thread in Copilot Chat (click the `+` icon to open a new conversation, or close and reopen the Chat panel).
+2. Type the following prompt:
 
-2. Ask:
    ```
-   Write a function that reads a JSON file from disk and returns its contents.
-   ```
-
-3. The response should still follow your custom instructions (using ES modules, `const`, `try/catch`, etc.).
-
-4. Now try asking Copilot explicitly for something that contradicts your instructions:
-   ```
-   Write the same function using require() and var declarations.
+   Read #file:docs/project-plan.md and design the data schema and file
+   structure for the Task Manager. Save the result to docs/schema.md.
    ```
 
-5. Notice that Copilot responds with the code you asked for. Custom instructions provide default behavior; they do not prevent you from overriding them in a specific prompt.
+3. Review the generated `docs/schema.md`. Verify it includes:
+
+   - A Task data model with properties, types, and validation rules
+   - A directory tree showing where each file lives under `src/`
+   - Module responsibilities describing what each file exports
+   - An error handling strategy
+
+4. If something is missing, iterate in the same conversation:
+
+   ```
+   Add validation rules for each property in the Task model.
+   ```
+
+5. Open `docs/schema.md` and confirm the content looks complete and follows your project conventions.
+
+### What a good schema includes
+
+The Task model should define at minimum:
+
+| Property | Type | Required | Validation |
+|----------|------|----------|------------|
+| id | string | yes | Generated by `crypto.randomUUID()` |
+| title | string | yes | Non-empty, max 100 characters |
+| description | string | no | Max 500 characters |
+| status | string | yes | One of: todo, in-progress, done |
+| priority | string | yes | One of: low, medium, high |
+| createdAt | string (ISO 8601) | yes | Set on creation |
+| updatedAt | string (ISO 8601) | yes | Updated on every change |
+
+Your schema may differ. The exact content depends on your project plan and the agent's output.
 
 ---
 
-## Step 5: Review the Example File
+## Step 5: Commit and Push
 
-This repository includes a fully-commented example of a real-world `copilot-instructions.md` file:
+1. Stage and commit all new files:
 
-```
-exercises/02-custom-instructions/example-copilot-instructions.md
-```
-
-Open that file and read through it. It shows:
-- How to structure instructions for a larger project
-- What types of information are most useful to include
-- What to avoid
-
----
-
-## Step 6: Commit Your Custom Instructions
-
-1. Stage and commit the file:
    ```bash
-   git add .github/copilot-instructions.md
-   git commit -m "Add repository-wide custom instructions for Copilot"
+   git add .github/copilot-instructions.md .github/agents/ docs/
+   git commit -m "Add project conventions and Architect Agent with schema"
    git push
    ```
 
-2. The file is now part of your repository. Every collaborator who uses Copilot in this repository will benefit from these instructions automatically.
+2. After you push, the workflow validates that `copilot-instructions.md` and `docs/schema.md` exist, then posts the next step.
+
+---
+
+## Verification
+
+Confirm the following before moving on:
+
+- [ ] `.github/copilot-instructions.md` exists and contains project conventions
+- [ ] Copilot Chat shows `.github/copilot-instructions.md` in the **Used n references** panel
+- [ ] `.github/agents/architect.agent.md` exists with valid YAML front matter
+- [ ] `docs/schema.md` exists and contains a data model, file structure, and module responsibilities
+- [ ] All files are committed and pushed
 
 ---
 
 ## Troubleshooting
 
-**Copilot does not seem to use my instructions:**
-- Confirm the file is saved at exactly `.github/copilot-instructions.md` (the path is case-sensitive on Linux/macOS).
-- Check that the file is not empty.
-- Try closing and reopening the Copilot Chat panel.
-- Confirm that your organization has not disabled repository custom instructions (requires administrator access to verify).
+**Copilot does not use my instructions:**
 
-**The "Used n references" link does not show my instructions file:**
-- Open a new chat thread (old threads may not reload the instructions automatically).
-- Confirm the file path is correct: the file must be named `copilot-instructions.md` inside the `.github` folder at the repository root.
+- Confirm the file is saved at exactly `.github/copilot-instructions.md` (case-sensitive path).
+- Check that the file is not empty.
+- Open a new chat thread. Existing threads may not reload instructions.
+- Confirm your organization has not disabled repository custom instructions.
+
+**The "Used n references" panel does not list my instructions:**
+
+- Open a new chat thread with the `+` icon.
+- Verify the file name is `copilot-instructions.md` inside `.github/` at the repository root.
+
+**The Architect Agent does not appear in the dropdown:**
+
+- Reload the VS Code window (`Ctrl+Shift+P` then **Reload Window**).
+- Confirm `.github/agents/architect.agent.md` has valid YAML front matter with a `description` property.
+
+**The agent does not create `docs/schema.md`:**
+
+- Create the `docs/` directory manually (`mkdir -p docs`) and re-run the prompt.
+- Make sure you selected **architect** from the agent dropdown, not Ask or Edit mode.
 
 ---
 
-## Summary
+## Reference: Example Custom Instructions
 
-You created a `copilot-instructions.md` file that gives Copilot persistent, project-specific context. Key points:
+This repository includes a fully commented example at [example-copilot-instructions.md](example-copilot-instructions.md). Open it to see:
 
-- The file lives at `.github/copilot-instructions.md`.
-- It uses plain Markdown.
-- It applies to all Copilot Chat requests in the repository.
-- It does not apply to inline completion suggestions.
-- It can be overridden in specific prompts if needed.
+- How to structure instructions for a larger project
+- What types of information are most useful to include
+- Common patterns to avoid
 
 ---
 
 ## Next Steps
 
-Proceed to [Exercise 3: Path-Specific Instructions](../03-path-specific-instructions/README.md).
+Proceed to [Exercise 03: Path-Specific Instructions](../03-path-specific-instructions/README.md).

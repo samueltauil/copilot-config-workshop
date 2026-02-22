@@ -6,7 +6,8 @@ on:
     branches:
       - main
     paths:
-      - "exercises/01-prompt-engineering/**"
+      - "docs/**"
+      - ".github/agents/**"
 
 permissions:
   contents: read
@@ -57,17 +58,19 @@ jobs:
           file: exercise-toolkit/markdown-templates/step-feedback/checking-work.md
           edit-mode: replace
 
-      - name: Check if starter.js has been modified
-        id: check-starter-js
+      - name: Check if planner agent exists
+        id: check-planner-agent
         continue-on-error: true
-        run: |
-          LINES=$(wc -l < exercises/01-prompt-engineering/starter.js)
-          if [ "$LINES" -gt 5 ]; then
-            echo "starter.js has been modified ($LINES lines)"
-          else
-            echo "starter.js has not been modified"
-            exit 1
-          fi
+        uses: skills/exercise-toolkit/actions/file-exists@v0.8.1
+        with:
+          file: .github/agents/planner.agent.md
+
+      - name: Check if project plan exists
+        id: check-project-plan
+        continue-on-error: true
+        uses: skills/exercise-toolkit/actions/file-exists@v0.8.1
+        with:
+          file: docs/project-plan.md
 
       - name: Update comment - step results
         uses: GrantBirki/comment@v2.1.1
@@ -80,8 +83,10 @@ jobs:
           vars: |
             step_number: 1
             results_table:
-              - description: "Added functions to exercises/01-prompt-engineering/starter.js"
-                passed: ${{ steps.check-starter-js.outcome == 'success' }}
+              - description: "Created .github/agents/planner.agent.md"
+                passed: ${{ steps.check-planner-agent.outcome == 'success' }}
+              - description: "Created docs/project-plan.md"
+                passed: ${{ steps.check-project-plan.outcome == 'success' }}
 
       - name: Fail job if not all checks passed
         if: contains(steps.*.outcome, 'failure')
