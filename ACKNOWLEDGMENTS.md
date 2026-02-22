@@ -1,6 +1,6 @@
 # Acknowledgments
 
-This workshop uses images and design patterns from official GitHub repositories. Thank you to the GitHub Skills team and the broader GitHub community for making these resources available.
+This workshop uses images and design patterns from official GitHub repositories. Thank you to the @skills team and the broader GitHub community for making these resources available.
 
 ## Image Credits
 
@@ -43,8 +43,12 @@ This workshop is built using the [GitHub Skills](https://skills.github.com) exer
 
 - [Exercise Template](https://github.com/skills/exercise-template) - repository structure and bootstrapping
 - [Exercise Toolkit](https://github.com/skills/exercise-toolkit) - reusable workflows, actions, and markdown templates
-- [GrantBirki/comment](https://github.com/GrantBirki/comment) - issue comment management with Nunjucks templating
-- [peter-evans/find-comment](https://github.com/peter-evans/find-comment) - comment lookup for in-place updates
+- [@GrantBirki/comment](https://github.com/GrantBirki/comment) - issue comment management with Nunjucks templating
+- [@peter-evans/find-comment](https://github.com/peter-evans/find-comment) - comment lookup for in-place updates
+
+## Special Thanks
+
+- [@chriswblake](https://github.com/chriswblake) - for introducing the GitHub Skills framework during a Tech Exchange in Seattle
 
 ## License
 
