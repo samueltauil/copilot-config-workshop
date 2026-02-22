@@ -20,7 +20,7 @@ Each agent file you created teaches Copilot a specialized role. An orchestrator 
 | Tester | Testing | `tests/**/*.test.js` |
 | **Orchestrator** | **Full lifecycle** | **Coordinates all of the above** |
 
-> ![Screenshot: Copilot Chat showing the Orchestrator agent with four handoff buttons labeled Plan, Design, Develop, and Test](https://github.com/user-attachments/assets/copilot-orchestrator-handoffs.png)
+> 🪧 **Note:** After the Orchestrator responds, you see four handoff buttons at the bottom of the message labeled **1. Plan the feature**, **2. Design the architecture**, **3. Implement the feature**, and **4. Test the feature**.
 
 Agent files support these advanced properties:
 

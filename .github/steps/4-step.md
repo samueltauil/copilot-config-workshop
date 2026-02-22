@@ -20,7 +20,7 @@ Prompt files use the `.prompt.md` suffix and live in `.github/prompts/`. Each fi
 
 You invoke a prompt file by typing `/` in Copilot Chat and selecting it from the list. This turns a multi-step workflow into a single action.
 
-> ![Screenshot: Copilot Chat showing the slash command menu with available prompt files](https://github.com/user-attachments/assets/copilot-slash-commands.png)
+> 🪧 **Note:** When you type `/` in the Copilot Chat input, a menu appears listing all available prompt files from `.github/prompts/`.
 
 ## ⌨️ Activity: Create prompt files
 

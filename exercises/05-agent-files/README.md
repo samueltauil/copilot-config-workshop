@@ -239,8 +239,6 @@ All handoffs use `send: false`, which means the pre-filled prompt appears in the
 2. Open the agent dropdown.
 3. Confirm **orchestrator** appears in the list.
 
-> ![Screenshot: Copilot Chat agent dropdown showing the orchestrator agent alongside the other four agents](https://github.com/user-attachments/assets/copilot-orchestrator-dropdown.png)
-
 If it does not appear, reload the VS Code window: press `Ctrl+Shift+P` (or `Cmd+Shift+P` on macOS) and type **Reload Window**.
 
 ---
@@ -274,8 +272,6 @@ Requirements:
 After the Orchestrator summarizes the plan, you see four buttons at the bottom of the response:
 
 **1. Plan the feature** → **2. Design the architecture** → **3. Implement the feature** → **4. Test the feature**
-
-> ![Screenshot: Copilot Chat showing the Orchestrator response with four handoff buttons at the bottom](https://github.com/user-attachments/assets/copilot-orchestrator-handoffs.png)
 
 Click each button in order. Each handoff pre-fills a prompt and switches to the named agent. Review the prompt and press Enter to run it. You stay in control at every step.
 

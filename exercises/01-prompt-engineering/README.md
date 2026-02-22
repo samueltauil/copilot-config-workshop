@@ -61,7 +61,7 @@ Copilot offers five ways to interact. Each mode fits different tasks. You do not
 
 > **Where is the mode selector?** Look at the top of the Copilot Chat panel. A dropdown lets you switch between Ask, Edit, and Agent modes.
 >
-> ![Screenshot: Copilot Chat mode selector showing Ask, Edit, and Agent options](https://github.com/user-attachments/assets/copilot-mode-selector.png)
+> <img width="350" alt="Screenshot: Copilot Chat mode selector showing Ask, Edit, and Agent options" src="https://raw.githubusercontent.com/skills/getting-started-with-github-copilot/main/.github/images/ask-mode-selection.png" />
 
 ### Inline Suggestions
 
@@ -69,7 +69,7 @@ Start typing in the editor and Copilot shows grey ghost text (a suggestion that 
 
 **Best for:** Completing lines, finishing functions, writing repetitive code.
 
-> ![Screenshot: VS Code editor showing grey ghost text from Copilot inline suggestion](https://github.com/user-attachments/assets/copilot-inline-suggestion.png)
+<img width="700" alt="Screenshot: VS Code editor showing grey ghost text from Copilot inline suggestion" src="https://raw.githubusercontent.com/skills/getting-started-with-github-copilot/main/.github/images/shadow-text.gif" />
 
 **Try it:** Open `exercises/01-prompt-engineering/starter.js` and type the following on a new line:
 
@@ -103,7 +103,7 @@ Switch the mode selector to **Agent**. Copilot performs multi-step tasks: creati
 
 **Best for:** Complex tasks that span multiple files or require running commands. In the SDLC context, this is the mode you use to have specialized agents (like the Planner) do their work.
 
-> ![Screenshot: Copilot Chat in Agent mode showing the agent dropdown with available agents](https://github.com/user-attachments/assets/copilot-agent-mode.png)
+<img width="350" alt="Screenshot: Copilot Chat in Agent mode showing the agent dropdown" src="https://raw.githubusercontent.com/skills/getting-started-with-github-copilot/main/.github/images/agent-mode-dropdown.png" />
 
 ### Inline Chat
 
@@ -288,7 +288,7 @@ Writing a clear system prompt applies the same strategies you learned above: be 
 
 In Copilot Chat, open the mode selector and choose **Agent**. Then select **planner** from the agent dropdown. If the planner does not appear, reload the window (`Ctrl+Shift+P` then type **Reload Window**).
 
-> ![Screenshot: Copilot Chat showing the planner agent selected in the agent dropdown](https://github.com/user-attachments/assets/copilot-select-planner.png)
+<img width="350" alt="Screenshot: Copilot Chat showing the plan mode dropdown" src="https://raw.githubusercontent.com/skills/getting-started-with-github-copilot/main/.github/images/plan-mode-dropdown.png" />
 
 ### 2. Enter the prompt
 

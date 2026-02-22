@@ -69,7 +69,9 @@ Key facts:
 
 1. Click the **Used n references** link at the top of the response. Confirm `.github/copilot-instructions.md` appears in the list. The response should follow your conventions.
 
-    > ![Screenshot: Copilot Chat response showing the "Used n references" link expanded to list loaded instruction files](https://github.com/user-attachments/assets/copilot-used-references.png)
+    > 🪧 **Note:** The **Used n references** link appears at the top of each Copilot Chat response. Click it to expand the list of loaded instruction files.
+    >
+    > <img width="504" alt="Screenshot: Copilot Chat showing Used n references panel" src="https://github.com/user-attachments/assets/2214ed9e-c165-4440-a23e-d2d33c0231a9" />
 
 ## ⌨️ Activity: Create the Architect Agent
 

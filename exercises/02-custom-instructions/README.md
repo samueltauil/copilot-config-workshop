@@ -146,7 +146,7 @@ See the [official documentation](https://docs.github.com/en/copilot/customizing-
 
    If you see your instructions file listed, Copilot loaded them.
 
-   > ![Screenshot: Copilot Chat response showing the "Used n references" link expanded to list loaded instruction files](https://github.com/user-attachments/assets/copilot-used-references.png)
+   <img width="504" alt="Screenshot: Copilot Chat response showing the Used n references link expanded to list loaded instruction files" src="https://github.com/user-attachments/assets/2214ed9e-c165-4440-a23e-d2d33c0231a9" />
 
 5. Open a new chat thread and try a prompt that contradicts your instructions:
 

@@ -320,7 +320,7 @@ Verify that Copilot loads both repository-wide and path-specific instructions.
    - `.github/copilot-instructions.md` (repository-wide)
    - `.github/instructions/models.instructions.md` (path-specific)
 
-   > ![Screenshot: Copilot Chat "Used n references" panel showing both repository-wide and path-specific instruction files loaded](https://github.com/user-attachments/assets/copilot-instruction-layering.png)
+   <img width="492" alt="Screenshot: Copilot Chat Used n references panel showing both repository-wide and path-specific instruction files loaded" src="https://github.com/user-attachments/assets/dbf26be3-5940-4619-af4e-0a4380f16494" />
 
 5. Now open `src/services/taskService.js` and ask a similar question. The references should show `services.instructions.md` instead of `models.instructions.md`.
 

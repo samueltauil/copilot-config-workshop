@@ -211,8 +211,6 @@ Your `.github/prompts/` directory should now contain two files:
 2. Type `/` in the prompt box.
 3. You should see **generate-tests** and **test-edge-cases** in the list.
 
-> ![Screenshot: Copilot Chat showing the slash command menu with generate-tests and test-edge-cases prompt files](https://github.com/user-attachments/assets/copilot-slash-commands.png)
-
 If the prompts do not appear, reload the VS Code window: press `Ctrl+Shift+P` (or `Cmd+Shift+P` on macOS) and type **Reload Window**.
 
 ---

@@ -24,7 +24,7 @@ Copilot offers five ways to work. Each mode fits a different situation. You do n
 
 > **Where is the mode selector?** Look at the top of the Copilot Chat panel. A dropdown lets you switch between Ask, Edit, and Agent modes.
 >
-> ![Screenshot: Copilot Chat mode selector showing Ask, Edit, and Agent options](https://github.com/user-attachments/assets/copilot-mode-selector.png)
+> <img width="350" alt="Screenshot: Copilot Chat mode selector" src="https://raw.githubusercontent.com/skills/getting-started-with-github-copilot/main/.github/images/ask-mode-selection.png" />
 
 ### 📖 Theory: Six prompt engineering strategies
 
@@ -43,11 +43,7 @@ Good prompts lead to good results. These six strategies help you communicate wit
 
 1. Open this repository in a **GitHub Codespace** (click **Code > Codespaces > Create codespace on main**). Alternatively, clone it locally and open it in VS Code.
 
-   > ![Screenshot: GitHub Code button with Codespaces tab open](https://github.com/user-attachments/assets/codespaces-create.png)
-
 1. Verify Copilot is active: look for the Copilot icon (a small sparkle icon) in the VS Code status bar at the bottom of the window.
-
-   > ![Screenshot: VS Code status bar showing the Copilot icon](https://github.com/user-attachments/assets/copilot-status-bar.png)
 
 1. Open Copilot Chat by clicking the chat icon in the sidebar (or press `Ctrl+Alt+I` / `Cmd+Alt+I`).
 
@@ -56,6 +52,8 @@ Good prompts lead to good results. These six strategies help you communicate wit
 Try each mode briefly so you know what is available.
 
 1. **Inline suggestions:** Open `exercises/01-prompt-engineering/starter.js`, place your cursor at the bottom, and type `function hello(name) {`. Pause and observe the grey ghost text. Press `Tab` to accept or `Esc` to dismiss.
+
+    <img width="700" alt="Screenshot: Copilot inline suggestion ghost text" src="https://raw.githubusercontent.com/skills/getting-started-with-github-copilot/main/.github/images/shadow-text.gif" />
 
 1. **Ask mode:** In Copilot Chat (default mode), type:
 
@@ -66,6 +64,8 @@ Try each mode briefly so you know what is available.
     Read the response. Ask mode is great for brainstorming without changing files.
 
 1. **Agent mode:** Switch the mode selector to **Agent**. You will use this mode to run the Planner Agent in the next activity.
+
+    <img width="350" alt="Screenshot: Copilot Agent mode dropdown" src="https://raw.githubusercontent.com/skills/getting-started-with-github-copilot/main/.github/images/agent-mode-dropdown.png" />
 
 ## ⌨️ Activity: Create the Planner Agent
 
