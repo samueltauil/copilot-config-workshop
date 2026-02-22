@@ -249,15 +249,21 @@ Your schema may differ. The exact content depends on your project plan and the a
 
 ## Step 5: Commit and Push
 
-1. Stage and commit all new files:
+1. In the VS Code left sidebar, click the **Source Control** tab.
 
-   ```bash
-   git add .github/copilot-instructions.md .github/agents/ docs/
-   git commit -m "Add project conventions and Architect Agent with schema"
-   git push
-   ```
+2. Hover over each changed file and click the **+** (Stage Changes) button, or click the **+** next to **Changes** to stage everything.
 
-2. After you push, the workflow validates that `copilot-instructions.md` and `docs/schema.md` exist, then posts the next step.
+    <img width="300" alt="Screenshot: Stage changes icon in VS Code Source Control" src="https://raw.githubusercontent.com/skills/getting-started-with-github-copilot/main/.github/images/staging-changes-icon.png" />
+
+3. In the **Message** text box, type:
+
+    ```
+    Add project conventions and Architect Agent with schema
+    ```
+
+4. Click **Commit**, then click **Sync Changes** to push to GitHub.
+
+5. After you push, the workflow validates that `copilot-instructions.md` and `docs/schema.md` exist, then posts the next step.
 
 ---
 

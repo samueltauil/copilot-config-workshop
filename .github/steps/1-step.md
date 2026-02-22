@@ -139,13 +139,21 @@ A custom agent is a `.agent.md` file with a YAML front matter block (a small con
 
 ## ⌨️ Activity: Commit and push your work
 
-1. Commit and push:
+1. In the VS Code left sidebar, click the **Source Control** tab (the icon that looks like a branch).
 
-    ```bash
-    git add docs/ .github/agents/
-    git commit -m "Add Planner Agent and generate project plan"
-    git push
+1. You should see your changed files listed. Hover over each file and click the **+** (Stage Changes) button to add them to the commit.
+
+    <img width="300" alt="Screenshot: Stage changes icon in VS Code Source Control" src="https://raw.githubusercontent.com/skills/getting-started-with-github-copilot/main/.github/images/staging-changes-icon.png" />
+
+    > 💡 **Tip:** You can also click the **+** icon next to **Changes** to stage all files at once.
+
+1. In the **Message** text box above the file list, type a short description, for example:
+
     ```
+    Add Planner Agent and generate project plan
+    ```
+
+1. Click the **Commit** button, then click **Sync Changes** to push your work to GitHub.
 
 1. After you push, the workflow checks your work and posts the next step.
 

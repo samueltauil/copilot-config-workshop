@@ -331,11 +331,19 @@ After the agent generates the initial test suite, use the prompt files for targe
 
 ## Step 8: Commit and Push
 
-```bash
-git add .github/prompts/ .github/agents/ tests/
-git commit -m "Add prompt files and Tester Agent with tests"
-git push
-```
+1. In the VS Code left sidebar, click the **Source Control** tab.
+
+2. Hover over each changed file and click the **+** (Stage Changes) button, or click the **+** next to **Changes** to stage everything.
+
+    <img width="300" alt="Screenshot: Stage changes icon in VS Code Source Control" src="https://raw.githubusercontent.com/skills/getting-started-with-github-copilot/main/.github/images/staging-changes-icon.png" />
+
+3. In the **Message** text box, type:
+
+    ```
+    Add prompt files and Tester Agent with tests
+    ```
+
+4. Click **Commit**, then click **Sync Changes** to push to GitHub.
 
 After you push, the workflow checks your work and posts the next step.
 

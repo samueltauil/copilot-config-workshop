@@ -442,7 +442,7 @@
   <h1>GitHub Copilot<br>Configuration Workshop</h1>
   <div class="divider"></div>
   <p style="color:#8b949e; margin-top:0.7em; font-size:1rem">
-    Plan &bull; Design &bull; Implement &bull; Test &bull; Orchestrate &mdash; Build SDLC agents with Copilot
+    Plan &bull; Design &bull; Implement &bull; Test &bull; Orchestrate &bull; Build SDLC agents with Copilot
   </p>
   <p style="font-size:0.72rem; color:#484f58; margin-top:2em">
     Open-source &bull; No additional tools required
@@ -654,7 +654,7 @@
   <div class="step">
     <div class="step-num">3</div>
     <div class="step-content">
-      Open the <strong>Issues</strong> tab of your new repo. A new issue appears with the instructions for Step 1 — this is your exercise guide.
+      Open the <strong>Issues</strong> tab of your new repository. A new issue appears with the instructions for Step 1. This is your exercise guide.
     </div>
   </div>
   <div class="step">
@@ -668,7 +668,7 @@
   <div class="step">
     <div class="step-num">5</div>
     <div class="step-content">
-      Follow the instructions in the Issue. After each step, push your changes — GitHub Actions detects completion and posts the next step automatically.
+      Follow the instructions in the Issue. After each step, push your changes. GitHub Actions detects completion and posts the next step automatically.
     </div>
   </div>
 </section>
@@ -1246,7 +1246,7 @@ tools: ["search"]
       </tr>
       <tr>
         <td><code>AGENTS.md</code></td>
-        <td>Anywhere in repo</td>
+        <td>Anywhere in repository</td>
         <td>Automatic (coding agent)</td>
         <td>Onboard autonomous agents</td>
       </tr>
@@ -1257,13 +1257,15 @@ tools: ["search"]
 <!-- ============================================================
      SLIDE 27: Exercise 5 intro
      ============================================================ -->
-<section class="exercise-intro" data-background="linear-gradient(135deg, #0d1117 0%, #1F2328 100%)">
+<section class="exercise-intro" data-background="linear-gradient(160deg, #0d1117 0%, #0d1f38 50%, #0d1117 100%)">
+  <svg width="36" height="36" viewBox="0 0 24 24" fill="#388bfd" style="opacity:0.4; margin-bottom:0.3em; display:block; margin-left:auto; margin-right:auto" aria-hidden="true">
+    <path d="M12 2l2.4 7.4H22l-6.4 4.6 2.4 7.4L12 17l-6 4.4 2.4-7.4L2 9.4h7.6L12 2z"/>
+  </svg>
   <span class="exercise-number">05</span>
   <h2>Agent Orchestration &rarr; Full Lifecycle</h2>
   <p>Build an Orchestrator Agent and deliver a new feature using all SDLC agents together.</p>
-  <div style="margin-top:1.2em; font-size:0.82rem; color:#8b949e">
-    SDLC Phase: Full Lifecycle &bull; Duration: ~30 minutes
-  </div>
+  <div class="cta-box">&#128073; Open your GitHub Issue to start this lab</div>
+  <p class="cta-hint">SDLC Phase: Full Lifecycle &bull; Duration: ~30 minutes</p>
 </section>
 
 <!-- ============================================================
@@ -1344,7 +1346,7 @@ You are a testing specialist. Your responsibilities:
       <tr><th style="width:30%">Location</th><th>Scope</th></tr>
     </thead>
     <tbody>
-      <tr><td><code>.github/agents/</code> in a repo</td><td>Available in that repository (workspace)</td></tr>
+      <tr><td><code>.github/agents/</code> in a repository</td><td>Available in that repository (workspace)</td></tr>
       <tr><td>VS Code user profile folder</td><td>Available across all your workspaces (personal)</td></tr>
       <tr><td><code>.github-private</code> repository</td><td>Available across all repos in the organization</td></tr>
     </tbody>
@@ -1416,10 +1418,10 @@ You are a testing specialist. Your responsibilities:
   </div>
   <div class="step">
     <div class="step-num">3</div>
-    <div class="step-content">Place Copilot configuration files using the same directory structure as repo-level files.</div>
+    <div class="step-content">Place Copilot configuration files using the same directory structure as repository-level files.</div>
   </div>
   <div class="note orange" style="margin-top:0.7em">
-    <strong>Important:</strong> Repo-level configuration always takes precedence and does <em>not</em> merge with org-level files. When a repo defines its own <code>copilot-instructions.md</code>, the org-level file is ignored entirely for that repo. For example, if your org provides a standard instructions file and a repo adds its own, only the repo-level file is used. Plan your org-level content as a fallback baseline, not as additions.
+    <strong>Important:</strong> Repository-level configuration always takes precedence and does <em>not</em> merge with org-level files. When a repository defines its own <code>copilot-instructions.md</code>, the org-level file is ignored entirely for that repository. For example, if your org provides a standard instructions file and a repository adds its own, only the repository-level file is used. Plan your org-level content as a fallback baseline, not as additions.
   </div>
 </section>
 
@@ -1432,7 +1434,7 @@ You are a testing specialist. Your responsibilities:
     <thead>
       <tr>
         <th style="width:30%">File</th>
-        <th>Repo-level path</th>
+        <th>Repository-level path</th>
         <th>Org-level path</th>
       </tr>
     </thead>
@@ -1440,22 +1442,22 @@ You are a testing specialist. Your responsibilities:
       <tr>
         <td><code>copilot-instructions.md</code></td>
         <td><code>.github/copilot-instructions.md</code></td>
-        <td><code>.github/copilot-instructions.md</code> in org <code>.github</code> repo</td>
+        <td><code>.github/copilot-instructions.md</code> in org <code>.github</code> repository</td>
       </tr>
       <tr>
         <td>Path-specific instructions</td>
         <td><code>.github/instructions/*.instructions.md</code></td>
-        <td><code>.github/instructions/*.instructions.md</code> in org <code>.github</code> repo</td>
+        <td><code>.github/instructions/*.instructions.md</code> in org <code>.github</code> repository</td>
       </tr>
       <tr>
         <td><code>AGENTS.md</code></td>
         <td>Root or any subdirectory</td>
-        <td>Root of org <code>.github</code> repo</td>
+        <td>Root of org <code>.github</code> repository</td>
       </tr>
       <tr>
         <td>Custom agents (<code>.agent.md</code>)</td>
         <td><code>.github/agents/*.agent.md</code></td>
-        <td><code>.github/agents/*.agent.md</code> in org <code>.github-private</code> repo</td>
+        <td><code>.github/agents/*.agent.md</code> in org <code>.github-private</code> repository</td>
       </tr>
     </tbody>
   </table>
@@ -1477,17 +1479,17 @@ You are a testing specialist. Your responsibilities:
       </ul>
     </div>
     <div class="card">
-      <h3>Keep in repo-level files</h3>
+      <h3>Keep in repository-level files</h3>
       <ul>
         <li>Project-specific language versions</li>
-        <li>Repo-specific test runner configuration</li>
+        <li>Repository-specific test runner configuration</li>
         <li>Unique architecture patterns</li>
         <li>Domain-specific terminology</li>
       </ul>
     </div>
   </div>
   <div class="note" style="margin-top:0.9em">
-    Org-level files are the right place to enforce consistent SDLC practices across all repositories: shared coding standards, testing conventions, security rules, and documentation expectations. Repo-level files then handle project-specific variation within that baseline.
+    Org-level files are the right place to enforce consistent SDLC practices across all repositories: shared coding standards, testing conventions, security rules, and documentation expectations. Repository-level files then handle project-specific variation within that baseline.
   </div>
 </section>
 
@@ -1608,7 +1610,7 @@ You are a testing specialist. Your responsibilities:
     You can now configure GitHub Copilot at every level:
   </p>
   <p style="color:#8b949e; font-size:0.88rem">
-    Planner &bull; Architect &bull; Developer &bull; Tester &bull; Orchestrator &mdash; a full SDLC agent pipeline
+    Planner &bull; Architect &bull; Developer &bull; Tester &bull; Orchestrator &bull; A full SDLC agent pipeline
   </p>
   <p style="margin-top:2em; font-size:0.78rem; color:#484f58">
     Repository:
