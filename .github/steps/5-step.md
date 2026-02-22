@@ -2,11 +2,11 @@
 
 _SDLC Phase: **Full Lifecycle**_
 
-You now have four agents that each own one phase of the software development lifecycle: **Planner** (plan), **Architect** (design), **Developer** (implement), and **Tester** (test). In this final exercise you create an **Orchestrator Agent** that coordinates all four agents and then prove it works by delivering a new feature end-to-end.
+You now have four agents that each own one phase of the software development lifecycle: **Planner** (plan), **Architect** (design), **Developer** (implement), and **Tester** (test). In this final exercise you create an **Orchestrator Agent** that uses **handoffs** to chain all four agents into a guided pipeline, and then prove it works by delivering a new feature end-to-end.
 
 ### 📖 Theory: Bringing agents together
 
-Each agent file you created teaches Copilot a specialized role. An orchestrator agent ties them together by defining the workflow sequence and telling the user which agent to invoke at each phase.
+Each agent file you created teaches Copilot a specialized role. An orchestrator agent ties them together using the `handoffs:` front matter property. Handoffs create one-click buttons in Copilot Chat. Each button pre-fills a prompt and switches to the named agent. The user clicks each button in order to move the feature through the full lifecycle.
 
 | Agent | SDLC Phase | Key Artifacts |
 |-------|-----------|---------------|
@@ -16,12 +16,13 @@ Each agent file you created teaches Copilot a specialized role. An orchestrator 
 | Tester | Testing | `tests/**/*.test.js` |
 | **Orchestrator** | **Full lifecycle** | **Coordinates all of the above** |
 
-Agent files also support advanced properties:
+Agent files support these advanced properties:
 
 | Property | Purpose |
 |----------|---------|
 | `tools` | Restrict the agent to specific tools (e.g., `["read", "edit", "runInTerminal"]`) |
-| Prompt references | Use `#file:` inside the agent body to attach other files as context |
+| `#file:` references | Attach other files as context inside the agent prompt body |
+| `handoffs` | Define buttons that chain to the next agent with a pre-filled prompt |
 
 ## ⌨️ Activity: Review your agents
 
@@ -48,30 +49,40 @@ Before building the orchestrator, verify the agent suite is complete.
     ---
     name: orchestrator
     description: Coordinates the full SDLC workflow for new features using the planner, architect, developer, and tester agents
+    tools: ["edit", "search", "runInTerminal", "runTests"]
+    handoffs:
+      - agent: planner
+        label: "1. Plan the feature"
+        prompt: "Analyze the feature request above and update docs/project-plan.md with the new feature scope."
+        send: false
+      - agent: architect
+        label: "2. Design the architecture"
+        prompt: "Read #file:docs/project-plan.md and update docs/schema.md with any new or modified data structures."
+        send: false
+      - agent: developer
+        label: "3. Implement the feature"
+        prompt: "Read #file:docs/schema.md and implement the feature in src/. Use only built-in Node.js modules."
+        send: false
+      - agent: tester
+        label: "4. Test the feature"
+        prompt: "Read the updated source files in src/ and update tests/ to cover the new feature. Run node --test tests/ and fix any failures."
+        send: false
     ---
 
     You are the orchestrator. When the user requests a new feature you
-    guide them through the full software development lifecycle.
+    summarize the work to be done across all four phases, then use the
+    handoff buttons below to guide the user through each phase.
 
-    ## Workflow
+    ## Phases
 
-    1. **Plan** - Describe what the feature requires. Update
-       `docs/project-plan.md` with a new section for the feature.
-    2. **Design** - Update `docs/schema.md` with any new or changed
-       data structures, validation rules, and file changes.
-    3. **Develop** - Implement the feature in `src/` following the
-       conventions in `.github/copilot-instructions.md` and the
-       path-specific instructions in `.github/instructions/`.
-    4. **Test** - Generate or update tests in `tests/` for the new
-       code. Run all tests and fix any failures.
-    5. **Document** - Add a brief summary of the change to
-       `docs/changelog.md`. Create the file if it does not exist.
+    1. **Plan** - The Planner Agent updates `docs/project-plan.md`.
+    2. **Design** - The Architect Agent updates `docs/schema.md`.
+    3. **Develop** - The Developer Agent implements the feature in `src/`.
+    4. **Test** - The Tester Agent writes and runs tests in `tests/`.
 
     ## Rules
 
-    - Complete each phase before starting the next.
-    - Show the user what you plan to do at each phase and wait for
-      approval before proceeding.
+    - Summarize the full plan before handing off to the first agent.
     - Follow all repository and path-specific instructions.
     - Use only built-in Node.js modules.
     - Run tests after every code change.
@@ -81,41 +92,25 @@ Before building the orchestrator, verify the agent suite is complete.
 
 ## ⌨️ Activity: Add a new feature using the full lifecycle
 
-Use your agents to add **task categories** to the Task Manager.
+Use the Orchestrator to add **task categories** to the Task Manager.
 
-1. **Plan the feature.** In Copilot Chat, select the **planner** agent:
+1. In Copilot Chat, select the **orchestrator** agent and enter this prompt:
 
     ```
     Add a "category" feature to the Task Manager. Users should be able
     to assign a category (e.g., "work", "personal", "urgent") when
-    creating a task and filter tasks by category. Update
-    docs/project-plan.md with a new section for this feature.
+    creating a task and filter tasks by category. The category property
+    is optional and defaults to "general".
     ```
 
-1. **Design the change.** Switch to the **architect** agent:
+1. After the Orchestrator summarizes the plan, click the handoff buttons in order:
 
-    ```
-    Read #file:docs/project-plan.md and update #file:docs/schema.md
-    to include the new category property on the Task model. Define
-    the allowed values, default value, and any new service functions
-    needed.
-    ```
+    - **1. Plan the feature** — The Planner Agent updates `docs/project-plan.md`.
+    - **2. Design the architecture** — The Architect Agent updates `docs/schema.md`.
+    - **3. Implement the feature** — The Developer Agent implements the feature in `src/`.
+    - **4. Test the feature** — The Tester Agent writes and runs tests in `tests/`.
 
-1. **Implement.** Switch to the **developer** agent:
-
-    ```
-    Read #file:docs/schema.md and implement the category feature.
-    Update the Task model, task service, validators, and the entry
-    point. Run the app to verify it works.
-    ```
-
-1. **Test.** Switch to the **tester** agent:
-
-    ```
-    Read the updated source files in src/ and update the tests in
-    tests/ to cover the category feature. Run all tests and fix
-    any failures.
-    ```
+    Each button pre-fills a prompt. Review it and press Enter to run it.
 
 1. **Verify the full suite:**
 
@@ -129,7 +124,7 @@ Use your agents to add **task categories** to the Task Manager.
 
     ```bash
     git add .github/agents/ docs/ src/ tests/
-    git commit -m "Add Orchestrator Agent and deliver category feature end-to-end"
+    git commit -m "Add Orchestrator Agent with handoffs and deliver category feature end-to-end"
     git push
     ```
 
@@ -139,7 +134,8 @@ Use your agents to add **task categories** to the Task Manager.
 <summary>Having trouble? 🤷</summary><br/>
 
 - If an agent does not appear in the dropdown, reload the VS Code window (`Ctrl+Shift+P` or `Cmd+Shift+P` → **Developer: Reload Window**).
-- The orchestrator coordinates the *workflow*. You still switch agents manually for each phase.
+- If the handoff buttons do not appear, confirm the `handoffs:` block is inside the YAML front matter (between the `---` markers). Each entry needs `agent`, `label`, `prompt`, and `send`.
+- Handoffs are supported in VS Code and GitHub Codespaces. If you are using a different environment, switch to the next agent manually.
 - If tests fail after adding the category feature, let the tester agent fix both tests and source code.
 - For a deeper walkthrough, see [exercises/05-agent-files/README.md](exercises/05-agent-files/README.md).
 

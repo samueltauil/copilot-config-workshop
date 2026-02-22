@@ -27,9 +27,10 @@ After completing this exercise you will be able to:
 
 ## Prerequisites
 
-- GitHub Codespaces **or** Visual Studio Code with the GitHub Copilot extension
 - A GitHub account with Copilot access
-- Node.js 20 or later (pre-installed in the Codespace)
+- **GitHub Codespaces** (recommended, no local setup required) or VS Code with the GitHub Copilot extension and Node.js 20+
+
+> **Using Codespaces?** Click **Code > Codespaces > Create codespace on main** in your repository. Node.js 20, the Copilot extension, and Copilot Chat are pre-installed. No local configuration is needed.
 
 ## The Application: Task Manager CLI
 

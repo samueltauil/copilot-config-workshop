@@ -86,7 +86,7 @@ Each directory should contain files generated during the earlier exercises. If a
 
 ## Advanced Agent Properties
 
-Before building the Orchestrator, review two advanced features: the `tools` property and `#file:` references.
+Before building the Orchestrator, review three advanced features: the `tools` property, `#file:` references, and `handoffs`.
 
 ### The `tools` property
 
@@ -116,6 +116,37 @@ Common uses for `#file:` references:
 - Attach `docs/project-plan.md` for project scope
 - Attach `docs/schema.md` for data model context
 
+### Handoffs
+
+Handoffs chain agents together. When an agent finishes its work, it presents one or more buttons that launch the next agent in the workflow. The user clicks a button to continue, keeping full control of the pipeline.
+
+Each handoff entry specifies:
+
+| Field | Purpose |
+|-------|---------|
+| `agent` | The name of the next agent to invoke (matches the `name` field in the target agent's front matter) |
+| `label` | The text shown on the button in Copilot Chat |
+| `prompt` | The pre-filled message sent to the next agent |
+| `send` | `true` to auto-submit the prompt, `false` to let the user review it first |
+
+Example front matter with handoffs:
+
+```yaml
+---
+name: planner
+description: Generates structured project plans
+handoffs:
+  - agent: architect
+    label: "Design the architecture"
+    prompt: "Read #file:docs/project-plan.md and update docs/schema.md."
+    send: false
+---
+```
+
+Setting `send: false` keeps the user in the loop. They can edit the pre-filled prompt before it runs.
+
+> **Note:** Handoffs are supported in VS Code and GitHub Codespaces. They are not supported when running agents on GitHub.com.
+
 ### Agent naming conventions
 
 Follow these conventions when naming agents:
@@ -138,50 +169,44 @@ Create a new file at `.github/agents/orchestrator.agent.md` with the following c
 name: orchestrator
 description: Coordinates the full SDLC workflow by delegating to Planner, Architect, Developer, and Tester agents
 tools: ["edit", "search", "runInTerminal", "runTests"]
+handoffs:
+  - agent: planner
+    label: "1. Plan the feature"
+    prompt: "Analyze the feature request above and update docs/project-plan.md with the new feature scope. Follow the planning conventions in #file:.github/agents/planner.agent.md."
+    send: false
+  - agent: architect
+    label: "2. Design the architecture"
+    prompt: "Read #file:docs/project-plan.md and update docs/schema.md to include any new or modified data properties. Reference #file:.github/copilot-instructions.md for coding standards."
+    send: false
+  - agent: developer
+    label: "3. Implement the feature"
+    prompt: "Read #file:docs/schema.md and implement the feature in src/. Use only built-in Node.js modules. Run the app after changes to verify there are no errors."
+    send: false
+  - agent: tester
+    label: "4. Test the feature"
+    prompt: "Read the updated source files in src/ and add or update tests in tests/. Run node --test tests/ and fix any failures before finishing."
+    send: false
 ---
 
 You are the Orchestrator. You coordinate the full software development
-lifecycle by guiding the user through five phases in order.
+lifecycle by guiding the user through four phases in order.
 
-## Workflow
+When the user describes a feature, summarize the work to be done across
+all four phases, then use the handoff buttons below to hand off to each
+specialized agent.
 
-Follow these phases in sequence for every feature request:
+## Phases
 
-### Phase 1: Plan
-- Analyze the feature request and break it into user stories.
-- Update `docs/project-plan.md` with the new feature scope.
-- Follow the planning conventions in #file:.github/agents/planner.agent.md.
-
-### Phase 2: Design
-- Update `docs/schema.md` with any new or modified data properties.
-- Follow the design conventions in #file:.github/agents/architect.agent.md.
-- Reference #file:.github/copilot-instructions.md for coding standards.
-
-### Phase 3: Develop
-- Implement the feature in `src/`.
-- Follow the implementation patterns in #file:.github/agents/developer.agent.md.
-- Use only built-in Node.js modules. Do not add external dependencies.
-
-### Phase 4: Test
-- Add or update tests in `tests/`.
-- Follow the testing conventions in #file:.github/agents/tester.agent.md.
-- Run tests after every code change:
-
-```bash
-node --test tests/
-```
-
-### Phase 5: Document
-- Update `docs/project-plan.md` to mark the feature as complete.
-- Summarize what changed in each file.
+1. **Plan** - The Planner Agent updates `docs/project-plan.md`.
+2. **Design** - The Architect Agent updates `docs/schema.md`.
+3. **Develop** - The Developer Agent implements the feature in `src/`.
+4. **Test** - The Tester Agent writes and runs tests in `tests/`.
 
 ## Rules
 
-- Complete each phase before starting the next one.
-- Show the plan at the start of each phase so the user can review it.
+- Summarize the full plan before handing off to the first agent.
 - Follow all project instructions in #file:.github/copilot-instructions.md.
 - Use only built-in Node.js modules (assert, crypto, fs, path, etc.).
-- Run tests after every code change and fix failures before continuing.
 ```
 
 ### 2. Review the front matter
@@ -191,22 +216,20 @@ node --test tests/
 | `name` | `orchestrator` | Appears in the Copilot Chat dropdown |
 | `description` | Coordinates the full SDLC workflow... | Tells users what the agent does |
 | `tools` | `edit`, `search`, `runInTerminal`, `runTests` | Grants file editing, search, terminal, and test capabilities |
+| `handoffs` | List of four entries | Creates buttons that launch each specialized agent in sequence |
 
-The Orchestrator needs more tools than most agents because it must edit files, search the codebase, run commands, and execute tests.
+The `handoffs` list creates four buttons in Copilot Chat. Each button pre-fills a prompt and switches to the named agent. The user clicks each button in order to move the feature through the full lifecycle.
 
-### 3. Review the `#file:` references
+### 3. Review the handoffs
 
-The prompt body references five files:
+| Button label | Target agent | What it does |
+|---|---|---|
+| 1. Plan the feature | `planner` | Opens the Planner Agent with a prompt to update `docs/project-plan.md` |
+| 2. Design the architecture | `architect` | Opens the Architect Agent with a prompt to update `docs/schema.md` |
+| 3. Implement the feature | `developer` | Opens the Developer Agent with a prompt to implement the feature |
+| 4. Test the feature | `tester` | Opens the Tester Agent with a prompt to write and run tests |
 
-| Reference | Purpose |
-|-----------|---------|
-| `#file:.github/agents/planner.agent.md` | Planning conventions |
-| `#file:.github/agents/architect.agent.md` | Design conventions |
-| `#file:.github/agents/developer.agent.md` | Implementation patterns |
-| `#file:.github/agents/tester.agent.md` | Testing conventions |
-| `#file:.github/copilot-instructions.md` | Repository-wide coding standards |
-
-These references ensure the Orchestrator follows the same conventions that each specialized agent uses. The user does not need to attach these files manually.
+All handoffs use `send: false`, which means the pre-filled prompt appears in the chat input but does not run until the user presses Enter. This keeps the user in control at every step.
 
 ### 4. Verify the agent appears
 
@@ -242,42 +265,42 @@ Requirements:
 - Run all tests and confirm they pass
 ```
 
-### 3. Follow the Orchestrator's phases
+### 3. Use the handoff buttons
 
-The Orchestrator works through each phase in order. At each phase, review the proposed changes before the agent continues.
+After the Orchestrator summarizes the plan, you see four buttons at the bottom of the response:
 
-**Phase 1: Plan**
+**1. Plan the feature** → **2. Design the architecture** → **3. Implement the feature** → **4. Test the feature**
 
-The agent updates `docs/project-plan.md` with the new feature scope. Verify it adds user stories for the category feature.
+Click each button in order. Each handoff pre-fills a prompt and switches to the named agent. Review the prompt and press Enter to run it.
 
-**Phase 2: Design**
+**Phase 1: Plan (Planner Agent)**
 
-The agent updates `docs/schema.md` to include the `category` property. Verify the schema shows:
+The Planner Agent updates `docs/project-plan.md` with the new feature scope. Verify it adds user stories for the category feature.
+
+**Phase 2: Design (Architect Agent)**
+
+The Architect Agent updates `docs/schema.md` to include the `category` property. Verify the schema shows:
 
 | Property | Type | Details |
 |----------|------|---------|
 | `category` | `string` | Optional, defaults to `"general"` |
 
-**Phase 3: Develop**
+**Phase 3: Develop (Developer Agent)**
 
-The agent modifies files in `src/` to add the category property, filter function, and list function. Verify the code uses only built-in Node.js modules.
+The Developer Agent modifies files in `src/` to add the category property, filter function, and list function. Verify the code uses only built-in Node.js modules.
 
-**Phase 4: Test**
+**Phase 4: Test (Tester Agent)**
 
-The agent adds tests in `tests/` covering:
+The Tester Agent adds tests in `tests/` covering:
 
 - Creating a task with a category
 - Default category value
 - Filtering tasks by category
 - Listing unique categories
 
-**Phase 5: Document**
-
-The agent updates `docs/project-plan.md` to mark the feature as complete.
-
 ### 4. Run the tests
 
-After the Orchestrator finishes, run the full test suite to confirm everything passes:
+After the final handoff finishes, run the full test suite to confirm everything passes:
 
 ```bash
 node --test tests/
@@ -304,13 +327,14 @@ You should see changes in:
 
 ## When to Use What
 
-You have now seen three types of Copilot customization files. Each serves a different purpose.
+You have now seen four types of Copilot customization files. Each serves a different purpose.
 
 | File type | Extension | Purpose | Activation |
 |-----------|-----------|---------|------------|
 | Custom instructions | `.instructions.md` | Define rules for how Copilot writes code | Automatic when matching files are open |
 | Prompt files | `.prompt.md` | Save reusable multi-step prompts | Manual via `/` command in Chat |
 | Agent files | `.agent.md` | Create specialized Copilot personalities | Manual via agent dropdown in Chat |
+| Agent handoffs | `handoffs:` in front matter | Chain agents in sequence with one-click buttons | Triggered by the previous agent's handoff button |
 
 ### Choose instructions when...
 
@@ -331,15 +355,16 @@ You have now seen three types of Copilot customization files. Each serves a diff
 - Multiple people on your team should use the same specialized behavior
 - Examples: planner, architect, developer, tester, orchestrator
 
-### Combining all three
+### Combining all four
 
-The most effective setup uses all three together:
+The most effective setup uses all four together:
 
 1. **Instructions** set the baseline rules for code style and conventions.
 2. **Prompt files** encode common workflows that any developer can trigger.
 3. **Agents** create specialized roles that each follow instructions and can invoke prompts.
+4. **Handoffs** chain agents in a guided pipeline, so the user clicks through each phase instead of switching agents manually.
 
-The Orchestrator agent demonstrates this combination. It references instruction files via `#file:`, follows the conventions those instructions define, and coordinates multiple specialized agents.
+The Orchestrator agent demonstrates this combination. It uses `handoffs:` to present a one-click pipeline, references instruction files via `#file:`, and coordinates multiple specialized agents.
 
 ---
 
@@ -353,8 +378,9 @@ Before moving on, confirm each item:
   - `developer.agent.md`
   - `tester.agent.md`
   - `orchestrator.agent.md`
-- [ ] The `orchestrator.agent.md` file has valid YAML front matter with `name`, `description`, and `tools`
-- [ ] The Orchestrator prompt references other agent files with `#file:` syntax
+- [ ] The `orchestrator.agent.md` file has valid YAML front matter with `name`, `description`, `tools`, and `handoffs`
+- [ ] The `handoffs` list contains four entries targeting `planner`, `architect`, `developer`, and `tester`
+- [ ] The four handoff buttons appear in Copilot Chat after running the Orchestrator
 - [ ] The category feature is implemented in `src/`
 - [ ] Tests for the category feature exist in `tests/`
 - [ ] All tests pass when you run `node --test tests/`
@@ -373,6 +399,10 @@ After you push, the workflow checks your work and posts the next step as an issu
 ---
 
 ## Troubleshooting
+
+**Handoff buttons do not appear**
+
+Confirm the `handoffs:` block is inside the YAML front matter (between the `---` markers, not in the Markdown body). Each entry must have `agent`, `label`, `prompt`, and `send`. Reload the VS Code window after saving the file.
 
 **Orchestrator agent does not appear in the dropdown**
 
@@ -434,7 +464,8 @@ Together these agents form a complete workflow. The Orchestrator coordinates the
 | Agent suite review | Verified all four agents exist and have valid front matter |
 | `tools` property | Restricted the Orchestrator to edit, search, terminal, and test tools |
 | `#file:` references | Attached agent files and instructions as persistent context |
-| Multi-phase workflow | Delivered a feature through Plan, Design, Develop, Test, Document |
+| `handoffs` property | Created one-click buttons that chain agents across the SDLC |
+| Multi-phase workflow | Delivered a feature through Plan, Design, Develop, Test |
 | Agents vs instructions vs prompts | Chose the right customization file for each use case |
 
 ---
