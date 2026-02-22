@@ -7,6 +7,8 @@ on:
       - main
     paths:
       - ".github/prompts/**"
+      - "tests/**"
+      - ".github/agents/**"
 
 permissions:
   contents: read
@@ -68,6 +70,17 @@ jobs:
             exit 1
           fi
 
+      - name: Check if tests directory has files
+        id: check-tests
+        continue-on-error: true
+        run: |
+          if find tests -name '*.js' -o -name '*.test.js' 2>/dev/null | grep -q .; then
+            echo "Found test files in tests/"
+          else
+            echo "No test files found in tests/"
+            exit 1
+          fi
+
       - name: Update comment - step results
         uses: GrantBirki/comment@v2.1.1
         with:
@@ -79,8 +92,10 @@ jobs:
           vars: |
             step_number: 4
             results_table:
-              - description: "Created a prompt file in .github/prompts/"
+              - description: "Created prompt files in .github/prompts/"
                 passed: ${{ steps.check-prompt-file.outcome == 'success' }}
+              - description: "Generated test files in tests/"
+                passed: ${{ steps.check-tests.outcome == 'success' }}
 
       - name: Fail job if not all checks passed
         if: contains(steps.*.outcome, 'failure')

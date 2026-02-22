@@ -7,6 +7,8 @@ on:
       - main
     paths:
       - ".github/instructions/*.instructions.md"
+      - "src/**"
+      - ".github/agents/**"
 
 permissions:
   contents: read
@@ -57,12 +59,27 @@ jobs:
           file: exercise-toolkit/markdown-templates/step-feedback/checking-work.md
           edit-mode: replace
 
-      - name: Check if python instructions file exists
-        id: check-python-instructions
+      - name: Check if instruction files exist
+        id: check-instructions
         continue-on-error: true
-        uses: skills/exercise-toolkit/actions/file-exists@v0.8.1
-        with:
-          file: .github/instructions/python.instructions.md
+        run: |
+          if ls .github/instructions/*.instructions.md 1> /dev/null 2>&1; then
+            echo "Found instruction file(s)"
+          else
+            echo "No instruction files found"
+            exit 1
+          fi
+
+      - name: Check if src has JS files
+        id: check-src
+        continue-on-error: true
+        run: |
+          if find src -name '*.js' 2>/dev/null | grep -q .; then
+            echo "Found JS files in src/"
+          else
+            echo "No JS files found in src/"
+            exit 1
+          fi
 
       - name: Update comment - step results
         uses: GrantBirki/comment@v2.1.1
@@ -75,8 +92,10 @@ jobs:
           vars: |
             step_number: 3
             results_table:
-              - description: "Created .github/instructions/python.instructions.md"
-                passed: ${{ steps.check-python-instructions.outcome == 'success' }}
+              - description: "Created path-specific instruction files in .github/instructions/"
+                passed: ${{ steps.check-instructions.outcome == 'success' }}
+              - description: "Generated implementation code in src/"
+                passed: ${{ steps.check-src.outcome == 'success' }}
 
       - name: Fail job if not all checks passed
         if: contains(steps.*.outcome, 'failure')

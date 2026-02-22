@@ -1,382 +1,471 @@
-# Exercise 5: Creating Custom Agents for GitHub Copilot
+# Exercise 5: Agent Orchestration
 
-**Learning objectives:**
+**SDLC Phase: Full Lifecycle**
 
-- Understand what custom agents are and how they differ from other Copilot customization files
-- Create custom agent profiles (`.agent.md`) with YAML frontmatter and prompt instructions
-- Configure agent properties: name, description, tools, and model
-- Use custom agents in VS Code and on GitHub.com
-- Explore real-world custom agent examples from the community
+In this exercise you build an **Orchestrator Agent** that coordinates the four agents you created in Exercises 1 through 4. The Orchestrator drives features through the full software development lifecycle: **Plan, Design, Develop, Test, and Document**. You also learn advanced agent properties and deliver a new feature end to end.
 
-**Duration:** ~30 minutes
+## Workshop Roadmap
 
-**Prerequisites:** Complete [Exercise 4](../04-copilot-chat-skills/README.md) before this exercise.
+| Exercise | Copilot Concept | Agent | SDLC Phase |
+|----------|----------------|-------|------------|
+| 01 | Prompt engineering and interaction modes | Planner | Planning |
+| 02 | Repository-wide custom instructions | Architect | Design |
+| 03 | Path-specific instructions | Developer | Implementation |
+| 04 | Prompt files | Tester | Testing |
+| **05 (this one)** | Agent files and orchestration | Orchestrator | Full lifecycle |
+
+Each exercise builds on the output of the previous one. The Planner Agent produces a project plan. The Architect Agent reads that plan and generates a schema. The Developer Agent reads the schema and writes code. The Tester Agent reads the code and writes tests. Now the Orchestrator coordinates all four in sequence.
+
+## Learning Objectives
+
+After completing this exercise you will be able to:
+
+- Verify and review a multi-agent suite
+- Use the `tools` property to restrict agent capabilities
+- Use `#file:` references to attach context from other files
+- Create an Orchestrator agent that coordinates multiple agents across SDLC phases
+- Deliver a new feature by running every agent in sequence
+
+## Prerequisites
+
+- Exercises 01 through 04 complete
+- All four agents exist in `.github/agents/`:
+  - `planner.agent.md`
+  - `architect.agent.md`
+  - `developer.agent.md`
+  - `tester.agent.md`
+- The Task Manager CLI application runs and passes tests
+- Node.js 20 or later
 
 ---
 
-## Background
+## Review Your Agent Suite
 
-Custom agents allow you to create specialized AI assistants tailored to specific tasks in your development workflow. Each custom agent has its own identity, tools, and behavioral instructions. You can create agents for testing, code review, planning, debugging, documentation, and more.
+Before creating the Orchestrator, confirm that all four agents exist and are functional.
 
-A custom agent is a Markdown file with the `.agent.md` suffix. It contains YAML frontmatter that defines the agent's properties and a Markdown body that serves as the agent's system prompt. Custom agents are available in VS Code, JetBrains IDEs, Eclipse, Xcode, and on GitHub.com with the Copilot coding agent.
+### 1. Check that every agent file exists
 
-For the full reference, see [Creating custom agents for Copilot coding agent](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents).
+Run the following command from the repository root:
 
----
+```bash
+ls .github/agents/
+```
 
-## Custom Agents vs Other Copilot Files
+You should see these four files:
 
-| File | Purpose | Used by |
-|------|---------|---------|
-| `.agent.md` | Define specialized agents with specific tools and behaviors | Copilot Chat (IDE) + Copilot coding agent (GitHub.com) |
-| `copilot-instructions.md` | Repository-wide context for all Copilot interactions | Copilot Chat (interactive sessions) |
-| `.instructions.md` | Path-specific rules for certain file types | Copilot Chat (when matching files are open) |
-| `.prompt.md` | Reusable prompt templates for common tasks | Copilot Chat (invoked manually) |
-| `AGENTS.md` | Repository onboarding context for autonomous agents | AI coding agents (autonomous tasks) |
+- `planner.agent.md`
+- `architect.agent.md`
+- `developer.agent.md`
+- `tester.agent.md`
 
-Custom agents go further than instructions or prompts: they create an entirely new Copilot personality with a defined name, description, and restricted (or expanded) tool access.
+### 2. Verify each agent has valid front matter
 
----
-
-## Anatomy of a Custom Agent File
-
-A custom agent file has two parts: YAML frontmatter and a Markdown prompt body.
+Open each file and confirm it contains a `---` delimited YAML front matter block with at least `name` and `description`. For example:
 
 ```markdown
 ---
-name: test-specialist
-description: Focuses on test coverage and testing best practices
-tools: ["read", "edit", "search", "runTests"]
+name: planner
+description: Generates structured project plans with user stories and acceptance criteria
+tools: ["edit", "search"]
 ---
-
-You are a testing specialist. Your responsibilities:
-
-- Analyze existing tests and identify coverage gaps
-- Write unit tests, integration tests, and end-to-end tests
-- Review test quality and suggest improvements
-- Focus only on test files. Do not modify production code.
 ```
 
-### YAML frontmatter properties
+### 3. Confirm existing deliverables
 
-| Property | Required | Description |
-|----------|----------|-------------|
-| `name` | No | Display name for the agent. Defaults to the filename without the `.agent.md` suffix. |
-| `description` | Yes | A brief explanation of what the agent does. Appears in the agent dropdown. |
-| `tools` | No | List of tools the agent can use. Omit to grant access to all available tools. |
-| `model` | No | The AI model the agent should use (VS Code and JetBrains only). |
-
-### Where to store agent files
-
-| Location | Scope |
-|----------|-------|
-| `.github/agents/` in a repository | Available in that repository (workspace) |
-| VS Code user profile folder | Available across all your workspaces (personal) |
-| `.github-private` repository (org) | Available across all repositories in the organization |
-
----
-
-## Step 1: Create a Test Specialist Agent
-
-This agent focuses exclusively on writing and improving tests. It has access to all tools by omitting the `tools` property.
-
-1. Create the directory and file:
-
-   ```bash
-   mkdir -p .github/agents
-   ```
-
-2. Create a new file at `.github/agents/test-specialist.agent.md`:
-
-   ```markdown
-   ---
-   name: test-specialist
-   description: Focuses on test coverage, quality, and testing best practices without modifying production code
-   ---
-
-   You are a testing specialist focused on improving code quality through
-   comprehensive testing. Your responsibilities:
-
-   - Analyze existing tests and identify coverage gaps
-   - Write unit tests, integration tests, and end-to-end tests following
-     best practices
-   - Review test quality and suggest improvements for maintainability
-   - Ensure tests are isolated, deterministic, and well-documented
-   - Focus only on test files and avoid modifying production code unless
-     specifically requested
-
-   Always include clear test descriptions and use appropriate testing
-   patterns for the language and framework.
-   ```
-
-3. Save the file.
-
----
-
-## Step 2: Create an Implementation Planner Agent
-
-This agent creates technical plans without writing code. It restricts tools to reading, searching, and editing only.
-
-1. Create a new file at `.github/agents/implementation-planner.agent.md`:
-
-   ```markdown
-   ---
-   name: implementation-planner
-   description: Creates detailed implementation plans and technical specifications in Markdown format
-   tools: ["read", "search", "edit"]
-   ---
-
-   You are a technical planning specialist focused on creating comprehensive
-   implementation plans. Your responsibilities:
-
-   - Analyze requirements and break them down into actionable tasks
-   - Create detailed technical specifications and architecture documentation
-   - Generate implementation plans with clear steps, dependencies, and
-     milestones
-   - Document API designs, data models, and system interactions
-   - Create Markdown files with structured plans that development teams
-     can follow
-
-   Always structure your plans with clear headings, task breakdowns, and
-   acceptance criteria. Include considerations for testing, deployment,
-   and potential risks. Focus on creating thorough documentation rather
-   than implementing code.
-   ```
-
-2. Save the file.
-
----
-
-## Step 3: Create a Debug Agent
-
-This agent follows a structured debugging process. It has access to terminal, testing, and editing tools.
-
-1. Create a new file at `.github/agents/debug.agent.md`:
-
-   ```markdown
-   ---
-   name: debug
-   description: Systematically identifies, analyzes, and resolves bugs using a structured debugging process
-   tools: ["read", "edit", "search", "runInTerminal", "runTests", "problems"]
-   ---
-
-   You are in debug mode. Follow this structured process:
-
-   ## Phase 1: Assess
-   - Read error messages, stack traces, or failure reports
-   - Reproduce the bug by running the application or tests
-   - Document the expected vs actual behavior
-
-   ## Phase 2: Investigate
-   - Trace the code execution path leading to the bug
-   - Check for common issues: null references, off-by-one errors,
-     race conditions, incorrect assumptions
-   - Form specific hypotheses about the root cause
-
-   ## Phase 3: Fix
-   - Make targeted, minimal changes to address the root cause
-   - Follow existing code patterns and conventions
-   - Consider edge cases and potential side effects
-
-   ## Phase 4: Verify
-   - Run tests to verify the fix resolves the issue
-   - Run broader test suites to ensure no regressions
-   - Summarize what you fixed and why
-
-   Be systematic. Do not jump to solutions. Always reproduce and
-   understand the bug before attempting to fix it.
-   ```
-
-2. Save the file.
-
----
-
-## Step 4: Use Your Custom Agents in VS Code
-
-1. Open GitHub Copilot Chat in VS Code.
-2. At the bottom of the chat view, click the agent dropdown.
-3. Your custom agents appear in the list with the names you defined.
-
-### Step 4.1: Generate and run tests with the test-specialist agent
-
-1. Select **test-specialist** from the agent dropdown.
-2. Ask it to generate a complete test suite:
-
-   ```
-   Generate a comprehensive test file for exercises/04-copilot-chat-skills/starter.py.
-   Include tests for normal inputs, edge cases (empty lists, single items),
-   and error conditions (invalid input types). Use pytest conventions.
-   Save the tests to exercises/04-copilot-chat-skills/test_starter.py.
-   ```
-
-3. Review the generated test file. Confirm it includes tests for `calculate_average`, `find_duplicates`, and `flatten`.
-4. Run the tests from the terminal:
-
-   ```bash
-   python3 -m pytest exercises/04-copilot-chat-skills/test_starter.py -v
-   ```
-
-5. If any tests fail, stay in the test-specialist agent and paste the error output:
-
-   ```
-   These tests failed. Analyze the failures and fix the test file.
-   ```
-
-6. Run the tests again until all pass. The test-specialist agent focuses exclusively on test quality and avoids modifying the production code in `starter.py`.
-
-**Validation:** All tests pass with verbose output showing each test name and status.
-
-### Step 4.2: Ask the test-specialist to improve test coverage
-
-1. With the test-specialist agent still selected, ask:
-
-   ```
-   Review the test file at exercises/04-copilot-chat-skills/test_starter.py
-   and identify any coverage gaps. Add tests for boundary conditions I may
-   have missed.
-   ```
-
-2. Review any new tests the agent adds.
-3. Run the tests again to confirm the expanded suite still passes.
-
-### Step 4.3: Try the implementation-planner agent
-
-1. Switch to **implementation-planner** and ask it to plan a feature:
-
-   ```
-   Create an implementation plan for adding a new exercise about MCP servers
-   to this workshop.
-   ```
-
-### Step 4.4: Try the debug agent
-
-1. Switch to **debug** and try a debugging prompt:
-
-   ```
-   There is a bug in this code. The function returns undefined instead of
-   the expected result. Help me debug it.
-   ```
-
-Each agent responds differently because it has a different system prompt, tool access, and behavioral focus.
-
----
-
-## Step 5: Review the Example File
-
-This repository includes an example custom agent for reference:
-
-```
-exercises/05-agent-files/example-agent.agent.md
-```
-
-Open and read through it. It shows a code reviewer agent with a structured review process, restricted tools, and specific output formatting instructions.
-
----
-
-## Step 6: Explore the Community Collection
-
-The [awesome-copilot](https://github.com/github/awesome-copilot) repository on GitHub contains a growing collection of community-contributed custom agents. Browse the `agents/` directory to find agents for:
-
-- **Language experts:** C#, Python, Rust, Java, Go, Ruby, Swift, PHP, and more
-- **Framework specialists:** Next.js, React, Laravel, Drupal, .NET MAUI, Electron
-- **DevOps and infrastructure:** GitHub Actions, Kubernetes, Azure IaC, Terraform
-- **Planning and architecture:** Blueprint mode, implementation plans, PRDs, ADRs
-- **Testing:** Playwright, polyglot test suites, browser testing
-- **Specialized tasks:** Accessibility audits, security reviews, code tours, documentation
-
-To use a community agent in your project:
-
-1. Find an agent file in the [agents directory](https://github.com/github/awesome-copilot/tree/main/agents).
-2. Copy its content into a new `.agent.md` file in your `.github/agents/` directory.
-3. Customize the prompt and tool list to match your project's needs.
-
----
-
-## Step 7: Use Custom Agents on GitHub.com
-
-Custom agents also work with the Copilot coding agent on GitHub.com. When you assign an issue to Copilot, you can select a specific custom agent to handle the task.
-
-> **Note:** This step requires a GitHub Copilot subscription that includes the coding agent feature.
-
-1. Navigate to [github.com/copilot/agents](https://github.com/copilot/agents) to see your available agents.
-2. Create a new issue with a clear task for the coding agent:
-
-   ```
-   Title: Add unit tests for the formatDate function
-
-   Body:
-   Write unit tests for the `formatDate` function in
-   `exercises/01-prompt-engineering/starter.js`.
-
-   Requirements:
-   - Test valid Date objects
-   - Test edge cases (end of year, leap year)
-   - Use clear test descriptions
-   ```
-
-3. When assigning the issue to **Copilot**, select your **test-specialist** agent from the agents dropdown.
-4. The coding agent uses your custom agent's prompt and tool restrictions when implementing the task.
-5. Review the resulting Pull Request and collaborate with `@copilot` via review comments.
-
----
-
-## Step 8: Commit Your Agents
+Verify the artifacts from previous exercises:
 
 ```bash
-git add .github/agents/
-git commit -m "Add custom agents for testing, planning, and debugging"
+ls docs/project-plan.md docs/schema.md
+ls src/
+ls tests/
+```
+
+Each directory should contain files generated during the earlier exercises. If anything is missing, return to the relevant exercise and complete it first.
+
+---
+
+## Advanced Agent Properties
+
+Before building the Orchestrator, review three advanced features: the `tools` property, `#file:` references, and `handoffs`.
+
+### The `tools` property
+
+The `tools` array restricts which Copilot capabilities an agent can use. Omitting `tools` grants access to everything. Listing specific tools limits the agent to those capabilities only.
+
+| Approach | Syntax | Effect |
+|----------|--------|--------|
+| Unrestricted | Omit `tools` entirely | Agent can use all available tools |
+| Restricted | `tools: ["edit", "search"]` | Agent can only edit files and search |
+| Read-only | `tools: ["search"]` | Agent can search but not modify files |
+
+Restricting tools enforces boundaries. A planner should not run code. A tester should not modify source files. Use `tools` to match each agent's role.
+
+### `#file:` references
+
+Inside an agent's prompt body, you can reference other files with `#file:` syntax. This attaches the referenced file as context every time the agent runs.
+
+```markdown
+Follow the conventions in #file:.github/copilot-instructions.md when generating code.
+```
+
+This ensures the agent reads your repository instructions without the user needing to mention them in every prompt.
+
+Common uses for `#file:` references:
+
+- Attach `copilot-instructions.md` for coding conventions
+- Attach `docs/project-plan.md` for project scope
+- Attach `docs/schema.md` for data model context
+
+### Handoffs
+
+Handoffs chain agents together. When an agent finishes its work, it presents one or more buttons that launch the next agent in the workflow. The user clicks a button to continue, keeping full control of the pipeline.
+
+Each handoff entry specifies:
+
+| Field | Purpose |
+|-------|---------|
+| `agent` | The name of the next agent to invoke (matches the `name` field in the target agent's front matter) |
+| `label` | The text shown on the button in Copilot Chat |
+| `prompt` | The pre-filled message sent to the next agent |
+| `send` | `true` to auto-submit the prompt, `false` to let the user review it first |
+
+Example front matter with handoffs:
+
+```yaml
+---
+name: planner
+description: Generates structured project plans
+handoffs:
+  - agent: architect
+    label: "Design the architecture"
+    prompt: "Read #file:docs/project-plan.md and update docs/schema.md."
+    send: false
+---
+```
+
+Setting `send: false` keeps the user in the loop. They can edit the pre-filled prompt before it runs.
+
+> **Note:** Handoffs are supported in VS Code and GitHub Codespaces. They are not supported when running agents on GitHub.com.
+
+### Agent naming conventions
+
+Follow these conventions when naming agents:
+
+- Use lowercase with hyphens: `planner.agent.md`, not `Planner.agent.md`
+- The filename (minus the `.agent.md` suffix) becomes the default display name
+- Keep names short and descriptive: one to two words maximum
+- Choose names that reflect the agent's SDLC role
+
+---
+
+## Step by Step: Create the Orchestrator Agent
+
+### 1. Create the agent file
+
+Create a new file at `.github/agents/orchestrator.agent.md` with the following content:
+
+```markdown
+---
+name: orchestrator
+description: Coordinates the full SDLC workflow by delegating to Planner, Architect, Developer, and Tester agents
+tools: ["edit", "search", "runInTerminal", "runTests"]
+handoffs:
+  - agent: planner
+    label: "1. Plan the feature"
+    prompt: "Analyze the feature request above and update docs/project-plan.md with the new feature scope. Follow the planning conventions in #file:.github/agents/planner.agent.md."
+    send: false
+  - agent: architect
+    label: "2. Design the architecture"
+    prompt: "Read #file:docs/project-plan.md and update docs/schema.md to include any new or modified data properties. Reference #file:.github/copilot-instructions.md for coding standards."
+    send: false
+  - agent: developer
+    label: "3. Implement the feature"
+    prompt: "Read #file:docs/schema.md and implement the feature in src/. Use only built-in Node.js modules. Run the app after changes to verify there are no errors."
+    send: false
+  - agent: tester
+    label: "4. Test the feature"
+    prompt: "Read the updated source files in src/ and add or update tests in tests/. Run node --test tests/ and fix any failures before finishing."
+    send: false
+---
+
+You are the Orchestrator. You coordinate the full software development
+lifecycle by guiding the user through four phases in order.
+
+When the user describes a feature, summarize the work to be done across
+all four phases, then use the handoff buttons below to hand off to each
+specialized agent.
+
+## Phases
+
+1. **Plan** - The Planner Agent updates `docs/project-plan.md`.
+2. **Design** - The Architect Agent updates `docs/schema.md`.
+3. **Develop** - The Developer Agent implements the feature in `src/`.
+4. **Test** - The Tester Agent writes and runs tests in `tests/`.
+
+## Rules
+
+- Summarize the full plan before handing off to the first agent.
+- Follow all project instructions in #file:.github/copilot-instructions.md.
+- Use only built-in Node.js modules (assert, crypto, fs, path, etc.).
+```
+
+### 2. Review the front matter
+
+| Property | Value | Purpose |
+|----------|-------|---------|
+| `name` | `orchestrator` | Appears in the Copilot Chat dropdown |
+| `description` | Coordinates the full SDLC workflow... | Tells users what the agent does |
+| `tools` | `edit`, `search`, `runInTerminal`, `runTests` | Grants file editing, search, terminal, and test capabilities |
+| `handoffs` | List of four entries | Creates buttons that launch each specialized agent in sequence |
+
+The `handoffs` list creates four buttons in Copilot Chat. Each button pre-fills a prompt and switches to the named agent. The user clicks each button in order to move the feature through the full lifecycle.
+
+### 3. Review the handoffs
+
+| Button label | Target agent | What it does |
+|---|---|---|
+| 1. Plan the feature | `planner` | Opens the Planner Agent with a prompt to update `docs/project-plan.md` |
+| 2. Design the architecture | `architect` | Opens the Architect Agent with a prompt to update `docs/schema.md` |
+| 3. Implement the feature | `developer` | Opens the Developer Agent with a prompt to implement the feature |
+| 4. Test the feature | `tester` | Opens the Tester Agent with a prompt to write and run tests |
+
+All handoffs use `send: false`, which means the pre-filled prompt appears in the chat input but does not run until the user presses Enter. This keeps the user in control at every step.
+
+### 4. Verify the agent appears
+
+1. Open Copilot Chat in VS Code.
+2. Open the agent dropdown.
+3. Confirm **orchestrator** appears in the list.
+
+If it does not appear, reload the VS Code window: press `Ctrl+Shift+P` (or `Cmd+Shift+P` on macOS) and type **Reload Window**.
+
+---
+
+## Step by Step: Deliver a New Feature End to End
+
+Use the Orchestrator to add a **task categories** feature to the Task Manager. This feature adds a `category` property to every task. Users can assign a category when creating a task and filter tasks by category.
+
+### 1. Select the Orchestrator
+
+In Copilot Chat, switch to **Agent** mode and select **orchestrator** from the agent dropdown.
+
+### 2. Enter the feature request
+
+Type the following prompt:
+
+```text
+Add a "category" feature to the Task Manager.
+
+Requirements:
+- Add a "category" property to the task model (string, optional, defaults to "general")
+- Allow setting category when creating a task
+- Add a function to filter tasks by category
+- Add a function to list all unique categories
+- Update the schema, source code, and tests
+- Run all tests and confirm they pass
+```
+
+### 3. Use the handoff buttons
+
+After the Orchestrator summarizes the plan, you see four buttons at the bottom of the response:
+
+**1. Plan the feature** → **2. Design the architecture** → **3. Implement the feature** → **4. Test the feature**
+
+Click each button in order. Each handoff pre-fills a prompt and switches to the named agent. Review the prompt and press Enter to run it.
+
+**Phase 1: Plan (Planner Agent)**
+
+The Planner Agent updates `docs/project-plan.md` with the new feature scope. Verify it adds user stories for the category feature.
+
+**Phase 2: Design (Architect Agent)**
+
+The Architect Agent updates `docs/schema.md` to include the `category` property. Verify the schema shows:
+
+| Property | Type | Details |
+|----------|------|---------|
+| `category` | `string` | Optional, defaults to `"general"` |
+
+**Phase 3: Develop (Developer Agent)**
+
+The Developer Agent modifies files in `src/` to add the category property, filter function, and list function. Verify the code uses only built-in Node.js modules.
+
+**Phase 4: Test (Tester Agent)**
+
+The Tester Agent adds tests in `tests/` covering:
+
+- Creating a task with a category
+- Default category value
+- Filtering tasks by category
+- Listing unique categories
+
+### 4. Run the tests
+
+After the final handoff finishes, run the full test suite to confirm everything passes:
+
+```bash
+node --test tests/
+```
+
+All tests should pass, including the new category tests.
+
+### 5. Review the changes
+
+Check that these files were created or updated:
+
+```bash
+git diff --name-only
+```
+
+You should see changes in:
+
+- `docs/project-plan.md`
+- `docs/schema.md`
+- Files in `src/`
+- Files in `tests/`
+
+---
+
+## When to Use What
+
+You have now seen four types of Copilot customization files. Each serves a different purpose.
+
+| File type | Extension | Purpose | Activation |
+|-----------|-----------|---------|------------|
+| Custom instructions | `.instructions.md` | Define rules for how Copilot writes code | Automatic when matching files are open |
+| Prompt files | `.prompt.md` | Save reusable multi-step prompts | Manual via `/` command in Chat |
+| Agent files | `.agent.md` | Create specialized Copilot personalities | Manual via agent dropdown in Chat |
+| Agent handoffs | `handoffs:` in front matter | Chain agents in sequence with one-click buttons | Triggered by the previous agent's handoff button |
+
+### Choose instructions when...
+
+- You want rules applied automatically without user action
+- The rules apply to a specific file type or directory
+- Examples: coding standards, naming conventions, framework patterns
+
+### Choose prompt files when...
+
+- You want a repeatable workflow the user triggers on demand
+- The prompt is long or complex and should not be retyped each time
+- Examples: "generate tests", "create a migration", "review for security"
+
+### Choose agents when...
+
+- You want a fundamentally different Copilot personality
+- The task requires specific tool restrictions
+- Multiple people on your team should use the same specialized behavior
+- Examples: planner, architect, developer, tester, orchestrator
+
+### Combining all four
+
+The most effective setup uses all four together:
+
+1. **Instructions** set the baseline rules for code style and conventions.
+2. **Prompt files** encode common workflows that any developer can trigger.
+3. **Agents** create specialized roles that each follow instructions and can invoke prompts.
+4. **Handoffs** chain agents in a guided pipeline, so the user clicks through each phase instead of switching agents manually.
+
+The Orchestrator agent demonstrates this combination. It uses `handoffs:` to present a one-click pipeline, references instruction files via `#file:`, and coordinates multiple specialized agents.
+
+---
+
+## Verification Checklist
+
+Before moving on, confirm each item:
+
+- [ ] All five agent files exist in `.github/agents/`:
+  - `planner.agent.md`
+  - `architect.agent.md`
+  - `developer.agent.md`
+  - `tester.agent.md`
+  - `orchestrator.agent.md`
+- [ ] The `orchestrator.agent.md` file has valid YAML front matter with `name`, `description`, `tools`, and `handoffs`
+- [ ] The `handoffs` list contains four entries targeting `planner`, `architect`, `developer`, and `tester`
+- [ ] The four handoff buttons appear in Copilot Chat after running the Orchestrator
+- [ ] The category feature is implemented in `src/`
+- [ ] Tests for the category feature exist in `tests/`
+- [ ] All tests pass when you run `node --test tests/`
+- [ ] `docs/project-plan.md` and `docs/schema.md` reflect the new feature
+
+## Commit and Push
+
+```bash
+git add .github/agents/ docs/ src/ tests/
+git commit -m "Add Orchestrator Agent and deliver category feature"
 git push
 ```
 
----
-
-## Tips for Designing Effective Agents
-
-- **Be specific about the role.** A clear identity ("You are a testing specialist") produces better results than a vague one ("Help with code").
-- **Restrict tools when appropriate.** A planning agent should not execute code. A documentation agent should not modify source files. Use the `tools` property to enforce boundaries.
-- **Structure the prompt with headings.** Agents follow structured instructions more reliably than free-form text.
-- **Keep prompts under 30,000 characters.** This is the maximum allowed by the platform.
-- **Test with representative tasks.** Try several prompts to verify the agent behaves as expected before sharing it with your team.
-- **Use descriptive filenames.** The filename becomes the default agent name. Use lowercase with hyphens: `test-specialist.agent.md`, not `TestSpecialist.agent.md`.
+After you push, the workflow checks your work and posts the next step as an issue comment.
 
 ---
 
 ## Troubleshooting
 
-**My custom agent does not appear in the agent dropdown:**
+**Handoff buttons do not appear**
 
-- Confirm the file is in `.github/agents/` and has the `.agent.md` suffix.
-- Check that the YAML frontmatter is valid (correct indentation, no missing colons).
-- Verify the `description` property is present. It is required.
-- In VS Code, try reopening the chat panel or reloading the window.
+Confirm the `handoffs:` block is inside the YAML front matter (between the `---` markers, not in the Markdown body). Each entry must have `agent`, `label`, `prompt`, and `send`. Reload the VS Code window after saving the file.
 
-**The agent does not follow its instructions:**
+**Orchestrator agent does not appear in the dropdown**
 
-- Review the prompt for clarity. Shorter, more direct instructions work better.
-- Check that the `tools` list includes the tools the agent needs.
-- Verify the file is saved and committed (the coding agent on GitHub reads committed files).
+Reload the VS Code window: press `Ctrl+Shift+P` (or `Cmd+Shift+P` on macOS) and type **Reload Window**. Confirm the file is at `.github/agents/orchestrator.agent.md` with the `.agent.md` extension.
 
-**I want the agent available across all my workspaces:**
+**YAML front matter errors**
 
-- In VS Code, select **User profile** as the location when creating the agent.
-- The agent file is stored in your VS Code user profile folder, not in the repository.
+The `---` markers must start on the very first line with no blank lines above them. Check for correct indentation and no missing colons. The `description` property is required.
+
+**`#file:` references not loading**
+
+Confirm the referenced files exist at the paths specified. Relative paths in `#file:` start from the repository root. For example, `#file:.github/copilot-instructions.md` expects a file at `.github/copilot-instructions.md`.
+
+**Agent skips phases or produces incomplete output**
+
+Follow up in the same conversation with a specific request:
+
+```text
+You skipped the Test phase. Add tests for the category feature
+in tests/ and run them.
+```
+
+Breaking the work into smaller prompts often helps.
+
+**Tests fail after the Orchestrator finishes**
+
+Run the failing tests individually to see detailed output:
+
+```bash
+node --test tests/
+```
+
+Copy the failure output into Copilot Chat and ask the Orchestrator to fix the issue. The agent's rules require it to run tests and fix failures before continuing.
+
+**External dependencies added by mistake**
+
+Check `package.json` for unexpected dependencies. This workshop uses only built-in Node.js modules. If the agent added an external package, ask it to rewrite the code using only built-in modules.
 
 ---
 
-## Summary
+## Workshop Complete
 
-You created custom agent profiles to specialize Copilot for different tasks. Key points:
+You have now built all five SDLC agents:
 
-- Custom agents are `.agent.md` files with YAML frontmatter and a Markdown prompt body.
-- Store agents in `.github/agents/` for workspace scope or in your user profile for global scope.
-- Use the `description` property (required) to explain what the agent does.
-- Use the `tools` property to restrict which capabilities the agent can use.
-- Agents work in VS Code, JetBrains IDEs, and on GitHub.com with the coding agent.
-- The [awesome-copilot](https://github.com/github/awesome-copilot) community collection has dozens of ready-to-use agents.
-- Design agents with clear roles, structured prompts, and appropriate tool restrictions.
+| Agent | SDLC Phase | Copilot Concept |
+|-------|------------|----------------|
+| Planner | Planning | Prompt engineering |
+| Architect | Design | Custom instructions |
+| Developer | Implementation | Path-specific instructions |
+| Tester | Testing | Prompt files |
+| Orchestrator | Full lifecycle | Agent files and orchestration |
+
+Together these agents form a complete workflow. The Orchestrator coordinates the others to deliver features from plan through tested implementation.
+
+## Key Takeaways
+
+| Concept | What you practiced |
+|---------|--------------------|
+| Agent suite review | Verified all four agents exist and have valid front matter |
+| `tools` property | Restricted the Orchestrator to edit, search, terminal, and test tools |
+| `#file:` references | Attached agent files and instructions as persistent context |
+| `handoffs` property | Created one-click buttons that chain agents across the SDLC |
+| Multi-phase workflow | Delivered a feature through Plan, Design, Develop, Test |
+| Agents vs instructions vs prompts | Chose the right customization file for each use case |
 
 ---
-
-## Next Steps
-
-Proceed to [Exercise 6: Org-Level Best Practices](../06-org-level-best-practices/README.md).

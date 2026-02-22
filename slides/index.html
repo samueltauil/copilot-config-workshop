@@ -442,7 +442,7 @@
   <h1>GitHub Copilot<br>Configuration Workshop</h1>
   <div class="divider"></div>
   <p style="color:#8b949e; margin-top:0.7em; font-size:1rem">
-    Prompt engineering &bull; Custom instructions &bull; Path-specific rules &bull; Prompt files &bull; Custom agents &bull; Org-level practices
+    Plan &bull; Design &bull; Implement &bull; Test &bull; Orchestrate &mdash; Build SDLC agents with Copilot
   </p>
   <p style="font-size:0.72rem; color:#484f58; margin-top:2em">
     Open-source &bull; No additional tools required
@@ -608,27 +608,23 @@
   <div class="toc-grid">
     <div class="toc-item">
       <span class="toc-num">01</span>
-      Prompt Engineering
+      Prompt Engineering &rarr; Planner Agent
     </div>
     <div class="toc-item">
       <span class="toc-num">02</span>
-      Custom Instructions
+      Custom Instructions &rarr; Architect Agent
     </div>
     <div class="toc-item">
       <span class="toc-num">03</span>
-      Path-Specific Instructions
+      Path-Specific Instructions &rarr; Developer Agent
     </div>
     <div class="toc-item">
       <span class="toc-num">04</span>
-      Chat Participants, Commands &amp; Variables
+      Prompt Files &rarr; Tester Agent
     </div>
     <div class="toc-item">
       <span class="toc-num">05</span>
-      Creating Custom Agents
-    </div>
-    <div class="toc-item">
-      <span class="toc-num">06</span>
-      Org-Level Best Practices
+      Agent Orchestration &rarr; Full Lifecycle
     </div>
   </div>
   <p style="font-size:0.83rem; color:var(--gh-gray); margin-top:1.2em">
@@ -711,10 +707,10 @@
     <path d="M12 2l2.4 7.4H22l-6.4 4.6 2.4 7.4L12 17l-6 4.4 2.4-7.4L2 9.4h7.6L12 2z"/>
   </svg>
   <span class="exercise-number">01</span>
-  <h2>Prompt Engineering for GitHub Copilot</h2>
-  <p>Learn how to write prompts that produce consistent, accurate results every time.</p>
+  <h2>Prompt Engineering &rarr; Planner Agent</h2>
+  <p>Learn prompt strategies and Copilot modes while building a Planner Agent for the Planning phase.</p>
   <div class="cta-box">&#128073; Open your GitHub Issue to start this lab</div>
-  <p class="cta-hint">Duration: ~30 minutes &bull; Return to these slides for theory while you work</p>
+  <p class="cta-hint">SDLC Phase: Planning &bull; Duration: ~30 minutes</p>
 </section>
 
 <!-- ============================================================
@@ -822,10 +818,10 @@ Expected output:
     <path d="M12 2l2.4 7.4H22l-6.4 4.6 2.4 7.4L12 17l-6 4.4 2.4-7.4L2 9.4h7.6L12 2z"/>
   </svg>
   <span class="exercise-number">02</span>
-  <h2>Repository-Wide Custom Instructions</h2>
-  <p>Give Copilot persistent, project-specific context that applies to every request.</p>
+  <h2>Custom Instructions &rarr; Architect Agent</h2>
+  <p>Create repository-wide conventions and build an Architect Agent for the Design phase.</p>
   <div class="cta-box">&#128073; Open your GitHub Issue to start this lab</div>
-  <p class="cta-hint">Duration: ~25 minutes &bull; Return to these slides for theory while you work</p>
+  <p class="cta-hint">SDLC Phase: Design &bull; Duration: ~25 minutes</p>
 </section>
 
 <!-- ============================================================
@@ -938,10 +934,10 @@ Expected output:
     <path d="M12 2l2.4 7.4H22l-6.4 4.6 2.4 7.4L12 17l-6 4.4 2.4-7.4L2 9.4h7.6L12 2z"/>
   </svg>
   <span class="exercise-number">03</span>
-  <h2>Path-Specific Instructions</h2>
-  <p>Apply targeted rules only to files that match a specific path or file-type pattern.</p>
+  <h2>Path-Specific Instructions &rarr; Developer Agent</h2>
+  <p>Create per-directory coding rules and build a Developer Agent for the Implementation phase.</p>
   <div class="cta-box">&#128073; Open your GitHub Issue to start this lab</div>
-  <p class="cta-hint">Duration: ~20 minutes &bull; Return to these slides for theory while you work</p>
+  <p class="cta-hint">SDLC Phase: Implementation &bull; Duration: ~30 minutes</p>
 </section>
 
 <!-- ============================================================
@@ -992,10 +988,10 @@ applyTo: "**/*.py"
     <path d="M12 2l2.4 7.4H22l-6.4 4.6 2.4 7.4L12 17l-6 4.4 2.4-7.4L2 9.4h7.6L12 2z"/>
   </svg>
   <span class="exercise-number">04</span>
-  <h2>Chat Participants, Commands, and Variables</h2>
-  <p>Use special keywords to make your prompts precise and efficient without extra explanation.</p>
+  <h2>Prompt Files &rarr; Tester Agent</h2>
+  <p>Create reusable prompt files and build a Tester Agent for the Testing phase.</p>
   <div class="cta-box">&#128073; Open your GitHub Issue to start this lab</div>
-  <p class="cta-hint">Duration: ~40 minutes &bull; Return to these slides for theory while you work</p>
+  <p class="cta-hint">SDLC Phase: Testing &bull; Duration: ~30 minutes</p>
 </section>
 
 <!-- ============================================================
@@ -1263,10 +1259,10 @@ tools: ["search"]
      ============================================================ -->
 <section class="exercise-intro" data-background="linear-gradient(135deg, #0d1117 0%, #1F2328 100%)">
   <span class="exercise-number">05</span>
-  <h2>Creating Custom Agents</h2>
-  <p>Build specialized Copilot agents for testing, debugging, planning, and more.</p>
+  <h2>Agent Orchestration &rarr; Full Lifecycle</h2>
+  <p>Build an Orchestrator Agent and deliver a new feature using all SDLC agents together.</p>
   <div style="margin-top:1.2em; font-size:0.82rem; color:#8b949e">
-    Duration: ~30 minutes &bull; File: <code style="color:#79c0ff">exercises/05-agent-files/README.md</code>
+    SDLC Phase: Full Lifecycle &bull; Duration: ~30 minutes
   </div>
 </section>
 
@@ -1398,11 +1394,10 @@ You are a testing specialist. Your responsibilities:
   <svg width="36" height="36" viewBox="0 0 24 24" fill="#388bfd" style="opacity:0.4; margin-bottom:0.3em; display:block; margin-left:auto; margin-right:auto" aria-hidden="true">
     <path d="M12 2l2.4 7.4H22l-6.4 4.6 2.4 7.4L12 17l-6 4.4 2.4-7.4L2 9.4h7.6L12 2z"/>
   </svg>
-  <span class="exercise-number">06</span>
+  <span class="exercise-number" style="opacity:0.5">REF</span>
   <h2>Org-Level Best Practices</h2>
-  <p>Scale your Copilot configuration consistently across an entire GitHub organization.</p>
-  <div class="cta-box">&#128073; Open your GitHub Issue to start this lab</div>
-  <p class="cta-hint">Duration: ~25 minutes &bull; Return to these slides for theory while you work</p>
+  <p>Reference material: Scale your Copilot configuration across an entire GitHub organization.</p>
+  <p class="cta-hint">This is not a hands-on exercise. Use these slides as reference for org-level rollout.</p>
 </section>
 
 <!-- ============================================================
@@ -1503,48 +1498,68 @@ You are a testing specialist. Your responsibilities:
   <h2>What You Built</h2>
   <table>
     <thead>
-      <tr><th>File</th><th>Exercise</th><th>Purpose</th></tr>
+      <tr><th>Artifact</th><th>Exercise</th><th>SDLC Phase</th></tr>
     </thead>
     <tbody>
       <tr>
+        <td><code>.github/agents/planner.agent.md</code></td>
+        <td>01</td>
+        <td>Planning</td>
+      </tr>
+      <tr>
+        <td><code>docs/project-plan.md</code></td>
+        <td>01</td>
+        <td>Planning</td>
+      </tr>
+      <tr>
         <td><code>.github/copilot-instructions.md</code></td>
         <td>02</td>
-        <td>Repository-wide Copilot Chat instructions</td>
+        <td>Design</td>
       </tr>
       <tr>
-        <td><code>.github/instructions/python.instructions.md</code></td>
+        <td><code>.github/agents/architect.agent.md</code></td>
+        <td>02</td>
+        <td>Design</td>
+      </tr>
+      <tr>
+        <td><code>docs/schema.md</code></td>
+        <td>02</td>
+        <td>Design</td>
+      </tr>
+      <tr>
+        <td><code>.github/instructions/*.instructions.md</code></td>
         <td>03</td>
-        <td>Path-specific instructions for Python files</td>
+        <td>Implementation</td>
       </tr>
       <tr>
-        <td><code>.github/instructions/tests.instructions.md</code></td>
+        <td><code>.github/agents/developer.agent.md</code></td>
         <td>03</td>
-        <td>Path-specific instructions for test files</td>
+        <td>Implementation</td>
       </tr>
       <tr>
-        <td><code>.github/prompts/add-tests.prompt.md</code></td>
+        <td><code>src/**/*.js</code></td>
+        <td>03</td>
+        <td>Implementation</td>
+      </tr>
+      <tr>
+        <td><code>.github/prompts/*.prompt.md</code></td>
         <td>04</td>
-        <td>Reusable prompt for generating unit tests</td>
+        <td>Testing</td>
       </tr>
       <tr>
-        <td><code>.github/agents/code-reviewer.agent.md</code></td>
+        <td><code>.github/agents/tester.agent.md</code></td>
         <td>04</td>
-        <td>Custom agent mode for code review</td>
+        <td>Testing</td>
       </tr>
       <tr>
-        <td><code>.github/agents/test-specialist.agent.md</code></td>
+        <td><code>tests/**/*.test.js</code></td>
+        <td>04</td>
+        <td>Testing</td>
+      </tr>
+      <tr>
+        <td><code>.github/agents/orchestrator.agent.md</code></td>
         <td>05</td>
-        <td>Custom agent for test coverage and quality</td>
-      </tr>
-      <tr>
-        <td><code>.github/agents/implementation-planner.agent.md</code></td>
-        <td>05</td>
-        <td>Custom agent for technical planning</td>
-      </tr>
-      <tr>
-        <td>Org <code>.github/copilot-instructions.md</code></td>
-        <td>06</td>
-        <td>Organization-wide default instructions</td>
+        <td>Full Lifecycle</td>
       </tr>
     </tbody>
   </table>
@@ -1593,7 +1608,7 @@ You are a testing specialist. Your responsibilities:
     You can now configure GitHub Copilot at every level:
   </p>
   <p style="color:#8b949e; font-size:0.88rem">
-    per-prompt &bull; per-file-type &bull; prompt files &bull; custom agents &bull; repository-wide &bull; for coding agents &bull; organization-wide
+    Planner &bull; Architect &bull; Developer &bull; Tester &bull; Orchestrator &mdash; a full SDLC agent pipeline
   </p>
   <p style="margin-top:2em; font-size:0.78rem; color:#484f58">
     Repository:

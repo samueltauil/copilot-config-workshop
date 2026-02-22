@@ -1,141 +1,142 @@
-## Step 5: Creating Custom Agents
+## Step 5: Agent Orchestration &mdash; Build an Orchestrator Agent
 
-Your team uses GitHub Copilot across multiple workflows: writing tests, debugging, planning implementations, and reviewing code. Instead of re-explaining the same context in every chat, you can create [custom agents](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents) that specialize in each task. Each custom agent has its own identity, system prompt, and tool access.
+_SDLC Phase: **Full Lifecycle**_
 
-### 📖 Theory: What are custom agents?
+You now have four agents that each own one phase of the software development lifecycle: **Planner** (plan), **Architect** (design), **Developer** (implement), and **Tester** (test). In this final exercise you create an **Orchestrator Agent** that uses **handoffs** to chain all four agents into a guided pipeline, and then prove it works by delivering a new feature end-to-end.
 
-Custom agents are `.agent.md` files that create specialized Copilot assistants for specific tasks. Each agent has YAML frontmatter (name, description, tools) and a Markdown prompt body that defines its behavior.
+### 📖 Theory: Bringing agents together
 
-| File | Location | Used by |
-|------|----------|---------|
-| `.agent.md` | `.github/agents/` in a repository | Copilot Chat (IDE) + Copilot coding agent (GitHub.com) |
-| `copilot-instructions.md` | `.github/` | Copilot Chat (interactive sessions) |
-| `AGENTS.md` | Anywhere in the repository | AI coding agents (autonomous tasks) |
+Each agent file you created teaches Copilot a specialized role. An orchestrator agent ties them together using the `handoffs:` front matter property. Handoffs create one-click buttons in Copilot Chat. Each button pre-fills a prompt and switches to the named agent. The user clicks each button in order to move the feature through the full lifecycle.
 
-Custom agents go further than instructions: they create an entirely new Copilot personality with a defined name, restricted tools, and behavioral focus.
+| Agent | SDLC Phase | Key Artifacts |
+|-------|-----------|---------------|
+| Planner | Planning | `docs/project-plan.md` |
+| Architect | Design | `docs/schema.md` |
+| Developer | Implementation | `src/**/*.js` |
+| Tester | Testing | `tests/**/*.test.js` |
+| **Orchestrator** | **Full lifecycle** | **Coordinates all of the above** |
 
-### YAML frontmatter properties
+Agent files support these advanced properties:
 
-| Property | Required | Description |
-|----------|----------|-------------|
-| `name` | No | Display name for the agent. Defaults to the filename. |
-| `description` | Yes | A brief explanation of what the agent does. |
-| `tools` | No | List of tools the agent can use. Omit to grant all tools. |
+| Property | Purpose |
+|----------|---------|
+| `tools` | Restrict the agent to specific tools (e.g., `["read", "edit", "runInTerminal"]`) |
+| `#file:` references | Attach other files as context inside the agent prompt body |
+| `handoffs` | Define buttons that chain to the next agent with a pre-filled prompt |
 
-## ⌨️ Activity: Create a test-specialist agent
+## ⌨️ Activity: Review your agents
 
-1. Create the agents directory:
+Before building the orchestrator, verify the agent suite is complete.
 
-    ```bash
-    mkdir -p .github/agents
+1. Confirm these files exist:
+
+    ```
+    .github/agents/planner.agent.md
+    .github/agents/architect.agent.md
+    .github/agents/developer.agent.md
+    .github/agents/tester.agent.md
     ```
 
-1. Create a new file at `.github/agents/test-specialist.agent.md` with the following content:
+1. Open each file and confirm it has valid YAML front matter with `name` and `description`.
+
+1. If any file is missing, go back to the corresponding exercise step and create it.
+
+## ⌨️ Activity: Create the Orchestrator Agent
+
+1. Create `.github/agents/orchestrator.agent.md`:
 
     ```markdown
     ---
-    name: test-specialist
-    description: Focuses on test coverage, quality, and testing best practices without modifying production code
+    name: orchestrator
+    description: Coordinates the full SDLC workflow for new features using the planner, architect, developer, and tester agents
+    tools: ["edit", "search", "runInTerminal", "runTests"]
+    handoffs:
+      - agent: planner
+        label: "1. Plan the feature"
+        prompt: "Analyze the feature request above and update docs/project-plan.md with the new feature scope."
+        send: false
+      - agent: architect
+        label: "2. Design the architecture"
+        prompt: "Read #file:docs/project-plan.md and update docs/schema.md with any new or modified data structures."
+        send: false
+      - agent: developer
+        label: "3. Implement the feature"
+        prompt: "Read #file:docs/schema.md and implement the feature in src/. Use only built-in Node.js modules."
+        send: false
+      - agent: tester
+        label: "4. Test the feature"
+        prompt: "Read the updated source files in src/ and update tests/ to cover the new feature. Run node --test tests/ and fix any failures."
+        send: false
     ---
 
-    You are a testing specialist focused on improving code quality through
-    comprehensive testing. Your responsibilities:
+    You are the orchestrator. When the user requests a new feature you
+    summarize the work to be done across all four phases, then use the
+    handoff buttons below to guide the user through each phase.
 
-    - Analyze existing tests and identify coverage gaps
-    - Write unit tests, integration tests, and end-to-end tests following
-      best practices
-    - Review test quality and suggest improvements for maintainability
-    - Ensure tests are isolated, deterministic, and well-documented
-    - Focus only on test files and avoid modifying production code unless
-      specifically requested
+    ## Phases
 
-    Always include clear test descriptions and use appropriate testing
-    patterns for the language and framework.
+    1. **Plan** - The Planner Agent updates `docs/project-plan.md`.
+    2. **Design** - The Architect Agent updates `docs/schema.md`.
+    3. **Develop** - The Developer Agent implements the feature in `src/`.
+    4. **Test** - The Tester Agent writes and runs tests in `tests/`.
+
+    ## Rules
+
+    - Summarize the full plan before handing off to the first agent.
+    - Follow all repository and path-specific instructions.
+    - Use only built-in Node.js modules.
+    - Run tests after every code change.
     ```
 
 1. Save the file.
 
-## ⌨️ Activity: Use the test-specialist agent
+## ⌨️ Activity: Add a new feature using the full lifecycle
 
-1. Open Copilot Chat in VS Code. Your custom agent appears in the agent dropdown at the bottom of the chat panel.
+Use the Orchestrator to add **task categories** to the Task Manager.
 
-1. Select **test-specialist** from the dropdown and ask it to generate tests:
+1. In Copilot Chat, select the **orchestrator** agent and enter this prompt:
 
     ```
-    Generate a comprehensive test file for
-    exercises/04-copilot-chat-skills/starter.py.
-    Include tests for normal inputs, edge cases (empty lists, single items),
-    and error conditions (invalid input types). Use pytest conventions.
-    Save the tests to exercises/04-copilot-chat-skills/test_starter.py.
+    Add a "category" feature to the Task Manager. Users should be able
+    to assign a category (e.g., "work", "personal", "urgent") when
+    creating a task and filter tasks by category. The category property
+    is optional and defaults to "general".
     ```
 
-1. Review the generated test file. Confirm it includes tests for `calculate_average`, `find_duplicates`, and `flatten`.
+1. After the Orchestrator summarizes the plan, click the handoff buttons in order:
 
-1. Run the tests:
+    - **1. Plan the feature** — The Planner Agent updates `docs/project-plan.md`.
+    - **2. Design the architecture** — The Architect Agent updates `docs/schema.md`.
+    - **3. Implement the feature** — The Developer Agent implements the feature in `src/`.
+    - **4. Test the feature** — The Tester Agent writes and runs tests in `tests/`.
+
+    Each button pre-fills a prompt. Review it and press Enter to run it.
+
+1. **Verify the full suite:**
 
     ```bash
-    python3 -m pytest exercises/04-copilot-chat-skills/test_starter.py -v
+    node --test tests/
     ```
-
-1. If any tests fail, stay in the test-specialist agent and paste the error output. The agent focuses exclusively on test quality and avoids modifying `starter.py`.
-
-1. Run the tests again until all pass.
-
-## ⌨️ Activity: Create additional agents (optional)
-
-You can create more agents for other tasks. Here are two examples you can try:
-
-**Debug agent** at `.github/agents/debug.agent.md`:
-
-```markdown
----
-name: debug
-description: Systematically identifies, analyzes, and resolves bugs using a structured debugging process
-tools: ["read", "edit", "search", "runInTerminal", "runTests", "problems"]
----
-
-You are in debug mode. Follow this process:
-1. Read error messages and stack traces
-2. Reproduce the bug by running the application or tests
-3. Trace the code execution path and form a hypothesis
-4. Make minimal, targeted fixes
-5. Run tests to verify the fix and check for regressions
-```
-
-**Implementation planner** at `.github/agents/implementation-planner.agent.md`:
-
-```markdown
----
-name: implementation-planner
-description: Creates detailed implementation plans and technical specifications in Markdown format
-tools: ["read", "search", "edit"]
----
-
-You are a technical planning specialist. Create implementation plans
-with clear headings, task breakdowns, and acceptance criteria. Focus
-on documentation rather than implementing code.
-```
 
 ## ⌨️ Activity: Commit and push your work
 
 1. Commit and push:
 
     ```bash
-    git add .github/agents/
-    git commit -m "Add custom agents for testing and other workflows"
+    git add .github/agents/ docs/ src/ tests/
+    git commit -m "Add Orchestrator Agent with handoffs and deliver category feature end-to-end"
     git push
     ```
 
-1. After you push, the workflow checks your work and posts the next step.
+1. After you push, the workflow checks your work and posts the final review.
 
 <details>
 <summary>Having trouble? 🤷</summary><br/>
 
-- Confirm the file is in `.github/agents/` and has the `.agent.md` suffix.
-- Check that the YAML frontmatter is valid (correct indentation, no missing colons).
-- Verify the `description` property is present. It is required.
-- In VS Code, try reopening the chat panel or reloading the window if the agent does not appear.
+- If an agent does not appear in the dropdown, reload the VS Code window (`Ctrl+Shift+P` or `Cmd+Shift+P` → **Developer: Reload Window**).
+- If the handoff buttons do not appear, confirm the `handoffs:` block is inside the YAML front matter (between the `---` markers). Each entry needs `agent`, `label`, `prompt`, and `send`.
+- Handoffs are supported in VS Code and GitHub Codespaces. If you are using a different environment, switch to the next agent manually.
+- If tests fail after adding the category feature, let the tester agent fix both tests and source code.
 - For a deeper walkthrough, see [exercises/05-agent-files/README.md](exercises/05-agent-files/README.md).
-- Browse the [awesome-copilot](https://github.com/github/awesome-copilot) community collection for more agent examples.
 
 </details>
