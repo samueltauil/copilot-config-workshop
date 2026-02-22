@@ -1,291 +1,380 @@
-# Exercise 1: Prompt Engineering for GitHub Copilot
+# Exercise 1: Prompt Engineering
 
-**Learning objectives:**
-- Understand what makes a good prompt
-- Apply the core prompt engineering strategies from the official GitHub documentation
-- Compare the quality of vague versus specific prompts
-- Use inline suggestions and Copilot Chat effectively
+**SDLC Phase: Planning & Requirements**
 
-**Duration:** ~30 minutes
+In this exercise you learn how to communicate with GitHub Copilot and build a **Planner Agent** that generates structured project plans. The Planner Agent is the first of five agents you create across this workshop. Together these agents cover the full software development lifecycle: **plan, design, implement, test, and orchestrate**.
 
-**Prerequisites:** GitHub Codespaces or Visual Studio Code with the GitHub Copilot extension installed.
+## Workshop Roadmap
 
----
+| Exercise | Copilot Concept | Agent | SDLC Phase |
+|----------|----------------|-------|------------|
+| **01 (this one)** | Prompt engineering and interaction modes | Planner | Planning |
+| 02 | Repository-wide custom instructions | Architect | Design |
+| 03 | Path-specific instructions | Developer | Implementation |
+| 04 | Prompt files | Tester | Testing |
+| 05 | Agent files and orchestration | Orchestrator | Full lifecycle |
 
-## Background
+Each exercise builds on the output of the previous one. The Planner Agent produces a project plan. The Architect Agent reads that plan and generates a schema. The Developer Agent reads the schema and writes code. This chain continues through all five exercises.
 
-A prompt is a request you make to GitHub Copilot. The quality of Copilot's response depends heavily on how you write your prompt. The [prompt engineering guide](https://docs.github.com/en/copilot/using-github-copilot/copilot-chat/prompt-engineering-for-copilot-chat) identifies several strategies that consistently improve results. This exercise walks you through each strategy with concrete examples.
+## Learning Objectives
 
----
+After completing this exercise you will be able to:
 
-## Setup
+- Identify the five Copilot interaction modes and choose the right one for a task
+- Apply six prompt engineering strategies to get better results from Copilot
+- Create a custom agent file (`.agent.md`) with YAML front matter
+- Use an agent to generate structured Markdown output
 
-**Option A: GitHub Codespaces (recommended)**
+## Prerequisites
 
-1. Open this repository on GitHub.
-2. Click **Code > Codespaces > Create codespace on main**.
-3. Wait for the Codespace to build. Node.js, Python, and the Copilot extensions are pre-installed.
-4. Open the starter file: `exercises/01-prompt-engineering/starter.js`
+- A GitHub account with Copilot access
+- **GitHub Codespaces** (recommended, no local setup required) or VS Code with the GitHub Copilot extension and Node.js 20+
 
-**Option B: Local VS Code**
+> **Using Codespaces?** Click **Code > Codespaces > Create codespace on main** in your repository. Node.js 20, the Copilot extension, and Copilot Chat are pre-installed. No local configuration is needed.
 
-1. Clone the repository and open it in VS Code:
-   ```bash
-   git clone https://github.com/<your-username>/copilot-config-workshop.git
-   cd copilot-config-workshop
-   code .
-   ```
-2. Open the starter file: `exercises/01-prompt-engineering/starter.js`
+## The Application: Task Manager CLI
 
-**Verify Copilot is active:**
+All five exercises build toward the same application. Here is the scope:
 
-Look for the Copilot icon in the VS Code status bar at the bottom of the screen. A checkmark or the Copilot logo indicates it is active. If it shows a warning, click it and sign in to GitHub.
+- **Runtime:** Node.js, no external dependencies, built-in modules only
+- **Storage:** In-memory (no database)
+- **Operations:** Create, read, update, and delete tasks; filter by status or priority; sort by date or priority
+- **Task model:**
 
----
-
-## Strategy 1: Start General, Then Get Specific
-
-Effective prompts begin with a broad goal and then add specific requirements.
-
-**Step 1.1 - Vague prompt (observe the result):**
-
-1. Open Copilot Chat by clicking the chat icon in the VS Code sidebar (or press `Ctrl+Alt+I` on Windows/Linux, `Cmd+Shift+I` on macOS).
-2. Type the following prompt and press `Enter`:
-   ```
-   Write a function to validate input
-   ```
-3. Read Copilot's response. Notice that the response makes assumptions about what type of input to validate. The function may or may not match what you need.
-
-**Step 1.2 - Specific prompt (compare the result):**
-
-1. In the same chat window, type the following prompt and press `Enter`:
-   ```
-   Write a JavaScript function that validates an email address.
-   
-   The function should:
-   - Accept a single string argument called `email`
-   - Return `true` if the string matches standard email format (e.g., user@domain.com)
-   - Return `false` otherwise
-   - Not use any external libraries
-   ```
-2. Compare this response to the previous one. The response should now be precise, without ambiguity.
-
-**Validation:** The second function should have a name like `validateEmail`, accept one argument, and return a boolean.
+| Property | Type | Details |
+|----------|------|---------|
+| `id` | `string` | Generated with `crypto.randomUUID()` |
+| `title` | `string` | Required |
+| `description` | `string` | Optional, defaults to empty string |
+| `status` | `string` | One of `todo`, `in-progress`, `done` |
+| `priority` | `string` | One of `low`, `medium`, `high` |
+| `createdAt` | `string` | ISO 8601 timestamp |
+| `updatedAt` | `string` | ISO 8601 timestamp |
 
 ---
 
-## Strategy 2: Give Examples
+## Copilot Interaction Modes
 
-Providing example inputs and outputs gives Copilot a clear target.
+Copilot offers five ways to interact. Each mode fits different tasks.
 
-**Step 2.1:**
+### Inline Suggestions
 
-1. In Copilot Chat, type the following prompt:
-   ```
-   Write a JavaScript function that formats a phone number.
-   
-   Examples:
-   - Input: "5551234567" → Output: "(555) 123-4567"
-   - Input: "15551234567" → Output: "(555) 123-4567"
-   - Input: "555-123-4567" → Output: "(555) 123-4567"
-   
-   The function should handle these three input formats and always return the same formatted output.
-   ```
-2. Press `Enter` and review the response.
+Start typing in the editor and Copilot shows grey ghost text. Press `Tab` to accept or `Esc` to dismiss.
 
-**Validation:** The generated function should handle all three input formats shown in the examples.
+**Best for:** Completing lines, finishing functions, writing repetitive code.
 
-**Step 2.2 - Verify the function:**
+**Try it:** Open `exercises/01-prompt-engineering/starter.js` and type the following on a new line:
 
-1. Copy the generated function into the `starter.js` file.
-2. Add the following test calls at the bottom of the file:
-   ```javascript
-   console.log(formatPhoneNumber("5551234567"));    // Expected: (555) 123-4567
-   console.log(formatPhoneNumber("15551234567"));   // Expected: (555) 123-4567
-   console.log(formatPhoneNumber("555-123-4567"));  // Expected: (555) 123-4567
-   ```
-3. Run the file:
-   ```bash
-   node exercises/01-prompt-engineering/starter.js
-   ```
-4. Confirm all three lines print `(555) 123-4567`.
-
----
-
-## Strategy 3: Break Complex Tasks into Simpler Tasks
-
-Large, complex prompts often produce incomplete results. Breaking a task into steps gives Copilot manageable scope at each step.
-
-**Step 3.1 - Avoid a single complex prompt:**
-
-Do not ask Copilot to build an entire feature in one prompt. Instead, break it into parts.
-
-**Step 3.2 - Build a simple data processing pipeline step by step:**
-
-1. In Copilot Chat, type:
-   ```
-   Write a JavaScript function called `readCSVLine` that accepts a comma-separated string and returns an array of trimmed string values.
-   
-   Example: "Alice, 30 , engineer" → ["Alice", "30", "engineer"]
-   ```
-2. Copy the result into `starter.js`.
-
-3. Next, type:
-   ```
-   Write a JavaScript function called `parseEmployee` that accepts an array of three strings [name, age, role] and returns an object with the properties `name` (string), `age` (number), and `role` (string).
-   
-   Example: ["Alice", "30", "engineer"] → { name: "Alice", age: 30, role: "engineer" }
-   ```
-4. Copy the result into `starter.js`.
-
-5. Finally, type:
-   ```
-   Write a JavaScript function called `processCSV` that accepts an array of comma-separated strings. Use the `readCSVLine` and `parseEmployee` functions to return an array of employee objects.
-   ```
-6. Copy the result into `starter.js`.
-
-**Validation:** Add the following to `starter.js` and run it:
 ```javascript
-const lines = [
-  "Alice, 30, engineer",
-  "Bob, 25, designer",
-  "Carol, 35, manager"
-];
-console.log(processCSV(lines));
-```
-Expected output:
-```
-[
-  { name: 'Alice', age: 30, role: 'engineer' },
-  { name: 'Bob', age: 25, role: 'designer' },
-  { name: 'Carol', age: 35, role: 'manager' }
-]
+function greet(name) {
 ```
 
----
+Pause and watch for the suggestion. Press `Tab` to accept it.
 
-## Strategy 4: Avoid Ambiguity
+### Ask Mode
 
-Ambiguous words and pronouns ("it", "this", "that") lead to unpredictable responses. Always be explicit.
+Open Copilot Chat (click the chat icon in the sidebar). The default mode is Ask. Type a question and Copilot answers without changing your files.
 
-**Step 4.1 - Ambiguous prompt (observe the problem):**
+**Best for:** Asking questions, understanding code, brainstorming ideas.
 
-1. In Copilot Chat, type:
-   ```
-   What does this do?
-   ```
-2. Notice that Copilot may not know what "this" refers to. It may ask for clarification or make an assumption.
+**Try it:**
 
-**Step 4.2 - Explicit prompt:**
-
-1. In `starter.js`, select the `processCSV` function you created earlier (click and drag to highlight it).
-2. Right-click the selected code and choose **Copilot > Explain This**.
-3. Alternatively, open Copilot Chat and type:
-   ```
-   Explain what the `processCSV` function in my current file does, step by step.
-   ```
-
-**Validation:** Copilot should provide a clear explanation of the function, referencing its name specifically.
-
----
-
-## Strategy 5: Indicate Relevant Code
-
-Copilot uses the files you have open as context. Manage which files are open to improve response quality.
-
-**Step 5.1:**
-
-1. Close all other files in VS Code so that only `starter.js` is open.
-2. In Copilot Chat, type:
-   ```
-   Add JSDoc comments to all functions in the current file.
-   ```
-3. Copilot should add comments to the functions in `starter.js`. Because only one relevant file is open, Copilot focuses its attention there.
-
-**Step 5.2 - Using the `#file` chat variable:**
-
-You can also explicitly attach a file to your prompt:
-
-1. In Copilot Chat, type `#` to see available chat variables.
-2. Select `#file` and choose `starter.js`.
-3. Complete your prompt:
-   ```
-   #file:starter.js Write unit tests for the `validateEmail` function using plain JavaScript assertions (no testing framework).
-   ```
-
-**Validation:** Copilot should generate test code that specifically tests the `validateEmail` function.
-
-**Step 5.3 - Generate tests and run them:**
-
-A key Copilot workflow is generating tests and then executing them to verify they pass. Practice this end-to-end flow:
-
-1. In Copilot Chat, type:
-   ```
-   #file:starter.js Write a complete test file for all functions in this file. Use the built-in Node.js assert module. Include tests for normal inputs, edge cases, and error conditions. Print a summary of passed and failed tests at the end.
-   ```
-2. Review the generated test code. Confirm it covers the functions you added during this exercise (such as `validateEmail`, `formatPhoneNumber`, `readCSVLine`, `parseEmployee`, `processCSV`).
-3. Save the generated tests to a new file:
-   ```
-   exercises/01-prompt-engineering/starter.test.js
-   ```
-4. Run the tests:
-   ```bash
-   node exercises/01-prompt-engineering/starter.test.js
-   ```
-5. If any tests fail, select the error output in the terminal, then use Copilot Chat to troubleshoot:
-   ```
-   #selection This test failed. Explain why and suggest a fix.
-   ```
-6. Fix the issue (either in the test or in the function) and run the tests again until all pass.
-
-**Validation:** All tests pass and the summary shows no failures.
-
----
-
-## Strategy 6: Experiment and Iterate
-
-If you do not get the result you want, iterate on your prompt. You do not need to start over.
-
-**Step 6.1:**
-
-1. In Copilot Chat, type:
-   ```
-   Write a function to sort employees
-   ```
-2. The result may sort by name alphabetically. If you want a different sort order, follow up:
-   ```
-   Update the function to sort employees by age in ascending order, and if two employees have the same age, sort them alphabetically by name.
-   ```
-3. Continue iterating until the function matches your requirements.
-
-**Validation:** The sort function should handle the tie-breaking case. Test it by adding employees with the same age:
-```javascript
-const employees = [
-  { name: "Carol", age: 30, role: "manager" },
-  { name: "Alice", age: 25, role: "engineer" },
-  { name: "Bob", age: 30, role: "designer" }
-];
-console.log(sortEmployees(employees));
-// Expected: Alice (25), Bob (30), Carol (30)
+```text
+What features would a Task Manager CLI application need?
 ```
 
+### Edit Mode
+
+Switch the mode selector in Copilot Chat to **Edit**. Copilot makes targeted changes to files you specify.
+
+**Best for:** Changing specific files, refactoring code, updating documentation.
+
+### Agent Mode
+
+Switch the mode selector to **Agent**. Copilot performs multi-step tasks: creating files, editing code, and running commands autonomously.
+
+**Best for:** Complex tasks that span multiple files or require running commands.
+
+### Inline Chat
+
+Press `Ctrl+I` (Windows/Linux) or `Cmd+I` (macOS) to open a small chat input at the cursor position.
+
+**Best for:** Quick edits at a specific location without leaving the editor.
+
 ---
 
-## Summary
+## Prompt Engineering Strategies
 
-In this exercise you applied six prompt engineering strategies:
+The quality of Copilot's response depends on how you write your prompt. The [GitHub prompt engineering guide](https://docs.github.com/en/copilot/using-github-copilot/copilot-chat/prompt-engineering-for-copilot-chat) identifies six strategies.
 
-| Strategy | Key takeaway |
-|----------|-------------|
-| Start general, then get specific | State the goal first, then add constraints |
-| Give examples | Show example inputs and outputs |
-| Break tasks into steps | Compose complex features from smaller prompts |
-| Avoid ambiguity | Name functions and files explicitly |
-| Indicate relevant code | Open only relevant files; use `#file` to attach context |
-| Experiment and iterate | Follow up in the same conversation to refine results |
+### Strategy 1: Start General, Then Get Specific
+
+State the broad goal first. Then add constraints, types, and requirements.
+
+**Vague prompt (produces unpredictable results):**
+
+```text
+Write a function to validate input
+```
+
+**Specific prompt (produces focused results):**
+
+```text
+Write a JavaScript function called `validateEmail` that accepts
+a single string argument and returns `true` if the string matches
+a standard email format (user@domain.com), `false` otherwise.
+Do not use external libraries.
+```
+
+The specific prompt names the language, function name, argument type, return type, and constraints.
+
+### Strategy 2: Give Examples
+
+Show expected inputs and outputs. Examples remove ambiguity faster than descriptions.
+
+```text
+Write a JavaScript function that formats a phone number.
+
+Examples:
+- Input: "5551234567"    -> Output: "(555) 123-4567"
+- Input: "15551234567"   -> Output: "(555) 123-4567"
+- Input: "555-123-4567"  -> Output: "(555) 123-4567"
+```
+
+### Strategy 3: Break Tasks into Steps
+
+Do not ask Copilot to build an entire feature in one prompt. Break the work into small, focused requests.
+
+Instead of this:
+
+```text
+Build a complete CSV parser with validation and error handling
+```
+
+Do this:
+
+1. Ask for a function that splits a CSV line into an array.
+2. Ask for a function that validates each field.
+3. Ask for a function that combines both into a pipeline.
+
+Each prompt produces a small, testable piece.
+
+### Strategy 4: Avoid Ambiguity
+
+Do not use pronouns like "it", "this", or "that" without context. Name the function, file, or concept explicitly.
+
+**Ambiguous:**
+
+```text
+What does this do?
+```
+
+**Explicit:**
+
+```text
+Explain what the processCSV function in starter.js does, step by step.
+```
+
+### Strategy 5: Indicate Relevant Code
+
+Use `#file` in Copilot Chat to attach a specific file as context.
+
+```text
+#file:starter.js Add JSDoc comments to all functions in this file.
+```
+
+You can also select code in the editor and use `#selection` to reference it:
+
+```text
+#selection Explain this function and suggest improvements.
+```
+
+### Strategy 6: Experiment and Iterate
+
+If the first response is not right, follow up in the same conversation. You do not need to start over.
+
+```text
+Write a function to sort tasks
+```
+
+Then refine:
+
+```text
+Update the function to sort by priority (high first), then by
+creation date (newest first) for tasks with the same priority.
+```
+
+Continue the conversation until the output matches your needs.
 
 ---
 
-## Next Steps
+## Step by Step: Create the Planner Agent
 
-Proceed to [Exercise 2: Repository-Wide Custom Instructions](../02-custom-instructions/README.md).
+Agent files live in `.github/agents/` and use the `.agent.md` extension. Each file has a YAML front matter block followed by a Markdown prompt body.
+
+### 1. Create the agents directory
+
+```bash
+mkdir -p .github/agents
+```
+
+### 2. Create the agent file
+
+Create a new file at `.github/agents/planner.agent.md` with the following content:
+
+```markdown
+---
+name: planner
+description: Generates structured project plans with user stories and acceptance criteria
+tools: ["edit", "search"]
+---
+
+You are a software project planner. When the user describes an application
+idea, generate a comprehensive project plan in Markdown format.
+
+## Output structure
+
+1. **Project overview** - one paragraph summarizing the application.
+2. **User stories** - numbered list, each with acceptance criteria.
+3. **Data model** - list the entities, their properties, and types.
+4. **File structure** - propose a directory layout under `src/`.
+5. **Implementation phases** - break the work into ordered milestones.
+
+## Rules
+
+- Target Node.js 20+ with no external dependencies.
+- Use only built-in Node.js modules (fs, path, assert, etc.).
+- Keep the scope small enough for a workshop exercise.
+- Save the plan to `docs/project-plan.md`.
+```
+
+### 3. Understand the YAML front matter
+
+The front matter block between `---` markers configures the agent:
+
+| Property | Required | Purpose |
+|----------|----------|---------|
+| `name` | Yes | Display name in the Copilot Chat dropdown |
+| `description` | Yes | Tells Copilot (and users) what the agent does |
+| `tools` | No | Grants the agent access to specific Copilot tools |
+
+### 4. Understand the prompt body
+
+The Markdown below the front matter is the agent's system prompt. It tells Copilot:
+
+- **Role:** "You are a software project planner."
+- **Output format:** The five sections the plan must contain.
+- **Constraints:** Node.js only, no external dependencies.
+
+Writing a clear system prompt applies the same strategies you learned above: be specific, provide structure, and set constraints.
+
+---
+
+## Step by Step: Generate a Project Plan
+
+### 1. Switch to Agent mode
+
+In Copilot Chat, open the mode selector and choose **Agent**. Then select **planner** from the agent dropdown. If the planner does not appear, reload the window (`Ctrl+Shift+P` then type **Reload Window**).
+
+### 2. Enter the prompt
+
+Type the following prompt. Notice how it applies "start general, then get specific" and "give examples":
+
+```text
+Create a project plan for a Task Manager CLI application.
+
+The app should support:
+- Creating, listing, updating, and deleting tasks
+- Each task has: title, description, status (todo/in-progress/done),
+  priority (low/medium/high), createdAt, updatedAt
+- Filtering tasks by status or priority
+- Sorting tasks by priority or creation date
+- Storing data in memory (no database)
+
+Save the plan to docs/project-plan.md
+```
+
+### 3. Review and iterate
+
+Read the generated plan. If something is missing, follow up in the same conversation. For example:
+
+```text
+Add a section on error handling conventions and input validation rules.
+```
+
+This demonstrates the "experiment and iterate" strategy.
+
+### 4. Verify the output
+
+Confirm that the file `docs/project-plan.md` exists and contains a structured project plan with these sections:
+
+- Project overview
+- User stories with acceptance criteria
+- Data model
+- File structure
+- Implementation phases
+
+---
+
+## Verification Checklist
+
+Before moving on, confirm each item:
+
+- [ ] `.github/agents/planner.agent.md` exists
+- [ ] The agent file has valid YAML front matter with `name` and `description`
+- [ ] `docs/project-plan.md` exists
+- [ ] The project plan covers the Task Manager CLI scope
+- [ ] The plan references Node.js with no external dependencies
+
+## Commit and Push
+
+```bash
+git add docs/ .github/agents/
+git commit -m "Add Planner Agent and generate project plan"
+git push
+```
+
+After you push, the workflow checks your work and posts the next step as an issue comment.
+
+---
+
+## Troubleshooting
+
+**Copilot icon missing from the status bar**
+
+Install the GitHub Copilot extension from the VS Code marketplace. Sign in to GitHub when prompted.
+
+**Planner agent does not appear in the dropdown**
+
+Reload the VS Code window: press `Ctrl+Shift+P` (or `Cmd+Shift+P` on macOS) and type **Reload Window**. Confirm the file is at `.github/agents/planner.agent.md` with the `.agent.md` extension.
+
+**YAML front matter errors**
+
+The `---` markers must start on the very first line with no blank lines above them. The `description` property is required.
+
+**Agent does not create the docs directory**
+
+Create it manually and re-run the prompt:
+
+```bash
+mkdir -p docs
+```
+
+**Agent produces incomplete output**
+
+Follow up in the same conversation with a specific request for the missing section. Breaking the task into smaller prompts often helps.
+
+---
+
+## Key Takeaways
+
+| Strategy | What you practiced |
+|----------|--------------------|
+| Start general, then get specific | Wrote a detailed prompt for the Planner Agent |
+| Give examples | Specified task properties and expected behaviors |
+| Break tasks into steps | Separated agent creation from plan generation |
+| Avoid ambiguity | Named files and formats explicitly |
+| Indicate relevant code | Used `#file` references in prompts |
+| Experiment and iterate | Refined the plan in a follow-up message |
+
+---

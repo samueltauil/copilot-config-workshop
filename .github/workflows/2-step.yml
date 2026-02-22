@@ -7,6 +7,8 @@ on:
       - main
     paths:
       - ".github/copilot-instructions.md"
+      - "docs/**"
+      - ".github/agents/**"
 
 permissions:
   contents: read
@@ -64,6 +66,13 @@ jobs:
         with:
           file: .github/copilot-instructions.md
 
+      - name: Check if schema.md exists
+        id: check-schema
+        continue-on-error: true
+        uses: skills/exercise-toolkit/actions/file-exists@v0.8.1
+        with:
+          file: docs/schema.md
+
       - name: Update comment - step results
         uses: GrantBirki/comment@v2.1.1
         with:
@@ -77,6 +86,8 @@ jobs:
             results_table:
               - description: "Created .github/copilot-instructions.md"
                 passed: ${{ steps.check-copilot-instructions.outcome == 'success' }}
+              - description: "Created docs/schema.md"
+                passed: ${{ steps.check-schema.outcome == 'success' }}
 
       - name: Fail job if not all checks passed
         if: contains(steps.*.outcome, 'failure')
