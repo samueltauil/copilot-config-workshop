@@ -4,8 +4,8 @@ _Learn to configure and use GitHub Copilot effectively through hands-on exercise
 
 ## Welcome
 
-- **Who is this for**: Developers who want to get the most out of GitHub Copilot.
-- **What you'll learn**: Prompt engineering, custom instructions, path-specific instructions, prompt files, custom agents, and agent orchestration across the software development lifecycle.
+- **Who is this for**: Developers, project managers, team leads, and anyone involved in the software development lifecycle who wants to get the most out of GitHub Copilot.
+- **What you'll learn**: How Copilot supports every phase of the SDLC, from planning and design through implementation and testing. You practice prompt engineering, custom instructions, path-specific instructions, prompt files, custom agents, and agent orchestration.
 - **What you'll build**: Five specialized Copilot agents that plan, design, implement, test, and orchestrate a Task Manager application end-to-end.
 - **Prerequisites**:
   - A GitHub account with access to GitHub Copilot
@@ -16,10 +16,10 @@ _Learn to configure and use GitHub Copilot effectively through hands-on exercise
 
 In this exercise, you will:
 
-1. Practice prompt engineering strategies and build a **Planner Agent** (Planning phase)
-1. Create repository-wide custom instructions and build an **Architect Agent** (Design phase)
-1. Add path-specific instructions and build a **Developer Agent** (Implementation phase)
-1. Create reusable prompt files and build a **Tester Agent** (Testing phase)
+1. Practice prompt engineering strategies and build a **Planner Agent** (SDLC: Planning phase)
+1. Create repository-wide custom instructions and build an **Architect Agent** (SDLC: Design phase)
+1. Add path-specific instructions and build a **Developer Agent** (SDLC: Implementation phase)
+1. Create reusable prompt files and build a **Tester Agent** (SDLC: Testing phase)
 1. Build an **Orchestrator Agent** and deliver a new feature using the full SDLC pipeline
 
 ### How to start this exercise

@@ -2,11 +2,15 @@
 
 _SDLC Phase: **Testing & Quality Assurance**_
 
+> **Why this matters:** The Testing phase verifies that what was built actually works as intended. It catches defects before they reach users. Copilot can automate test creation and run tests repeatedly, turning a time-consuming manual task into a guided, repeatable workflow.
+
 The Developer Agent generated your implementation code. Before you can trust it, you need tests. In this step you create [prompt files](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot#creating-prompt-files) that capture reusable testing workflows, then build a **Tester Agent** that generates and runs tests automatically.
 
 ### 📖 Theory: How prompt files work
 
-Prompt files use the `.prompt.md` suffix and live in `.github/prompts/`. Each file has a YAML front matter block and a Markdown prompt body.
+Prompt files let you save multi-step instructions as reusable templates. Instead of typing a long prompt every time you want to generate tests, you save it once as a file and invoke it with a single command.
+
+Prompt files use the `.prompt.md` suffix and live in `.github/prompts/`. Each file has a YAML front matter block (the configuration header) and a Markdown prompt body.
 
 | Field | Purpose |
 |-------|---------|
@@ -15,6 +19,8 @@ Prompt files use the `.prompt.md` suffix and live in `.github/prompts/`. Each fi
 | `argument-hint` | Placeholder text shown in the argument input |
 
 You invoke a prompt file by typing `/` in Copilot Chat and selecting it from the list. This turns a multi-step workflow into a single action.
+
+> ![Screenshot: Copilot Chat showing the slash command menu with available prompt files](https://github.com/user-attachments/assets/copilot-slash-commands.png)
 
 ## ⌨️ Activity: Create prompt files
 

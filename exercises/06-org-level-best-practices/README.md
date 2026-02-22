@@ -1,12 +1,12 @@
 # Org-Level Best Practices for Copilot Configuration
 
-> **Note:** This is a reference guide. The main workshop uses exercises 01 through 05. This content supplements the workshop with information about managing Copilot configuration across an organization.
+> **Note:** This is a reference guide. The main workshop uses exercises 01 through 05. This content supplements the workshop with information about managing Copilot configuration across an organization. It is relevant for team leads, platform engineers, and anyone responsible for standardizing development practices across multiple repositories.
 
 ---
 
 ## Overview
 
-GitHub Copilot configuration files can exist at both the organization and repository levels. Organizations that manage many repositories benefit from shared defaults. This guide explains how to structure, layer, and maintain Copilot configuration across an organization.
+GitHub Copilot configuration files can exist at both the organization and repository levels. Organizations that manage many repositories benefit from shared defaults. This guide explains how to structure, layer, and maintain Copilot configuration so that every team starts with consistent standards while retaining the flexibility to customize per project.
 
 ---
 

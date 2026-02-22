@@ -1,6 +1,8 @@
 # Exercise 3: Path-Specific Instructions
 
-**Build a Developer Agent for the Implementation phase of the SDLC.**
+**SDLC Phase: Implementation**
+
+> **Why this matters:** During Implementation, different parts of the codebase serve different purposes and follow different rules. Models handle data validation, services manage business logic, and utilities provide shared helpers. Path-specific instructions let you give Copilot the right guidance for each area automatically, just as a team lead might assign different coding guidelines to different modules.
 
 In this exercise you create path-specific instruction files that give Copilot different coding conventions for different parts of your codebase. You then build a Developer Agent that reads the schema from Exercise 02 and generates a working implementation.
 
@@ -38,7 +40,7 @@ Path-specific instruction files:
 
 - Live inside `.github/instructions/`
 - Use the `.instructions.md` file name suffix
-- Start with a YAML front matter block that contains an `applyTo` field
+- Start with a YAML front matter block (a configuration header between `---` markers) that contains an `applyTo` field
 
 For the full reference, see [Adding repository custom instructions for GitHub Copilot](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot).
 
@@ -47,6 +49,8 @@ For the full reference, see [Adding repository custom instructions for GitHub Co
 ## YAML Front Matter Syntax
 
 Every path-specific instruction file starts with a YAML front matter block. The `applyTo` field contains a glob pattern that determines which files trigger the instructions.
+
+> **What is a glob pattern?** A glob pattern is a shorthand for matching file paths. For example, `src/models/**` means "all files inside the `src/models/` folder and its subfolders." The `**` wildcard matches any number of folders deep.
 
 ```yaml
 ---
@@ -227,10 +231,10 @@ Use the Developer Agent to turn your schema into working code.
    Read #file:docs/schema.md and implement the Task Manager application.
 
    Create these files:
-   1. src/models/task.js — Task class with validation
-   2. src/services/taskService.js — CRUD operations for tasks
-   3. src/utils/validators.js — input validation helpers
-   4. src/index.js — entry point that demonstrates all features
+   1. src/models/task.js - Task class with validation
+   2. src/services/taskService.js - CRUD operations for tasks
+   3. src/utils/validators.js - input validation helpers
+   4. src/index.js - entry point that demonstrates all features
 
    After creating all files, run src/index.js with Node.js and fix
    any errors.
@@ -315,6 +319,8 @@ Verify that Copilot loads both repo-wide and path-specific instructions.
 
    - `.github/copilot-instructions.md` (repo-wide)
    - `.github/instructions/models.instructions.md` (path-specific)
+
+   > ![Screenshot: Copilot Chat "Used n references" panel showing both repo-wide and path-specific instruction files loaded](https://github.com/user-attachments/assets/copilot-instruction-layering.png)
 
 5. Now open `src/services/taskService.js` and ask a similar question. The references should show `services.instructions.md` instead of `models.instructions.md`.
 

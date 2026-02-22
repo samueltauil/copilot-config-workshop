@@ -2,15 +2,15 @@
 
 You have finished all five exercises and built a full suite of SDLC agents:
 
-| Agent | SDLC Phase | Created in |
-|-------|-----------|------------|
-| Planner | Planning | Step 1 |
-| Architect | Design | Step 2 |
-| Developer | Implementation | Step 3 |
-| Tester | Testing | Step 4 |
-| Orchestrator | Full Lifecycle | Step 5 |
+| Agent | SDLC Phase | What it does | Created in |
+|-------|-----------|--------------|------------|
+| Planner | Planning | Generates project plans and user stories | Step 1 |
+| Architect | Design | Produces data schemas and file structures | Step 2 |
+| Developer | Implementation | Writes code following project conventions | Step 3 |
+| Tester | Testing | Creates and runs tests until they pass | Step 4 |
+| Orchestrator | Full Lifecycle | Coordinates all agents end-to-end | Step 5 |
 
-You also used these agents together to deliver a new feature from plan through tested code.
+You also used these agents together to deliver a new feature from plan through tested code, covering every phase of the software development lifecycle.
 
 ## ⌨️ Activity: Finish the workshop
 

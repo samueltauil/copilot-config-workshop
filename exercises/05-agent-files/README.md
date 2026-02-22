@@ -2,6 +2,8 @@
 
 **SDLC Phase: Full Lifecycle**
 
+> **Why this matters:** Real software development is not a series of isolated steps. Features flow from planning through design, implementation, and testing. Each phase produces artifacts that the next phase consumes. An orchestrator coordinates these phases so nothing falls through the cracks. This mirrors how project managers and team leads track work across the SDLC using tools and processes.
+
 In this exercise you build an **Orchestrator Agent** that coordinates the four agents you created in Exercises 1 through 4. The Orchestrator drives features through the full software development lifecycle: **Plan, Design, Develop, Test, and Document**. You also learn advanced agent properties and deliver a new feature end to end.
 
 ## Workshop Roadmap
@@ -90,15 +92,15 @@ Before building the Orchestrator, review three advanced features: the `tools` pr
 
 ### The `tools` property
 
-The `tools` array restricts which Copilot capabilities an agent can use. Omitting `tools` grants access to everything. Listing specific tools limits the agent to those capabilities only.
+The `tools` array controls what capabilities an agent has access to. Omitting `tools` grants access to everything. Listing specific tools limits the agent to those capabilities only. Think of it as defining the agent's permissions.
 
 | Approach | Syntax | Effect |
 |----------|--------|--------|
-| Unrestricted | Omit `tools` entirely | Agent can use all available tools |
+| Unrestricted | Omit `tools` entirely | Agent can use all available capabilities |
 | Restricted | `tools: ["edit", "search"]` | Agent can only edit files and search |
 | Read-only | `tools: ["search"]` | Agent can search but not modify files |
 
-Restricting tools enforces boundaries. A planner should not run code. A tester should not modify source files. Use `tools` to match each agent's role.
+Restricting tools enforces role boundaries. A planner should not run code. A tester should not modify source files directly. Use `tools` to match each agent's SDLC role.
 
 ### `#file:` references
 
@@ -118,7 +120,7 @@ Common uses for `#file:` references:
 
 ### Handoffs
 
-Handoffs chain agents together. When an agent finishes its work, it presents one or more buttons that launch the next agent in the workflow. The user clicks a button to continue, keeping full control of the pipeline.
+Handoffs chain agents together, similar to a relay race where each runner passes the baton to the next. When an agent finishes its work, it presents one or more buttons that launch the next agent in the workflow. You click a button to continue, keeping full control of the pipeline.
 
 Each handoff entry specifies:
 
@@ -237,6 +239,8 @@ All handoffs use `send: false`, which means the pre-filled prompt appears in the
 2. Open the agent dropdown.
 3. Confirm **orchestrator** appears in the list.
 
+> ![Screenshot: Copilot Chat agent dropdown showing the orchestrator agent alongside the other four agents](https://github.com/user-attachments/assets/copilot-orchestrator-dropdown.png)
+
 If it does not appear, reload the VS Code window: press `Ctrl+Shift+P` (or `Cmd+Shift+P` on macOS) and type **Reload Window**.
 
 ---
@@ -271,7 +275,9 @@ After the Orchestrator summarizes the plan, you see four buttons at the bottom o
 
 **1. Plan the feature** → **2. Design the architecture** → **3. Implement the feature** → **4. Test the feature**
 
-Click each button in order. Each handoff pre-fills a prompt and switches to the named agent. Review the prompt and press Enter to run it.
+> ![Screenshot: Copilot Chat showing the Orchestrator response with four handoff buttons at the bottom](https://github.com/user-attachments/assets/copilot-orchestrator-handoffs.png)
+
+Click each button in order. Each handoff pre-fills a prompt and switches to the named agent. Review the prompt and press Enter to run it. You stay in control at every step.
 
 **Phase 1: Plan (Planner Agent)**
 
@@ -327,7 +333,7 @@ You should see changes in:
 
 ## When to Use What
 
-You have now seen four types of Copilot customization files. Each serves a different purpose.
+You have now seen four types of Copilot customization files. Each serves a different purpose in the SDLC.
 
 | File type | Extension | Purpose | Activation |
 |-----------|-----------|---------|------------|
@@ -357,12 +363,12 @@ You have now seen four types of Copilot customization files. Each serves a diffe
 
 ### Combining all four
 
-The most effective setup uses all four together:
+The most effective setup uses all four together. This mirrors a mature SDLC where standards, processes, roles, and handoffs are all defined:
 
-1. **Instructions** set the baseline rules for code style and conventions.
-2. **Prompt files** encode common workflows that any developer can trigger.
-3. **Agents** create specialized roles that each follow instructions and can invoke prompts.
-4. **Handoffs** chain agents in a guided pipeline, so the user clicks through each phase instead of switching agents manually.
+1. **Instructions** set the baseline rules for code style and conventions (Design phase).
+2. **Prompt files** encode common workflows that any team member can trigger (Testing, QA).
+3. **Agents** create specialized roles that each follow instructions and can invoke prompts (every SDLC phase).
+4. **Handoffs** chain agents in a guided pipeline, so you click through each phase instead of switching agents manually (Full Lifecycle).
 
 The Orchestrator agent demonstrates this combination. It uses `handoffs:` to present a one-click pipeline, references instruction files via `#file:`, and coordinates multiple specialized agents.
 
@@ -447,15 +453,15 @@ Check `package.json` for unexpected dependencies. This workshop uses only built-
 
 You have now built all five SDLC agents:
 
-| Agent | SDLC Phase | Copilot Concept |
-|-------|------------|----------------|
-| Planner | Planning | Prompt engineering |
-| Architect | Design | Custom instructions |
-| Developer | Implementation | Path-specific instructions |
-| Tester | Testing | Prompt files |
-| Orchestrator | Full lifecycle | Agent files and orchestration |
+| Agent | SDLC Phase | Copilot Concept | What it does |
+|-------|------------|----------------|--------------|
+| Planner | Planning | Prompt engineering | Generates project plans and user stories |
+| Architect | Design | Custom instructions | Produces data schemas and file structures |
+| Developer | Implementation | Path-specific instructions | Writes code following directory-level conventions |
+| Tester | Testing | Prompt files | Creates and runs tests until they pass |
+| Orchestrator | Full lifecycle | Agent files and orchestration | Coordinates all agents end-to-end |
 
-Together these agents form a complete workflow. The Orchestrator coordinates the others to deliver features from plan through tested implementation.
+Together these agents form a complete workflow. The Orchestrator coordinates the others to deliver features from plan through tested implementation, covering every phase of the SDLC.
 
 ## Key Takeaways
 

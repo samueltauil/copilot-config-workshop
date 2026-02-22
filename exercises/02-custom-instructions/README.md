@@ -1,6 +1,8 @@
-# Exercise 02: Custom Instructions — Build an Architect Agent
+# Exercise 02: Custom Instructions - Build an Architect Agent
 
 **SDLC Phase: Design & Architecture**
+
+> **Why this matters:** After planning, the Design phase translates requirements into technical decisions. This is where teams choose technologies, define data structures, and agree on coding standards. Copilot can help by enforcing these decisions automatically, so every suggestion already follows your project conventions without repeating instructions in every prompt.
 
 In this exercise you create repository-wide custom instructions and build an **Architect Agent** that turns a project plan into a data schema. You learn how `.github/copilot-instructions.md` works, what to include in it, and how to verify that Copilot loads it.
 
@@ -15,6 +17,7 @@ In this exercise you create repository-wide custom instructions and build an **A
 - Know what to include and what to avoid in custom instructions
 - Build an Architect Agent that reads a project plan and produces a data schema
 - Verify Copilot references your instructions using the **Used n references** panel
+- Connect the Design phase of the SDLC to Copilot configuration
 
 ---
 
@@ -30,7 +33,7 @@ In this exercise you create repository-wide custom instructions and build an **A
 
 ### What are custom instructions?
 
-The file `.github/copilot-instructions.md` gives Copilot persistent, project-wide context. Instead of repeating "use ES modules" or "follow our error handling patterns" in every prompt, you write it once. Copilot applies it automatically to every relevant interaction.
+The file `.github/copilot-instructions.md` gives Copilot persistent, project-wide context. Instead of repeating your preferences in every prompt, you write them once. Copilot applies them automatically to every relevant interaction. Think of this file as a style guide that Copilot reads before every response.
 
 ### Where does the file live?
 
@@ -79,7 +82,7 @@ See the [official documentation](https://docs.github.com/en/copilot/customizing-
 4. Open `.github/copilot-instructions.md` and add the following content. Adjust it if your project plan specifies different conventions:
 
    ```markdown
-   # Task Manager — Project Conventions
+   # Task Manager - Project Conventions
 
    ## Language and Runtime
 
@@ -143,6 +146,8 @@ See the [official documentation](https://docs.github.com/en/copilot/customizing-
 
    If you see your instructions file listed, Copilot loaded them.
 
+   > ![Screenshot: Copilot Chat response showing the "Used n references" link expanded to list loaded instruction files](https://github.com/user-attachments/assets/copilot-used-references.png)
+
 5. Open a new chat thread and try a prompt that contradicts your instructions:
 
    ```
@@ -171,13 +176,13 @@ The Architect Agent reads a project plan and produces a data schema with file st
 
    ## Output structure
 
-   1. **Data models** — for each entity, list every property with its type,
+   1. **Data models** - for each entity, list every property with its type,
       whether it is required, and any validation rules.
-   2. **File structure** — show the complete directory tree with a one-line
+   2. **File structure** - show the complete directory tree with a one-line
       description of each file's purpose.
-   3. **Module responsibilities** — describe what each module exports and
+   3. **Module responsibilities** - describe what each module exports and
       how modules depend on each other.
-   4. **Error handling strategy** — list the error types and where they
+   4. **Error handling strategy** - list the error types and where they
       are thrown.
 
    ## Rules

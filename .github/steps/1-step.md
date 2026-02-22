@@ -2,11 +2,17 @@
 
 _SDLC Phase: **Planning & Requirements**_
 
-Over the next five exercises you build a suite of specialized Copilot agents that cover the entire software development lifecycle. Together these agents will **plan, design, implement, test, and orchestrate** a Task Manager application.
+> **Why this matters:** Every project starts with a plan. In the SDLC, the Planning phase defines what you will build, for whom, and why. Copilot can accelerate this phase by helping you brainstorm requirements, structure user stories, and draft project plans, all through natural language conversation.
+
+Over the next five exercises you build a suite of specialized Copilot agents that cover the entire software development lifecycle (SDLC). Together these agents will **plan, design, implement, test, and orchestrate** a Task Manager application.
 
 In this first step you learn [prompt engineering](https://docs.github.com/en/copilot/using-github-copilot/copilot-chat/prompt-engineering-for-copilot-chat) strategies, explore Copilot's interaction modes, and create a **Planner Agent** that generates project plans.
 
+> **What is prompt engineering?** Prompt engineering is the practice of writing clear, structured requests so that an AI assistant produces the best possible response. Think of it as giving precise instructions to a colleague.
+
 ### 📖 Theory: Copilot interaction modes
+
+Copilot offers five ways to work. Each mode fits a different situation. You do not need to memorize them all right now. The table below is a quick reference you can revisit any time.
 
 | Mode | How to access | Best for |
 |------|---------------|----------|
@@ -16,7 +22,13 @@ In this first step you learn [prompt engineering](https://docs.github.com/en/cop
 | **Agent mode** | Mode selector &rarr; **Agent** | Multi-step tasks that create, edit, and run files autonomously |
 | **Inline chat** | `Ctrl+I` / `Cmd+I` | Quick edits at the cursor without leaving the editor |
 
+> **Where is the mode selector?** Look at the top of the Copilot Chat panel. A dropdown lets you switch between Ask, Edit, and Agent modes.
+>
+> ![Screenshot: Copilot Chat mode selector showing Ask, Edit, and Agent options](https://github.com/user-attachments/assets/copilot-mode-selector.png)
+
 ### 📖 Theory: Six prompt engineering strategies
+
+Good prompts lead to good results. These six strategies help you communicate with Copilot more effectively, regardless of your technical background.
 
 | # | Strategy | Key idea |
 |---|----------|----------|
@@ -31,9 +43,13 @@ In this first step you learn [prompt engineering](https://docs.github.com/en/cop
 
 1. Open this repository in a **GitHub Codespace** (click **Code > Codespaces > Create codespace on main**). Alternatively, clone it locally and open it in VS Code.
 
-1. Verify Copilot is active: look for the Copilot icon in the VS Code status bar.
+   > ![Screenshot: GitHub Code button with Codespaces tab open](https://github.com/user-attachments/assets/codespaces-create.png)
 
-1. Open Copilot Chat by clicking the chat icon in the sidebar.
+1. Verify Copilot is active: look for the Copilot icon (a small sparkle icon) in the VS Code status bar at the bottom of the window.
+
+   > ![Screenshot: VS Code status bar showing the Copilot icon](https://github.com/user-attachments/assets/copilot-status-bar.png)
+
+1. Open Copilot Chat by clicking the chat icon in the sidebar (or press `Ctrl+Alt+I` / `Cmd+Alt+I`).
 
 ## ⌨️ Activity: Explore Copilot interaction modes
 
@@ -53,7 +69,9 @@ Try each mode briefly so you know what is available.
 
 ## ⌨️ Activity: Create the Planner Agent
 
-A custom agent is a `.agent.md` file with a YAML front matter block and a Markdown prompt body. You store agents in `.github/agents/`.
+> **What is an agent file?** An agent file is a Markdown document that gives Copilot a specialized role. It tells Copilot who it should act as, what output format to use, and what rules to follow. Think of it as a job description for your AI assistant.
+
+A custom agent is a `.agent.md` file with a YAML front matter block (a small configuration header) and a Markdown prompt body. You store agents in `.github/agents/`.
 
 1. Create the agents directory:
 

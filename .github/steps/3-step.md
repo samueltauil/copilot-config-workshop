@@ -2,24 +2,28 @@
 
 _SDLC Phase: **Implementation**_
 
+> **Why this matters:** During Implementation, different parts of the codebase serve different purposes and follow different rules. Models handle data validation, services manage business logic, and utilities provide shared helpers. Path-specific instructions let you give Copilot the right guidance for each area automatically.
+
 Your Architect Agent produced a schema and file structure. Now you turn that design into working code. In this step you create [path-specific instruction files](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot) that give Copilot different coding conventions for different parts of the codebase, then build a **Developer Agent** that generates the implementation.
 
 ### 📖 Theory: How path-specific instructions work
 
-Path-specific instruction files live in `.github/instructions/` and use the `.instructions.md` suffix. A YAML front matter block specifies which files trigger them via `applyTo`.
+Path-specific instruction files live in `.github/instructions/` and use the `.instructions.md` suffix. A YAML front matter block (the configuration header at the top of the file) specifies which files trigger them via `applyTo`.
 
 When Copilot works on a matching file, it combines:
 
 1. The repository-wide instructions from `.github/copilot-instructions.md`
 1. All matching path-specific instructions
 
-Both sets are active at the same time.
+Both sets are active at the same time. This lets you define general project conventions once and add targeted rules for specific directories.
 
 ```yaml
 ---
 applyTo: "src/models/**"
 ---
 ```
+
+> **What is a glob pattern?** The `applyTo` value uses a glob pattern, a shorthand for matching file paths. `src/models/**` means "all files inside the `src/models/` folder and its subfolders." The `**` wildcard matches any number of folders deep.
 
 ## ⌨️ Activity: Create path-specific instruction files
 
@@ -123,10 +127,10 @@ applyTo: "src/models/**"
     Read #file:docs/schema.md and implement the Task Manager application.
 
     Create these files:
-    1. src/models/task.js — Task class with validation
-    2. src/services/taskService.js — CRUD operations for tasks
-    3. src/utils/validators.js — input validation helpers
-    4. src/index.js — entry point that demonstrates all features
+    1. src/models/task.js - Task class with validation
+    2. src/services/taskService.js - CRUD operations for tasks
+    3. src/utils/validators.js - input validation helpers
+    4. src/index.js - entry point that demonstrates all features
 
     After creating all files, run src/index.js with Node.js and fix
     any errors.

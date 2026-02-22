@@ -2,6 +2,8 @@
 
 **SDLC Phase: Testing & Quality Assurance**
 
+> **Why this matters:** The Testing phase verifies that what was built actually works as intended. It catches defects before they reach users and ensures requirements are met. Testing is often time-consuming and repetitive. Copilot can automate test creation and run tests repeatedly, turning a manual task into a guided, repeatable workflow.
+
 In this exercise you create prompt files that capture reusable testing workflows, then build a **Tester Agent** that generates and runs tests automatically. The Developer Agent from Exercise 03 generated your implementation code. Before you can trust it, you need tests.
 
 ## Workshop Roadmap
@@ -41,7 +43,7 @@ After completing this exercise you will be able to:
 
 ## Understanding Prompt Files
 
-Prompt files let you save multi-step prompts as reusable files in your repository. You invoke them with the `/` command in Copilot Chat instead of typing the full prompt each time.
+Prompt files let you save multi-step instructions as reusable templates in your repository. Instead of typing a long prompt every time you want to generate tests, you save it once as a file and invoke it with a single command. You invoke them with the `/` command in Copilot Chat.
 
 This is different from the other Copilot customization files you have used so far:
 
@@ -50,15 +52,15 @@ This is different from the other Copilot customization files you have used so fa
 | `copilot-instructions.md` | Repo-wide conventions (how to write code) | Automatic on every request |
 | `.instructions.md` | Path-specific rules (how to write code in a directory) | Automatic when a matching file is open |
 | `.prompt.md` | Reusable workflow (what task to perform) | Manual via `/` command |
-| `.agent.md` | Specialized Copilot personality with tool restrictions | Manual via agent dropdown |
+| `.agent.md` | Specialized Copilot personality with role and rules | Manual via agent dropdown |
 
-Instructions tell Copilot **how** to do things. Prompt files tell Copilot **what** to do.
+Instructions tell Copilot **how** to do things. Prompt files tell Copilot **what** to do. This distinction is important for building effective workflows.
 
 Prompt files:
 
 - Live inside `.github/prompts/`
 - Use the `.prompt.md` file name suffix
-- Start with a YAML front matter block followed by a Markdown prompt body
+- Start with a YAML front matter block (a configuration header between `---` markers) followed by a Markdown prompt body
 - Can reference workspace files using Markdown links for additional context
 
 For the full reference, see [Creating prompt files](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot#creating-prompt-files).
@@ -208,6 +210,8 @@ Your `.github/prompts/` directory should now contain two files:
 1. Open Copilot Chat in VS Code.
 2. Type `/` in the prompt box.
 3. You should see **generate-tests** and **test-edge-cases** in the list.
+
+> ![Screenshot: Copilot Chat showing the slash command menu with generate-tests and test-edge-cases prompt files](https://github.com/user-attachments/assets/copilot-slash-commands.png)
 
 If the prompts do not appear, reload the VS Code window: press `Ctrl+Shift+P` (or `Cmd+Shift+P` on macOS) and type **Reload Window**.
 
@@ -425,19 +429,25 @@ The key principle: never skip or delete a failing test. Always fix the root caus
 
 ## Review: How Prompt Files Fit the Copilot Configuration Stack
 
+Each layer of Copilot configuration serves a different purpose, and they all work together to support the SDLC:
+
 ```
 ┌──────────────────────────────────────────────────────────┐
 │  .github/copilot-instructions.md                         │
 │  (Repo-wide: applies to ALL requests)                    │
+│  → Sets project-wide standards (Design phase)            │
 ├──────────────────────────────────────────────────────────┤
 │  .github/instructions/*.instructions.md                  │
 │  (Path-specific: applies when matching files are open)   │
+│  → Guides implementation by directory (Implementation)   │
 ├──────────────────────────────────────────────────────────┤
 │  .github/prompts/*.prompt.md                             │
 │  (Prompt files: invoked manually with /)                 │
+│  → Encodes repeatable workflows (Testing, QA)            │
 ├──────────────────────────────────────────────────────────┤
 │  .github/agents/*.agent.md                               │
 │  (Custom agents: selected from agent dropdown)           │
+│  → Specialized roles for each SDLC phase                 │
 └──────────────────────────────────────────────────────────┘
 ```
 

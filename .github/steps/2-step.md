@@ -2,11 +2,13 @@
 
 _SDLC Phase: **Design & Architecture**_
 
+> **Why this matters:** After planning, the Design phase translates requirements into technical decisions: what data structures to use, how to organize code, and what patterns to follow. Copilot can help by applying your team's standards automatically, so every suggestion already follows your project conventions.
+
 Your Planner Agent produced a project plan. Now you need to turn that plan into a concrete data schema and file structure. In this step you create [repository-wide custom instructions](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot) that standardize how Copilot writes code in this project, then build an **Architect Agent** that designs the data model.
 
 ### 📖 Theory: What are custom instructions?
 
-The file `.github/copilot-instructions.md` gives Copilot persistent, project-wide context. Instead of repeating "use ES modules" or "follow our error handling patterns" in every prompt, you write it once and Copilot applies it automatically.
+The file `.github/copilot-instructions.md` gives Copilot persistent, project-wide context. Instead of repeating your preferences in every prompt, you write them once and Copilot applies them automatically. Think of this file as a style guide that Copilot reads before every response.
 
 Key facts:
 
@@ -22,7 +24,7 @@ Key facts:
 1. Open `.github/copilot-instructions.md` and replace its contents with project-specific conventions. Use the following as a starting point and adjust based on your project plan:
 
     ```markdown
-    # Task Manager — Project Conventions
+    # Task Manager - Project Conventions
 
     ## Language and Runtime
 
@@ -65,7 +67,9 @@ Key facts:
     Write a function that creates a new task object with default values.
     ```
 
-1. Click the **Used n references** link at the top of the response. Confirm `.github/copilot-instructions.md` appears in the list. The response should follow your conventions (ES modules, single quotes, JSDoc).
+1. Click the **Used n references** link at the top of the response. Confirm `.github/copilot-instructions.md` appears in the list. The response should follow your conventions.
+
+    > ![Screenshot: Copilot Chat response showing the "Used n references" link expanded to list loaded instruction files](https://github.com/user-attachments/assets/copilot-used-references.png)
 
 ## ⌨️ Activity: Create the Architect Agent
 
@@ -83,13 +87,13 @@ Key facts:
 
     ## Output structure
 
-    1. **Data models** — for each entity, list every property with its type,
+    1. **Data models** - for each entity, list every property with its type,
        whether it is required, and any validation rules.
-    2. **File structure** — show the complete directory tree with a one-line
+    2. **File structure** - show the complete directory tree with a one-line
        description of each file's purpose.
-    3. **Module responsibilities** — describe what each module exports and
+    3. **Module responsibilities** - describe what each module exports and
        how modules depend on each other.
-    4. **Error handling strategy** — list the error types and where they
+    4. **Error handling strategy** - list the error types and where they
        are thrown.
 
     ## Rules

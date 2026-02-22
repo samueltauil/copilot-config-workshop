@@ -2,6 +2,8 @@
 
 **SDLC Phase: Planning & Requirements**
 
+> **Why this matters:** Every project starts with a plan. In the SDLC, the Planning phase defines what you will build, for whom, and why. Before any code is written, teams gather requirements, write user stories, and outline priorities. Copilot can accelerate this phase by helping you brainstorm features, structure requirements, and draft project plans, all through natural language conversation.
+
 In this exercise you learn how to communicate with GitHub Copilot and build a **Planner Agent** that generates structured project plans. The Planner Agent is the first of five agents you create across this workshop. Together these agents cover the full software development lifecycle: **plan, design, implement, test, and orchestrate**.
 
 ## Workshop Roadmap
@@ -22,8 +24,8 @@ After completing this exercise you will be able to:
 
 - Identify the five Copilot interaction modes and choose the right one for a task
 - Apply six prompt engineering strategies to get better results from Copilot
-- Create a custom agent file (`.agent.md`) with YAML front matter
-- Use an agent to generate structured Markdown output
+- Create a custom agent file (`.agent.md`) with a configuration header and prompt body
+- Use an agent to generate a structured project plan for the Planning phase of the SDLC
 
 ## Prerequisites
 
@@ -55,13 +57,19 @@ All five exercises build toward the same application. Here is the scope:
 
 ## Copilot Interaction Modes
 
-Copilot offers five ways to interact. Each mode fits different tasks.
+Copilot offers five ways to interact. Each mode fits different tasks. You do not need to memorize them all right now. The table below is a quick reference you can revisit any time.
+
+> **Where is the mode selector?** Look at the top of the Copilot Chat panel. A dropdown lets you switch between Ask, Edit, and Agent modes.
+>
+> ![Screenshot: Copilot Chat mode selector showing Ask, Edit, and Agent options](https://github.com/user-attachments/assets/copilot-mode-selector.png)
 
 ### Inline Suggestions
 
-Start typing in the editor and Copilot shows grey ghost text. Press `Tab` to accept or `Esc` to dismiss.
+Start typing in the editor and Copilot shows grey ghost text (a suggestion that appears in lighter color). Press `Tab` to accept or `Esc` to dismiss.
 
 **Best for:** Completing lines, finishing functions, writing repetitive code.
+
+> ![Screenshot: VS Code editor showing grey ghost text from Copilot inline suggestion](https://github.com/user-attachments/assets/copilot-inline-suggestion.png)
 
 **Try it:** Open `exercises/01-prompt-engineering/starter.js` and type the following on a new line:
 
@@ -93,7 +101,9 @@ Switch the mode selector in Copilot Chat to **Edit**. Copilot makes targeted cha
 
 Switch the mode selector to **Agent**. Copilot performs multi-step tasks: creating files, editing code, and running commands autonomously.
 
-**Best for:** Complex tasks that span multiple files or require running commands.
+**Best for:** Complex tasks that span multiple files or require running commands. In the SDLC context, this is the mode you use to have specialized agents (like the Planner) do their work.
+
+> ![Screenshot: Copilot Chat in Agent mode showing the agent dropdown with available agents](https://github.com/user-attachments/assets/copilot-agent-mode.png)
 
 ### Inline Chat
 
@@ -210,7 +220,9 @@ Continue the conversation until the output matches your needs.
 
 ## Step by Step: Create the Planner Agent
 
-Agent files live in `.github/agents/` and use the `.agent.md` extension. Each file has a YAML front matter block followed by a Markdown prompt body.
+> **What is an agent file?** An agent file is a Markdown document that gives Copilot a specialized role. It tells Copilot who it should act as, what output format to use, and what rules to follow. Think of it as a job description for your AI assistant.
+
+Agent files live in `.github/agents/` and use the `.agent.md` extension. Each file has a YAML front matter block (a small configuration header between `---` markers) followed by a Markdown prompt body.
 
 ### 1. Create the agents directory
 
@@ -250,13 +262,13 @@ idea, generate a comprehensive project plan in Markdown format.
 
 ### 3. Understand the YAML front matter
 
-The front matter block between `---` markers configures the agent:
+The front matter block between `---` markers configures the agent. Think of it as the agent's profile card:
 
 | Property | Required | Purpose |
 |----------|----------|---------|
 | `name` | Yes | Display name in the Copilot Chat dropdown |
 | `description` | Yes | Tells Copilot (and users) what the agent does |
-| `tools` | No | Grants the agent access to specific Copilot tools |
+| `tools` | No | Controls what capabilities the agent has access to |
 
 ### 4. Understand the prompt body
 
@@ -275,6 +287,8 @@ Writing a clear system prompt applies the same strategies you learned above: be 
 ### 1. Switch to Agent mode
 
 In Copilot Chat, open the mode selector and choose **Agent**. Then select **planner** from the agent dropdown. If the planner does not appear, reload the window (`Ctrl+Shift+P` then type **Reload Window**).
+
+> ![Screenshot: Copilot Chat showing the planner agent selected in the agent dropdown](https://github.com/user-attachments/assets/copilot-select-planner.png)
 
 ### 2. Enter the prompt
 
@@ -367,6 +381,8 @@ Follow up in the same conversation with a specific request for the missing secti
 ---
 
 ## Key Takeaways
+
+In this exercise you used Copilot to complete the **Planning phase** of the SDLC. The Planner Agent produced a project plan that defines what to build, without you needing to write any code yourself.
 
 | Strategy | What you practiced |
 |----------|--------------------|

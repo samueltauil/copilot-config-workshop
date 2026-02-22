@@ -2,11 +2,15 @@
 
 _SDLC Phase: **Full Lifecycle**_
 
+> **Why this matters:** Real software development is not a series of isolated steps. Features flow from planning through design, implementation, and testing. An orchestrator coordinates these phases so nothing falls through the cracks. This mirrors how teams use project management tools to track work across the SDLC.
+
 You now have four agents that each own one phase of the software development lifecycle: **Planner** (plan), **Architect** (design), **Developer** (implement), and **Tester** (test). In this final exercise you create an **Orchestrator Agent** that uses **handoffs** to chain all four agents into a guided pipeline, and then prove it works by delivering a new feature end-to-end.
 
 ### 📖 Theory: Bringing agents together
 
-Each agent file you created teaches Copilot a specialized role. An orchestrator agent ties them together using the `handoffs:` front matter property. Handoffs create one-click buttons in Copilot Chat. Each button pre-fills a prompt and switches to the named agent. The user clicks each button in order to move the feature through the full lifecycle.
+Each agent file you created teaches Copilot a specialized role. An orchestrator agent ties them together using the `handoffs:` front matter property. Handoffs create one-click buttons in Copilot Chat. Each button pre-fills a prompt and switches to the named agent. You click each button in order to move the feature through the full lifecycle.
+
+> **Think of it like a relay race.** Each agent runs one leg and then passes the baton to the next. The orchestrator is the coach who organizes the handoffs.
 
 | Agent | SDLC Phase | Key Artifacts |
 |-------|-----------|---------------|
@@ -16,13 +20,15 @@ Each agent file you created teaches Copilot a specialized role. An orchestrator 
 | Tester | Testing | `tests/**/*.test.js` |
 | **Orchestrator** | **Full lifecycle** | **Coordinates all of the above** |
 
+> ![Screenshot: Copilot Chat showing the Orchestrator agent with four handoff buttons labeled Plan, Design, Develop, and Test](https://github.com/user-attachments/assets/copilot-orchestrator-handoffs.png)
+
 Agent files support these advanced properties:
 
 | Property | Purpose |
 |----------|---------|
-| `tools` | Restrict the agent to specific tools (e.g., `["read", "edit", "runInTerminal"]`) |
-| `#file:` references | Attach other files as context inside the agent prompt body |
-| `handoffs` | Define buttons that chain to the next agent with a pre-filled prompt |
+| `tools` | Controls what the agent can do (e.g., read files, edit files, run commands) |
+| `#file:` references | Attaches other files as context inside the agent prompt body |
+| `handoffs` | Creates buttons that switch to the next agent with a pre-filled prompt |
 
 ## ⌨️ Activity: Review your agents
 
@@ -105,12 +111,12 @@ Use the Orchestrator to add **task categories** to the Task Manager.
 
 1. After the Orchestrator summarizes the plan, click the handoff buttons in order:
 
-    - **1. Plan the feature** — The Planner Agent updates `docs/project-plan.md`.
-    - **2. Design the architecture** — The Architect Agent updates `docs/schema.md`.
-    - **3. Implement the feature** — The Developer Agent implements the feature in `src/`.
-    - **4. Test the feature** — The Tester Agent writes and runs tests in `tests/`.
+    - **1. Plan the feature** - The Planner Agent updates `docs/project-plan.md`.
+    - **2. Design the architecture** - The Architect Agent updates `docs/schema.md`.
+    - **3. Implement the feature** - The Developer Agent implements the feature in `src/`.
+    - **4. Test the feature** - The Tester Agent writes and runs tests in `tests/`.
 
-    Each button pre-fills a prompt. Review it and press Enter to run it.
+    Each button pre-fills a prompt. Review it and press Enter to run it. You stay in control at every step.
 
 1. **Verify the full suite:**
 

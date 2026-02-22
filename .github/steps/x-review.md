@@ -6,16 +6,16 @@ _Congratulations! You have completed the GitHub Copilot Configuration Workshop._
 
 Here is a recap of your accomplishments:
 
-- Applied prompt engineering strategies and explored five Copilot interaction modes
-- Built a **Planner Agent** that generates structured project plans
-- Created `.github/copilot-instructions.md` to standardize project conventions
+- Explored five Copilot interaction modes and applied prompt engineering strategies
+- Built a **Planner Agent** that generates structured project plans (Planning phase)
+- Created `.github/copilot-instructions.md` to standardize project conventions (Design phase)
 - Built an **Architect Agent** that reads plans and produces data schemas
-- Created path-specific instruction files for models, services, and utilities
-- Built a **Developer Agent** that turns schemas into working implementation code
-- Created reusable prompt files (`.prompt.md`) for test generation workflows
+- Created path-specific instruction files for models, services, and utilities (Implementation phase)
+- Built a **Developer Agent** that turns schemas into working code
+- Created reusable prompt files (`.prompt.md`) for test generation workflows (Testing phase)
 - Built a **Tester Agent** that generates, runs, and iterates on test suites
-- Built an **Orchestrator Agent** that coordinates the full software development lifecycle
-- Delivered a new feature end-to-end: plan, design, implement, test, and document
+- Built an **Orchestrator Agent** that coordinates the full software development lifecycle (Full Lifecycle)
+- Delivered a new feature end-to-end across all SDLC phases: plan, design, implement, and test
 
 ### What's next?
 
