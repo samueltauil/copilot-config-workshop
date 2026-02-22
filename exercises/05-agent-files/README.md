@@ -4,7 +4,7 @@
 
 > **Why this matters:** Real software development is not a series of isolated steps. Features flow from planning through design, implementation, and testing. Each phase produces artifacts that the next phase consumes. An orchestrator coordinates these phases so nothing falls through the cracks. This mirrors how project managers and team leads track work across the SDLC using tools and processes.
 
-In this exercise you build an **Orchestrator Agent** that coordinates the four agents you created in Exercises 1 through 4. The Orchestrator drives features through the full software development lifecycle: **Plan, Design, Develop, Test, and Document**. You also learn advanced agent properties and deliver a new feature end to end.
+In this exercise, you build an **Orchestrator Agent** that coordinates the four agents you created in Exercises 1 through 4. The Orchestrator drives features through the full software development lifecycle: **Plan, Design, Develop, and Test**. You also learn advanced agent properties and deliver a new feature end to end.
 
 ## Workshop Roadmap
 

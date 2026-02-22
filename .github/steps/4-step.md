@@ -1,10 +1,10 @@
-## Step 4: Prompt Files &mdash; Build a Tester Agent
+## Step 4: Prompt Files - Build a Tester Agent
 
 _SDLC Phase: **Testing & Quality Assurance**_
 
 > **Why this matters:** The Testing phase verifies that what was built actually works as intended. It catches defects before they reach users. Copilot can automate test creation and run tests repeatedly, turning a time-consuming manual task into a guided, repeatable workflow.
 
-The Developer Agent generated your implementation code. Before you can trust it, you need tests. In this step you create [prompt files](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot#creating-prompt-files) that capture reusable testing workflows, then build a **Tester Agent** that generates and runs tests automatically.
+The Developer Agent generated your implementation code. Before you can trust it, you need tests. In this step, you create [prompt files](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot#creating-prompt-files) that capture reusable testing workflows, then build a **Tester Agent** that generates and runs tests automatically.
 
 ### 📖 Theory: How prompt files work
 

@@ -1,10 +1,10 @@
-## Step 5: Agent Orchestration &mdash; Build an Orchestrator Agent
+## Step 5: Agent Orchestration - Build an Orchestrator Agent
 
 _SDLC Phase: **Full Lifecycle**_
 
 > **Why this matters:** Real software development is not a series of isolated steps. Features flow from planning through design, implementation, and testing. An orchestrator coordinates these phases so nothing falls through the cracks. This mirrors how teams use project management tools to track work across the SDLC.
 
-You now have four agents that each own one phase of the software development lifecycle: **Planner** (plan), **Architect** (design), **Developer** (implement), and **Tester** (test). In this final exercise you create an **Orchestrator Agent** that uses **handoffs** to chain all four agents into a guided pipeline, and then prove it works by delivering a new feature end-to-end.
+You now have four agents that each own one phase of the software development lifecycle: **Planner** (plan), **Architect** (design), **Developer** (implement), and **Tester** (test). In this final exercise, you create an **Orchestrator Agent** that uses **handoffs** to chain all four agents into a guided pipeline, and then prove it works by delivering a new feature end-to-end.
 
 ### 📖 Theory: Bringing agents together
 

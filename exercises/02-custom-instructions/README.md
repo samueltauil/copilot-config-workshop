@@ -4,7 +4,7 @@
 
 > **Why this matters:** After planning, the Design phase translates requirements into technical decisions. This is where teams choose technologies, define data structures, and agree on coding standards. Copilot can help by enforcing these decisions automatically, so every suggestion already follows your project conventions without repeating instructions in every prompt.
 
-In this exercise you create repository-wide custom instructions and build an **Architect Agent** that turns a project plan into a data schema. You learn how `.github/copilot-instructions.md` works, what to include in it, and how to verify that Copilot loads it.
+In this exercise, you create repository-wide custom instructions and build an **Architect Agent** that turns a project plan into a data schema. You learn how `.github/copilot-instructions.md` works, what to include in it, and how to verify that Copilot loads it.
 
 **Duration:** ~30 minutes
 

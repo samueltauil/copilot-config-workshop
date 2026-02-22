@@ -2,9 +2,9 @@
 
 **SDLC Phase: Implementation**
 
-> **Why this matters:** During Implementation, different parts of the codebase serve different purposes and follow different rules. Models handle data validation, services manage business logic, and utilities provide shared helpers. Path-specific instructions let you give Copilot the right guidance for each area automatically, just as a team lead might assign different coding guidelines to different modules.
+> **Why this matters:** During Implementation, different parts of the codebase serve different purposes and follow different rules. Models handle data validation, services manage business logic, and utilities provide shared helpers. Path-specific instructions let you give Copilot the right guidance for each area automatically, similar to how a team lead assigns different coding guidelines to different modules.
 
-In this exercise you create path-specific instruction files that give Copilot different coding conventions for different parts of your codebase. You then build a Developer Agent that reads the schema from Exercise 02 and generates a working implementation.
+In this exercise, you create path-specific instruction files that give Copilot different coding conventions for different parts of your codebase. You then build a Developer Agent that reads the schema from Exercise 02 and generates a working implementation.
 
 ---
 
@@ -12,7 +12,7 @@ In this exercise you create path-specific instruction files that give Copilot di
 
 - Create path-specific instruction files (`.instructions.md`) with YAML front matter.
 - Use `applyTo` glob patterns to target specific directories.
-- Understand how Copilot combines repo-wide and path-specific instructions.
+- Understand how Copilot combines repository-wide and path-specific instructions.
 - Build a Developer Agent that follows directory-level conventions.
 
 ---
@@ -31,7 +31,7 @@ Repository-wide instructions apply to every Copilot request. Path-specific instr
 
 When Copilot works on a matching file, it combines:
 
-1. The repo-wide instructions from `.github/copilot-instructions.md`
+1. The repository-wide instructions from `.github/copilot-instructions.md`
 2. All matching path-specific instructions from `.github/instructions/`
 
 Both sets are active at the same time. This lets you define general project conventions once and add targeted rules for specific directories.
@@ -175,7 +175,7 @@ Each file targets a different subdirectory under `src/`. When Copilot generates 
 
 ## Step 6: Create the Developer Agent
 
-The Developer Agent reads a schema document and generates implementation code. It follows the conventions in your repo-wide and path-specific instructions.
+The Developer Agent reads a schema document and generates implementation code. It follows the conventions in your repository-wide and path-specific instructions.
 
 1. Create the agents directory if it does not exist:
 
@@ -305,7 +305,7 @@ If any checklist item fails, open the file and ask Copilot to fix it. The path-s
 
 ## Step 10: Confirm Instruction Layering
 
-Verify that Copilot loads both repo-wide and path-specific instructions.
+Verify that Copilot loads both repository-wide and path-specific instructions.
 
 1. Open `src/models/task.js` in the editor.
 2. Open Copilot Chat and ask:
@@ -317,10 +317,10 @@ Verify that Copilot loads both repo-wide and path-specific instructions.
 3. Click the **Used n references** link at the top of the response.
 4. You should see both:
 
-   - `.github/copilot-instructions.md` (repo-wide)
+   - `.github/copilot-instructions.md` (repository-wide)
    - `.github/instructions/models.instructions.md` (path-specific)
 
-   > ![Screenshot: Copilot Chat "Used n references" panel showing both repo-wide and path-specific instruction files loaded](https://github.com/user-attachments/assets/copilot-instruction-layering.png)
+   > ![Screenshot: Copilot Chat "Used n references" panel showing both repository-wide and path-specific instruction files loaded](https://github.com/user-attachments/assets/copilot-instruction-layering.png)
 
 5. Now open `src/services/taskService.js` and ask a similar question. The references should show `services.instructions.md` instead of `models.instructions.md`.
 
@@ -371,7 +371,7 @@ After you push, the workflow checks your work and posts the next step.
 ```
 ┌──────────────────────────────────────────────────────────┐
 │  .github/copilot-instructions.md                         │
-│  (Repo-wide: applies to ALL Copilot requests)            │
+│  (Repository-wide: applies to ALL Copilot requests)            │
 ├──────────────────────────────────────────────────────────┤
 │                                                          │
 │  .github/instructions/models.instructions.md             │

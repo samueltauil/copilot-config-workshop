@@ -1,12 +1,12 @@
-## Step 1: Prompt Engineering &mdash; Build a Planner Agent
+## Step 1: Prompt Engineering - Build a Planner Agent
 
 _SDLC Phase: **Planning & Requirements**_
 
 > **Why this matters:** Every project starts with a plan. In the SDLC, the Planning phase defines what you will build, for whom, and why. Copilot can accelerate this phase by helping you brainstorm requirements, structure user stories, and draft project plans, all through natural language conversation.
 
-Over the next five exercises you build a suite of specialized Copilot agents that cover the entire software development lifecycle (SDLC). Together these agents will **plan, design, implement, test, and orchestrate** a Task Manager application.
+Over the next five exercises you build a suite of specialized Copilot agents that cover the entire software development lifecycle (SDLC). Together, these agents will **plan, design, implement, test, and orchestrate** a Task Manager application.
 
-In this first step you learn [prompt engineering](https://docs.github.com/en/copilot/using-github-copilot/copilot-chat/prompt-engineering-for-copilot-chat) strategies, explore Copilot's interaction modes, and create a **Planner Agent** that generates project plans.
+In this first step, you learn [prompt engineering](https://docs.github.com/en/copilot/using-github-copilot/copilot-chat/prompt-engineering-for-copilot-chat) strategies, explore Copilot's interaction modes, and create a **Planner Agent** that generates project plans.
 
 > **What is prompt engineering?** Prompt engineering is the practice of writing clear, structured requests so that an AI assistant produces the best possible response. Think of it as giving precise instructions to a colleague.
 

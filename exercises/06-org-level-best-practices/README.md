@@ -28,7 +28,7 @@ Any repository in the organization inherits these files automatically.
 
 The table below shows each configuration file type and its path at both levels.
 
-| File type | Repository-level path | Org-level path (in the `.github` repo) |
+| File type | Repository-level path | Org-level path (in the `.github` repository) |
 |-----------|----------------------|----------------------------------------|
 | Custom instructions | `.github/copilot-instructions.md` | `.github/copilot-instructions.md` |
 | Path-specific instructions | `.github/instructions/*.instructions.md` | `.github/instructions/*.instructions.md` |

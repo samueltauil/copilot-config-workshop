@@ -1,10 +1,10 @@
-## Step 2: Custom Instructions &mdash; Build an Architect Agent
+## Step 2: Custom Instructions - Build an Architect Agent
 
 _SDLC Phase: **Design & Architecture**_
 
 > **Why this matters:** After planning, the Design phase translates requirements into technical decisions: what data structures to use, how to organize code, and what patterns to follow. Copilot can help by applying your team's standards automatically, so every suggestion already follows your project conventions.
 
-Your Planner Agent produced a project plan. Now you need to turn that plan into a concrete data schema and file structure. In this step you create [repository-wide custom instructions](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot) that standardize how Copilot writes code in this project, then build an **Architect Agent** that designs the data model.
+Your Planner Agent produced a project plan. Now you need to turn that plan into a concrete data schema and file structure. In this step, you create [repository-wide custom instructions](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot) that standardize how Copilot writes code in this project, then build an **Architect Agent** that designs the data model.
 
 ### 📖 Theory: What are custom instructions?
 

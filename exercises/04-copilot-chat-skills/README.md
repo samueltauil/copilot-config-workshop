@@ -4,7 +4,7 @@
 
 > **Why this matters:** The Testing phase verifies that what was built actually works as intended. It catches defects before they reach users and ensures requirements are met. Testing is often time-consuming and repetitive. Copilot can automate test creation and run tests repeatedly, turning a manual task into a guided, repeatable workflow.
 
-In this exercise you create prompt files that capture reusable testing workflows, then build a **Tester Agent** that generates and runs tests automatically. The Developer Agent from Exercise 03 generated your implementation code. Before you can trust it, you need tests.
+In this exercise, you create prompt files that capture reusable testing workflows, then build a **Tester Agent** that generates and runs tests automatically. The Developer Agent from Exercise 03 generated your implementation code. Before you can trust it, you need tests.
 
 ## Workshop Roadmap
 
@@ -49,7 +49,7 @@ This is different from the other Copilot customization files you have used so fa
 
 | File Type | Purpose | How It Activates |
 |-----------|---------|-----------------|
-| `copilot-instructions.md` | Repo-wide conventions (how to write code) | Automatic on every request |
+| `copilot-instructions.md` | Repository-wide conventions (how to write code) | Automatic on every request |
 | `.instructions.md` | Path-specific rules (how to write code in a directory) | Automatic when a matching file is open |
 | `.prompt.md` | Reusable workflow (what task to perform) | Manual via `/` command |
 | `.agent.md` | Specialized Copilot personality with role and rules | Manual via agent dropdown |
@@ -434,7 +434,7 @@ Each layer of Copilot configuration serves a different purpose, and they all wor
 ```
 ┌──────────────────────────────────────────────────────────┐
 │  .github/copilot-instructions.md                         │
-│  (Repo-wide: applies to ALL requests)                    │
+│  (Repository-wide: applies to ALL requests)                    │
 │  → Sets project-wide standards (Design phase)            │
 ├──────────────────────────────────────────────────────────┤
 │  .github/instructions/*.instructions.md                  │

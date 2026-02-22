@@ -1,5 +1,5 @@
-# Starter file for Exercise 4: Copilot Chat Skills
-# Use this file to practice slash commands and chat variables.
+# Starter file for Exercise 4: Prompt Files
+# Use this file to practice with Copilot prompt files and chat features.
 # Run this file with: python3 exercises/04-copilot-chat-skills/starter.py
 
 

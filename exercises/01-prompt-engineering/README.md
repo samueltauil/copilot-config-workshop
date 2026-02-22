@@ -4,7 +4,7 @@
 
 > **Why this matters:** Every project starts with a plan. In the SDLC, the Planning phase defines what you will build, for whom, and why. Before any code is written, teams gather requirements, write user stories, and outline priorities. Copilot can accelerate this phase by helping you brainstorm features, structure requirements, and draft project plans, all through natural language conversation.
 
-In this exercise you learn how to communicate with GitHub Copilot and build a **Planner Agent** that generates structured project plans. The Planner Agent is the first of five agents you create across this workshop. Together these agents cover the full software development lifecycle: **plan, design, implement, test, and orchestrate**.
+In this exercise, you learn how to communicate with GitHub Copilot and build a **Planner Agent** that generates structured project plans. The Planner Agent is the first of five agents you create across this workshop. Together, these agents cover the full software development lifecycle: **plan, design, implement, test, and orchestrate**.
 
 ## Workshop Roadmap
 
@@ -382,7 +382,7 @@ Follow up in the same conversation with a specific request for the missing secti
 
 ## Key Takeaways
 
-In this exercise you used Copilot to complete the **Planning phase** of the SDLC. The Planner Agent produced a project plan that defines what to build, without you needing to write any code yourself.
+In this exercise, you used Copilot to complete the **Planning phase** of the SDLC. The Planner Agent produced a project plan that defines what to build, without you needing to write any code yourself.
 
 | Strategy | What you practiced |
 |----------|--------------------|

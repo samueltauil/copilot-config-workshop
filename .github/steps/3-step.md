@@ -1,10 +1,10 @@
-## Step 3: Path-Specific Instructions &mdash; Build a Developer Agent
+## Step 3: Path-Specific Instructions - Build a Developer Agent
 
 _SDLC Phase: **Implementation**_
 
 > **Why this matters:** During Implementation, different parts of the codebase serve different purposes and follow different rules. Models handle data validation, services manage business logic, and utilities provide shared helpers. Path-specific instructions let you give Copilot the right guidance for each area automatically.
 
-Your Architect Agent produced a schema and file structure. Now you turn that design into working code. In this step you create [path-specific instruction files](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot) that give Copilot different coding conventions for different parts of the codebase, then build a **Developer Agent** that generates the implementation.
+Your Architect Agent produced a schema and file structure. Now you turn that design into working code. In this step, you create [path-specific instruction files](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot) that give Copilot different coding conventions for different parts of the codebase, then build a **Developer Agent** that generates the implementation.
 
 ### 📖 Theory: How path-specific instructions work
 
