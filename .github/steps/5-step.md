@@ -1,6 +1,6 @@
 ## Step 5: Creating Custom Agents
 
-Your team uses GitHub Copilot across multiple workflows: writing tests, debugging, planning implementations, and reviewing code. Instead of re-explaining the same context in every chat, you can create custom agents that specialize in each task. Each custom agent has its own identity, system prompt, and tool access.
+Your team uses GitHub Copilot across multiple workflows: writing tests, debugging, planning implementations, and reviewing code. Instead of re-explaining the same context in every chat, you can create [custom agents](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents) that specialize in each task. Each custom agent has its own identity, system prompt, and tool access.
 
 ### 📖 Theory: What are custom agents?
 
@@ -14,7 +14,15 @@ Custom agents are `.agent.md` files that create specialized Copilot assistants f
 
 Custom agents go further than instructions: they create an entirely new Copilot personality with a defined name, restricted tools, and behavioral focus.
 
-### ⌨️ Activity: Create a custom agent
+### YAML frontmatter properties
+
+| Property | Required | Description |
+|----------|----------|-------------|
+| `name` | No | Display name for the agent. Defaults to the filename. |
+| `description` | Yes | A brief explanation of what the agent does. |
+| `tools` | No | List of tools the agent can use. Omit to grant all tools. |
+
+## ⌨️ Activity: Create a test-specialist agent
 
 1. Create the agents directory:
 
@@ -22,7 +30,7 @@ Custom agents go further than instructions: they create an entirely new Copilot 
     mkdir -p .github/agents
     ```
 
-1. Create a file named `.github/agents/test-specialist.agent.md` with the following content:
+1. Create a new file at `.github/agents/test-specialist.agent.md` with the following content:
 
     ```markdown
     ---
@@ -45,19 +53,80 @@ Custom agents go further than instructions: they create an entirely new Copilot 
     patterns for the language and framework.
     ```
 
-1. Save and commit:
+1. Save the file.
+
+## ⌨️ Activity: Use the test-specialist agent
+
+1. Open Copilot Chat in VS Code. Your custom agent appears in the agent dropdown at the bottom of the chat panel.
+
+1. Select **test-specialist** from the dropdown and ask it to generate tests:
+
+    ```
+    Generate a comprehensive test file for
+    exercises/04-copilot-chat-skills/starter.py.
+    Include tests for normal inputs, edge cases (empty lists, single items),
+    and error conditions (invalid input types). Use pytest conventions.
+    Save the tests to exercises/04-copilot-chat-skills/test_starter.py.
+    ```
+
+1. Review the generated test file. Confirm it includes tests for `calculate_average`, `find_duplicates`, and `flatten`.
+
+1. Run the tests:
+
+    ```bash
+    python3 -m pytest exercises/04-copilot-chat-skills/test_starter.py -v
+    ```
+
+1. If any tests fail, stay in the test-specialist agent and paste the error output. The agent focuses exclusively on test quality and avoids modifying `starter.py`.
+
+1. Run the tests again until all pass.
+
+## ⌨️ Activity: Create additional agents (optional)
+
+You can create more agents for other tasks. Here are two examples you can try:
+
+**Debug agent** at `.github/agents/debug.agent.md`:
+
+```markdown
+---
+name: debug
+description: Systematically identifies, analyzes, and resolves bugs using a structured debugging process
+tools: ["read", "edit", "search", "runInTerminal", "runTests", "problems"]
+---
+
+You are in debug mode. Follow this process:
+1. Read error messages and stack traces
+2. Reproduce the bug by running the application or tests
+3. Trace the code execution path and form a hypothesis
+4. Make minimal, targeted fixes
+5. Run tests to verify the fix and check for regressions
+```
+
+**Implementation planner** at `.github/agents/implementation-planner.agent.md`:
+
+```markdown
+---
+name: implementation-planner
+description: Creates detailed implementation plans and technical specifications in Markdown format
+tools: ["read", "search", "edit"]
+---
+
+You are a technical planning specialist. Create implementation plans
+with clear headings, task breakdowns, and acceptance criteria. Focus
+on documentation rather than implementing code.
+```
+
+## ⌨️ Activity: Commit and push your work
+
+1. Commit and push:
 
     ```bash
     git add .github/agents/
-    git commit -m "Add test-specialist custom agent"
+    git commit -m "Add custom agents for testing and other workflows"
     git push
     ```
 
-1. In VS Code, open Copilot Chat. Your custom agent appears in the agent dropdown at the bottom of the chat panel. Select it and try a prompt.
-
-1. Create additional agents for debugging, planning, or code review. The exercise README has templates for all of these.
-
-1. Follow the full step-by-step instructions in [exercises/05-agent-files/README.md](../../exercises/05-agent-files/README.md) to complete this exercise.
+1. After you push, the workflow checks your work and posts the next step.
 
 <details>
 <summary>Having trouble? 🤷</summary><br/>
@@ -66,6 +135,7 @@ Custom agents go further than instructions: they create an entirely new Copilot 
 - Check that the YAML frontmatter is valid (correct indentation, no missing colons).
 - Verify the `description` property is present. It is required.
 - In VS Code, try reopening the chat panel or reloading the window if the agent does not appear.
-- Review the [official documentation](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents) for the full agent reference.
+- For a deeper walkthrough, see [exercises/05-agent-files/README.md](exercises/05-agent-files/README.md).
+- Browse the [awesome-copilot](https://github.com/github/awesome-copilot) community collection for more agent examples.
 
 </details>

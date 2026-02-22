@@ -5,14 +5,14 @@ _Learn to configure and use GitHub Copilot effectively through hands-on exercise
 ## Welcome
 
 - **Who is this for**: Developers who want to get the most out of GitHub Copilot.
-- **What you'll learn**: Prompt engineering, custom instructions, path-specific instructions, chat skills, agent files, and org-level best practices.
+- **What you'll learn**: Prompt engineering, custom instructions, path-specific instructions, chat skills, custom agents, and org-level best practices.
 - **What you'll build**: A fully configured Copilot setup for a multi-language repository.
 - **Prerequisites**:
   - A GitHub account with access to GitHub Copilot
   - One of the following:
     - **GitHub Codespaces** (recommended, no local setup required)
     - Visual Studio Code with the GitHub Copilot extension installed
-- **How long**: This exercise takes less than 2 hours to complete.
+- **How long**: This workshop takes approximately 2-3 hours to complete.
 
 In this exercise, you will:
 
@@ -20,7 +20,7 @@ In this exercise, you will:
 1. Create repository-wide custom instructions
 1. Add path-specific instructions for different file types
 1. Use Copilot Chat participants, commands, and variables
-1. Write agent instruction files for the Copilot coding agent
+1. Create custom agents for specialized Copilot workflows
 1. Apply org-level best practices for Copilot configuration
 
 ### How to start this exercise

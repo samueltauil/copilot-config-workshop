@@ -14,7 +14,7 @@ Key facts:
 - It does **not** apply to inline completion suggestions (ghost text).
 - Collaborators benefit from it automatically.
 
-### ⌨️ Activity: Create your custom instructions file
+## ⌨️ Activity: Create your custom instructions file
 
 1. In your repository, create the file `.github/copilot-instructions.md`.
 
@@ -55,7 +55,28 @@ Key facts:
     - Each test function should test exactly one behavior.
     ```
 
-1. Save and commit the file:
+1. Save the file.
+
+## ⌨️ Activity: Verify Copilot uses your instructions
+
+1. Open Copilot Chat and ask:
+
+    ```
+    Write a function that fetches a list of users from a REST API endpoint
+    and returns the response body as parsed JSON.
+    ```
+
+1. Review the response. Based on your custom instructions, it should:
+    - Use `import`/`export` syntax (not `require`)
+    - Use `const` for variable declarations
+    - Include a `try/catch` block
+    - Include a JSDoc comment
+
+1. Click the **Used n references** link at the top of the Copilot response. You should see `.github/copilot-instructions.md` listed. This confirms Copilot loaded your instructions.
+
+## ⌨️ Activity: Commit and push your work
+
+1. Commit and push:
 
     ```bash
     git add .github/copilot-instructions.md
@@ -63,15 +84,7 @@ Key facts:
     git push
     ```
 
-1. Open Copilot Chat and ask:
-
-    ```
-    Write a function that fetches a list of users from a REST API endpoint and returns the response body as parsed JSON.
-    ```
-
-1. Look at the **Used n references** link at the top of the Copilot response. Click it to expand the list. You should see `.github/copilot-instructions.md` listed.
-
-1. Follow the full step-by-step instructions in [exercises/02-custom-instructions/README.md](../../exercises/02-custom-instructions/README.md) to complete this exercise.
+1. After you push, the workflow checks your work and posts the next step.
 
 <details>
 <summary>Having trouble? 🤷</summary><br/>
@@ -80,5 +93,6 @@ Key facts:
 - Check that the file is not empty.
 - Try closing and reopening the Copilot Chat panel.
 - Open a new chat thread if an existing thread does not show the reference.
+- For a deeper walkthrough, see [exercises/02-custom-instructions/README.md](exercises/02-custom-instructions/README.md).
 
 </details>

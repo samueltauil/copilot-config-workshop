@@ -1,91 +1,67 @@
 ## Step 6: Org-Level Best Practices for Copilot Configuration
 
-Your organization now manages dozens of repositories. Each team has configured Copilot independently, and the configurations are drifting apart. Security teams have no way to enforce a common baseline. You need a strategy to share configuration across all repositories while still letting individual teams customize for their projects.
+Your organization now manages dozens of repositories. Each team has configured Copilot independently, and the configurations are drifting apart. You need a strategy to share configuration across all repositories while still letting individual teams customize for their projects.
 
 ### 📖 Theory: Org-level vs. repository-level configuration
 
 GitHub supports a special `.github` repository at the organization level. Files placed there serve as defaults for all repositories in the organization that do not define their own. This creates a two-level hierarchy.
 
-#### Configuration file hierarchy
-
 | File | Repository level | Org level (`.github` repository) |
 |------|-----------|---------------------------|
-| `copilot-instructions.md` | `.github/copilot-instructions.md` | `.github/copilot-instructions.md` in the org's `.github` repository |
-| Path-specific instructions | `.github/instructions/*.instructions.md` | `.github/instructions/*.instructions.md` in the org's `.github` repository |
+| `copilot-instructions.md` | `.github/copilot-instructions.md` | `.github/copilot-instructions.md` in the org's `.github` repo |
+| Path-specific instructions | `.github/instructions/*.instructions.md` | `.github/instructions/*.instructions.md` in the org's `.github` repo |
 | `AGENTS.md` | Repository root or any subdirectory | Root of the org's `.github` repository |
-| `copilot-agents.yml` | `.github/copilot-agents.yml` | `.github/copilot-agents.yml` in the org's `.github` repository |
+| Custom agents (`.agent.md`) | `.github/agents/*.agent.md` | `.github/agents/*.agent.md` in org `.github` or `.github-private` repo |
 
-**Precedence rule:** Repository-level configuration takes precedence over org-level configuration. If a repository defines its own `copilot-instructions.md`, the org-level file is not merged; the repository-level file is used exclusively for that repository.
+**Precedence rule:** Repository-level configuration takes precedence over org-level configuration. If a repository defines its own `copilot-instructions.md`, the org-level file is not merged; the repository-level file is used exclusively.
 
-#### When to use org-level configuration
+### 📖 Theory: Key best practices
 
-Use the org-level `.github` repository when:
+| Practice | Details |
+|----------|---------|
+| Scope org-level instructions to universal rules | Avoid repository-specific details in the org-level file |
+| Do not repeat org-level content in repo files | Repository-level files replace, not extend, the org-level file |
+| Use consistent naming for path-specific files | Follow the `topic.instructions.md` naming pattern |
+| Prefix org-level agent filenames with the org name | Prevents name conflicts with repository-level agents |
+| Audit loaded instructions regularly | Use the **Used n references** panel in Copilot Chat |
 
-- The same conventions apply across most or all repositories (language, style guides, security policies).
-- You want to establish a baseline that individual teams can override.
-- You manage a large number of repositories and cannot maintain per-repository configuration files.
+## ⌨️ Activity: Review your configuration hierarchy
 
-Use repository-level configuration when:
+1. Review the configuration files you created in previous steps:
+    - `.github/copilot-instructions.md` (Step 2)
+    - `.github/instructions/python.instructions.md` (Step 3)
+    - `.github/agents/*.agent.md` (Step 5)
 
-- The repository has specialized conventions that differ from the org default.
-- The repository uses a different language, framework, or toolchain.
-- The repository serves a different audience (for example, a public open-source project vs. an internal tool).
+1. For each file, identify which instructions are truly universal (suitable for an org-level file) and which are project-specific (suitable for repository-level only).
 
-### 📖 Theory: Naming conventions and file organization
-
-#### `copilot-instructions.md`
-
-- Org-level: Keep the file focused on standards that apply universally (security practices, documentation standards, code review expectations).
-- Repository-level: Add project-specific context (framework version, architecture, team conventions).
-- The repository-level `copilot-instructions.md` replaces the org-level one; it does not add to it. Do not repeat org-level content.
-
-#### Path-specific instruction files
-
-- Use consistent naming across the organization: `language.instructions.md` or `topic.instructions.md`.
-- Org-level path-specific files set baseline rules for a file type across all repositories.
-- When both an org-level and a repository-level path-specific file match the same file, Copilot receives the combined content from both. This behavior is additive and can produce conflicting instructions if not managed carefully.
-- Avoid overlapping `applyTo` patterns between org and repository files where possible to prevent conflicts.
-
-#### `AGENTS.md`
-
-- The org-level `AGENTS.md` can describe org-wide conventions and prohibited actions.
-- Repository-level `AGENTS.md` files should describe repository-specific context (build commands, test commands, repository structure).
-- The nearest `AGENTS.md` in the directory tree takes precedence for a given file path.
-
-#### `copilot-agents.yml`
-
-- Org-level custom agents are available to all repositories in the organization.
-- Repository-level custom agents are available only in the defining repository.
-- Name org-level agents with a prefix that identifies the organization (for example, `acme-security-reviewer`) to avoid name conflicts with repository-level agents.
-
-### 📖 Theory: Avoiding conflicts and duplication
-
-Follow these practices to keep org-level and repository-level files from conflicting:
-
-1. **Scope org-level instructions to universal rules.** Avoid specifics that only some repositories need.
-1. **Document the org-level file location.** Add a comment or link in repository-level files so contributors know where org defaults are defined.
-1. **Use `applyTo` patterns that do not overlap** between org and repository path-specific files unless you intend additive behavior.
-1. **Review combined instructions periodically.** Copilot Chat shows all loaded instruction files in the **Used n references** panel; use this to audit what Copilot receives.
-1. **Test instructions with representative prompts** after making changes at either level.
-
-### ⌨️ Activity: Review and document your configuration hierarchy
-
-1. Open the full exercise guide: [exercises/06-org-level-best-practices/README.md](../../exercises/06-org-level-best-practices/README.md)
-
-1. Review the configuration files you have created in previous steps:
-    - `.github/copilot-instructions.md`
-    - `.github/instructions/python.instructions.md`
-    - `.github/agents/*.agent.md`
-
-1. For each file, write a one-sentence comment at the top (as a Markdown blockquote) that describes its scope:
+1. Add a scope comment at the top of each file as a Markdown blockquote:
 
     ```markdown
     > **Scope:** This file applies to all files in this repository.
+    > An org-level version would contain: security policies, documentation standards.
     ```
 
-1. Consider what would belong in an org-level version of each file versus what should remain repository-specific. Write a brief note in each file to distinguish the two.
+## ⌨️ Activity: Design an org-level configuration
 
-1. Read the [best practices section](../../exercises/06-org-level-best-practices/README.md#best-practices-summary) of the exercise guide and confirm your understanding.
+For this activity, you do not need to create an actual org-level repository. Instead, plan what the org-level files would contain.
+
+1. Open a new file at `exercises/06-org-level-best-practices/org-level-plan.md`.
+
+1. Write a brief plan that answers these questions:
+    - What rules from your `copilot-instructions.md` would move to the org level?
+    - What rules are project-specific and must stay at the repository level?
+    - What path-specific instruction files would you create at the org level?
+    - What custom agents would you share across the organization?
+
+1. Save the file.
+
+## ⌨️ Activity: Finish the workshop
+
+1. When you have completed your review, go to the **Actions** tab in your repository on GitHub.
+
+1. Select the **Step 6** workflow from the left sidebar.
+
+1. Click **Run workflow** to complete the workshop and see the final review.
 
 <details>
 <summary>Having trouble? 🤷</summary><br/>
@@ -93,5 +69,6 @@ Follow these practices to keep org-level and repository-level files from conflic
 - The org-level `.github` repository must be named exactly `.github` under your organization.
 - Repository-level files always take precedence over org-level files; there is no merging of `copilot-instructions.md`.
 - Use the **Used n references** panel in Copilot Chat to verify which instruction files are loaded.
+- For a deeper walkthrough, see [exercises/06-org-level-best-practices/README.md](exercises/06-org-level-best-practices/README.md).
 
 </details>

@@ -196,21 +196,61 @@ This agent follows a structured debugging process. It has access to terminal, te
 1. Open GitHub Copilot Chat in VS Code.
 2. At the bottom of the chat view, click the agent dropdown.
 3. Your custom agents appear in the list with the names you defined.
-4. Select **test-specialist** and ask it to analyze test coverage:
+
+### Step 4.1: Generate and run tests with the test-specialist agent
+
+1. Select **test-specialist** from the agent dropdown.
+2. Ask it to generate a complete test suite:
 
    ```
-   Look at exercises/01-prompt-engineering/starter.js and suggest what tests
-   should be written for the existing functions.
+   Generate a comprehensive test file for exercises/04-copilot-chat-skills/starter.py.
+   Include tests for normal inputs, edge cases (empty lists, single items),
+   and error conditions (invalid input types). Use pytest conventions.
+   Save the tests to exercises/04-copilot-chat-skills/test_starter.py.
    ```
 
-5. Switch to **implementation-planner** and ask it to plan a feature:
+3. Review the generated test file. Confirm it includes tests for `calculate_average`, `find_duplicates`, and `flatten`.
+4. Run the tests from the terminal:
+
+   ```bash
+   python3 -m pytest exercises/04-copilot-chat-skills/test_starter.py -v
+   ```
+
+5. If any tests fail, stay in the test-specialist agent and paste the error output:
+
+   ```
+   These tests failed. Analyze the failures and fix the test file.
+   ```
+
+6. Run the tests again until all pass. The test-specialist agent focuses exclusively on test quality and avoids modifying the production code in `starter.py`.
+
+**Validation:** All tests pass with verbose output showing each test name and status.
+
+### Step 4.2: Ask the test-specialist to improve test coverage
+
+1. With the test-specialist agent still selected, ask:
+
+   ```
+   Review the test file at exercises/04-copilot-chat-skills/test_starter.py
+   and identify any coverage gaps. Add tests for boundary conditions I may
+   have missed.
+   ```
+
+2. Review any new tests the agent adds.
+3. Run the tests again to confirm the expanded suite still passes.
+
+### Step 4.3: Try the implementation-planner agent
+
+1. Switch to **implementation-planner** and ask it to plan a feature:
 
    ```
    Create an implementation plan for adding a new exercise about MCP servers
    to this workshop.
    ```
 
-6. Switch to **debug** and try a debugging prompt:
+### Step 4.4: Try the debug agent
+
+1. Switch to **debug** and try a debugging prompt:
 
    ```
    There is a bug in this code. The function returns undefined instead of

@@ -130,8 +130,26 @@ Slash commands are shortcuts for common actions. They eliminate the need to writ
    /tests
    ```
 3. Copilot will generate unit tests for the functions in the file.
+4. Review the generated tests. They should use `pytest` or `unittest` and cover `calculate_average`, `find_duplicates`, and `flatten`.
+5. Save the generated tests to a new file:
+   ```
+   exercises/04-copilot-chat-skills/test_starter.py
+   ```
+6. Run the tests:
+   ```bash
+   python3 -m pytest exercises/04-copilot-chat-skills/test_starter.py -v
+   ```
+   If `pytest` is not installed, use the built-in test runner:
+   ```bash
+   python3 -m unittest exercises/04-copilot-chat-skills/test_starter.py -v
+   ```
+7. If any tests fail, copy the failure output and paste it into Copilot Chat:
+   ```
+   These tests failed. Explain why and fix the test file.
+   ```
+8. Run the tests again until all pass.
 
-**Validation:** The generated tests should import the functions from `starter.py` and include at least one test per function.
+**Validation:** All tests pass. The output shows each test name and a `PASSED` or `ok` status.
 
 ### Step 2.4: Use `/doc` to add documentation
 
@@ -448,4 +466,4 @@ You used the three types of Copilot Chat special keywords and two types of custo
 
 ## Next Steps
 
-Proceed to [Exercise 5: Agent Instruction Files](../05-agent-files/README.md).
+Proceed to [Exercise 5: Creating Custom Agents](../05-agent-files/README.md).

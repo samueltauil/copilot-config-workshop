@@ -7,7 +7,7 @@ Read this file before exploring the codebase or making any changes.
 
 This repository is a workshop for learning how to configure GitHub Copilot.
 It contains six exercises covering prompt engineering, custom instructions,
-path-specific instructions, Copilot Chat skills, agent instruction files,
+path-specific instructions, Copilot Chat skills, custom agents,
 and org-level best practices. There is no application code to build or deploy.
 
 ## Repository Structure

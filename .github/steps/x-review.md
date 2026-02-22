@@ -7,14 +7,15 @@ _Congratulations! You have completed the GitHub Copilot Configuration Workshop._
 Here is a recap of your accomplishments:
 
 - Applied six prompt engineering strategies to get better responses from Copilot
+- Generated unit tests with Copilot, saved them, and ran them to verify correctness
 - Created `.github/copilot-instructions.md` to give Copilot persistent project context
-- Created path-specific instruction files in `.github/instructions/` to target specific file types
-- Used chat participants (`@workspace`, `@github`), slash commands (`/explain`, `/fix`, `/tests`), and chat variables (`#file`, `#selection`, `#codebase`) to interact with Copilot Chat
-- Created reusable prompt files (`.prompt.md`) to turn multi-step workflows into one-click actions
-- Created custom agent modes (`.agent.md`) with specialized behavior and response formats
-- Created custom agents for testing, planning, and debugging with YAML frontmatter and structured prompts
-- Used custom agents in VS Code and learned how to use them with the Copilot coding agent on GitHub.com
-- Learned best practices for managing Copilot configuration files at the organization level
+- Verified that Copilot loads custom instructions by checking the **Used n references** panel
+- Created path-specific instruction files in `.github/instructions/` targeting Python files
+- Used chat participants (`@workspace`, `@github`), slash commands (`/explain`, `/fix`, `/tests`), and chat variables (`#file`, `#selection`, `#codebase`)
+- Created reusable prompt files (`.prompt.md`) for repeatable multi-step workflows
+- Created custom agents (`.agent.md`) with specialized behavior and tool restrictions
+- Used the test-specialist agent to generate, run, and iterate on test suites
+- Learned best practices for managing Copilot configuration at the organization level
 
 ### What's next?
 

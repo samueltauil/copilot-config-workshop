@@ -1105,6 +1105,43 @@ the `calculate_average` function using pytest.</code></pre>
 </section>
 
 <!-- ============================================================
+     SLIDE 23b: Exercise 4 - Test generation workflow
+     ============================================================ -->
+<section>
+  <h2>Test Generation &amp; Execution Workflow</h2>
+  <p style="font-size:0.88rem">Copilot can generate tests, save them, and help you iterate on failures.</p>
+  <div style="display:flex; justify-content:center; gap:0.6em; margin:1em 0 0.8em; flex-wrap:wrap">
+    <div class="card" style="flex:1; min-width:140px; max-width:200px; text-align:center; padding:0.6em">
+      <div style="font-size:1.4em">1</div>
+      <p style="font-size:0.78rem; margin:0.3em 0 0"><strong>Generate</strong><br>Use <code>/tests</code> or a prompt to generate a test file</p>
+    </div>
+    <div class="card" style="flex:1; min-width:140px; max-width:200px; text-align:center; padding:0.6em">
+      <div style="font-size:1.4em">2</div>
+      <p style="font-size:0.78rem; margin:0.3em 0 0"><strong>Save</strong><br>Save tests alongside the source with a <code>.test</code> suffix</p>
+    </div>
+    <div class="card" style="flex:1; min-width:140px; max-width:200px; text-align:center; padding:0.6em">
+      <div style="font-size:1.4em">3</div>
+      <p style="font-size:0.78rem; margin:0.3em 0 0"><strong>Run</strong><br>Execute tests in the terminal and review results</p>
+    </div>
+    <div class="card" style="flex:1; min-width:140px; max-width:200px; text-align:center; padding:0.6em">
+      <div style="font-size:1.4em">4</div>
+      <p style="font-size:0.78rem; margin:0.3em 0 0"><strong>Iterate</strong><br>Paste failures into Copilot, fix, and re-run</p>
+    </div>
+  </div>
+  <pre style="margin-top:0.5em"><code class="language-text"># Step 1: Generate tests
+#file:starter.py /tests
+
+# Step 3: Run tests
+python3 -m pytest test_starter.py -v
+
+# Step 4: Fix failures
+These tests failed: [paste error]. Explain and fix.</code></pre>
+  <div class="note" style="margin-top:0.7em">
+    You practice this workflow in Exercises 1, 4, and 5.
+  </div>
+</section>
+
+<!-- ============================================================
      SLIDE 24: Exercise 4 - Prompt files
      ============================================================ -->
 <section>
@@ -1421,9 +1458,9 @@ You are a testing specialist. Your responsibilities:
         <td>Root of org <code>.github</code> repo</td>
       </tr>
       <tr>
-        <td><code>copilot-agents.yml</code></td>
-        <td><code>.github/copilot-agents.yml</code></td>
-        <td><code>.github/copilot-agents.yml</code> in org <code>.github</code> repo</td>
+        <td>Custom agents (<code>.agent.md</code>)</td>
+        <td><code>.github/agents/*.agent.md</code></td>
+        <td><code>.github/agents/*.agent.md</code> in org <code>.github-private</code> repo</td>
       </tr>
     </tbody>
   </table>
@@ -1495,14 +1532,14 @@ You are a testing specialist. Your responsibilities:
         <td>Custom agent mode for code review</td>
       </tr>
       <tr>
-        <td><code>AGENTS.md</code></td>
+        <td><code>.github/agents/test-specialist.agent.md</code></td>
         <td>05</td>
-        <td>Agent instructions for the repository root</td>
+        <td>Custom agent for test coverage and quality</td>
       </tr>
       <tr>
-        <td><code>.github/workflows/copilot-setup-steps.yml</code></td>
+        <td><code>.github/agents/implementation-planner.agent.md</code></td>
         <td>05</td>
-        <td>Coding agent environment setup</td>
+        <td>Custom agent for technical planning</td>
       </tr>
       <tr>
         <td>Org <code>.github/copilot-instructions.md</code></td>

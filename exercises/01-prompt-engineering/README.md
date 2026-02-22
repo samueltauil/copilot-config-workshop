@@ -215,6 +215,31 @@ You can also explicitly attach a file to your prompt:
 
 **Validation:** Copilot should generate test code that specifically tests the `validateEmail` function.
 
+**Step 5.3 - Generate tests and run them:**
+
+A key Copilot workflow is generating tests and then executing them to verify they pass. Practice this end-to-end flow:
+
+1. In Copilot Chat, type:
+   ```
+   #file:starter.js Write a complete test file for all functions in this file. Use the built-in Node.js assert module. Include tests for normal inputs, edge cases, and error conditions. Print a summary of passed and failed tests at the end.
+   ```
+2. Review the generated test code. Confirm it covers the functions you added during this exercise (such as `validateEmail`, `formatPhoneNumber`, `readCSVLine`, `parseEmployee`, `processCSV`).
+3. Save the generated tests to a new file:
+   ```
+   exercises/01-prompt-engineering/starter.test.js
+   ```
+4. Run the tests:
+   ```bash
+   node exercises/01-prompt-engineering/starter.test.js
+   ```
+5. If any tests fail, select the error output in the terminal, then use Copilot Chat to troubleshoot:
+   ```
+   #selection This test failed. Explain why and suggest a fix.
+   ```
+6. Fix the issue (either in the test or in the function) and run the tests again until all pass.
+
+**Validation:** All tests pass and the summary shows no failures.
+
 ---
 
 ## Strategy 6: Experiment and Iterate
