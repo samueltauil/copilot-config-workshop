@@ -444,7 +444,3 @@ The key principle: never skip or delete a failing test. Always fix the root caus
 Instructions define conventions. Prompt files define workflows. Agents define personas. Each layer serves a different purpose, and they all work together.
 
 ---
-
-## Next Steps
-
-Proceed to [Exercise 05: Agent Files and Orchestration](../05-agent-files/README.md). In that exercise you build an **Orchestrator Agent** that coordinates all five agents across the full development lifecycle.

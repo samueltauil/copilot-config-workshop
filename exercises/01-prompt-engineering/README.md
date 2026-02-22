@@ -378,7 +378,3 @@ Follow up in the same conversation with a specific request for the missing secti
 | Experiment and iterate | Refined the plan in a follow-up message |
 
 ---
-
-## Next Steps
-
-Proceed to [Exercise 2: Repository-Wide Custom Instructions](../02-custom-instructions/README.md). In that exercise you create a `copilot-instructions.md` file and build an **Architect Agent** that generates a data schema from the project plan.

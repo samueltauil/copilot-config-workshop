@@ -303,7 +303,3 @@ This repository includes a fully commented example at [example-copilot-instructi
 - Common patterns to avoid
 
 ---
-
-## Next Steps
-
-Proceed to [Exercise 03: Path-Specific Instructions](../03-path-specific-instructions/README.md).

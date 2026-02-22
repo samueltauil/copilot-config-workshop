@@ -469,7 +469,3 @@ Together these agents form a complete workflow. The Orchestrator coordinates the
 | Agents vs instructions vs prompts | Chose the right customization file for each use case |
 
 ---
-
-## Next Steps
-
-Proceed to [Exercise 6: Org-Level Best Practices](../06-org-level-best-practices/README.md).

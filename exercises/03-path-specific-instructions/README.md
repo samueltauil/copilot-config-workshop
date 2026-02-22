@@ -391,7 +391,3 @@ When you edit `src/models/task.js`, Copilot loads:
 The services and utils instructions are not loaded because the file does not match their patterns.
 
 ---
-
-## Next Steps
-
-Proceed to [Exercise 04: Prompt Files](../04-copilot-chat-skills/README.md).
