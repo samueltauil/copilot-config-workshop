@@ -12,17 +12,16 @@ In this first step, you learn [prompt engineering](https://docs.github.com/en/co
 
 ### 📖 Theory: Copilot interaction modes
 
-Copilot offers five ways to work. Each mode fits a different situation. You do not need to memorize them all right now. The table below is a quick reference you can revisit any time.
+Copilot offers four ways to work. Each mode fits a different situation. You do not need to memorize them all right now. The table below is a quick reference you can revisit any time.
 
 | Mode | How to access | Best for |
 |------|---------------|----------|
 | **Inline suggestions** | Start typing in the editor | Completing lines and functions as you code |
 | **Ask mode** | Chat panel (default mode) | Asking questions, understanding code, exploring options |
-| **Edit mode** | Mode selector &rarr; **Edit** | Making targeted changes to specific files |
 | **Agent mode** | Mode selector &rarr; **Agent** | Multi-step tasks that create, edit, and run files autonomously |
 | **Inline chat** | `Ctrl+I` / `Cmd+I` | Quick edits at the cursor without leaving the editor |
 
-> **Where is the mode selector?** Look at the top of the Copilot Chat panel. A dropdown lets you switch between Ask, Edit, and Agent modes.
+> **Where is the mode selector?** Look at the top of the Copilot Chat panel. A dropdown lets you switch between Ask and Agent modes.
 >
 > <img width="350" alt="Screenshot: Copilot Chat mode selector" src="https://raw.githubusercontent.com/skills/getting-started-with-github-copilot/main/.github/images/ask-mode-selection.png" />
 

@@ -301,7 +301,7 @@ Confirm the following before moving on:
 **The agent does not create `docs/schema.md`:**
 
 - Create the `docs/` directory manually (`mkdir -p docs`) and re-run the prompt.
-- Make sure you selected **architect** from the agent dropdown, not Ask or Edit mode.
+- Make sure you selected **architect** from the agent dropdown, not Ask mode.
 
 ---
 

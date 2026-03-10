@@ -57,11 +57,11 @@ All five exercises build toward the same application. Here is the scope:
 
 ## Copilot Interaction Modes
 
-Copilot offers five ways to interact. Each mode fits different tasks. You do not need to memorize them all right now. The table below is a quick reference you can revisit any time.
+Copilot offers four ways to interact. Each mode fits different tasks. You do not need to memorize them all right now. The table below is a quick reference you can revisit any time.
 
-> **Where is the mode selector?** Look at the top of the Copilot Chat panel. A dropdown lets you switch between Ask, Edit, and Agent modes.
+> **Where is the mode selector?** Look at the top of the Copilot Chat panel. A dropdown lets you switch between Ask and Agent modes.
 >
-> <img width="350" alt="Screenshot: Copilot Chat mode selector showing Ask, Edit, and Agent options" src="https://raw.githubusercontent.com/skills/getting-started-with-github-copilot/main/.github/images/ask-mode-selection.png" />
+> <img width="350" alt="Screenshot: Copilot Chat mode selector showing Ask and Agent options" src="https://raw.githubusercontent.com/skills/getting-started-with-github-copilot/main/.github/images/ask-mode-selection.png" />
 
 ### Inline Suggestions
 
@@ -90,12 +90,6 @@ Open Copilot Chat (click the chat icon in the sidebar). The default mode is Ask.
 ```text
 What features would a Task Manager CLI application need?
 ```
-
-### Edit Mode
-
-Switch the mode selector in Copilot Chat to **Edit**. Copilot makes targeted changes to files you specify.
-
-**Best for:** Changing specific files, refactoring code, updating documentation.
 
 ### Agent Mode
 
