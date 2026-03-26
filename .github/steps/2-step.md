@@ -57,17 +57,18 @@ Key facts:
     - Each test function tests exactly one behavior.
     ```
 
-1. Save the file.
+    > 💡 **Tip:** In Codespaces, files save automatically. If you are working locally, save with `Ctrl+S` / `Cmd+S`.
 
 ## ⌨️ Activity: Verify Copilot uses your instructions
 
 1. Open Copilot Chat (Ask mode) and type:
 
     ```
-    Write a function that creates a new task object with default values.
+    Based on the project conventions, describe the technology stack,
+    coding standards, and data model for this project.
     ```
 
-1. Click the **Used n references** link at the top of the response. Confirm `.github/copilot-instructions.md` appears in the list. The response should follow your conventions.
+1. Click the **Used n references** link at the top of the response. Confirm `.github/copilot-instructions.md` appears in the list. The response should reflect the conventions you defined (ES modules, single quotes, the Task entity properties, and so on).
 
     > 🪧 **Note:** The **Used n references** link appears at the top of each Copilot Chat response. Click it to expand the list of loaded instruction files.
     >
@@ -105,7 +106,7 @@ Key facts:
     - Save the design document to `docs/schema.md`.
     ```
 
-1. Save the file.
+    > 💡 **Tip:** In Codespaces, files save automatically. If you are working locally, save with `Ctrl+S` / `Cmd+S`.
 
 ## ⌨️ Activity: Use the Architect Agent to design the schema
 

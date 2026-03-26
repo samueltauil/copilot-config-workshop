@@ -120,7 +120,7 @@ See the [official documentation](https://docs.github.com/en/copilot/customizing-
    - Use only built-in Node.js modules (fs, path, assert, crypto, etc.).
    ```
 
-5. Save the file.
+   > 💡 **Tip:** In Codespaces, files save automatically. If you are working locally, save with `Ctrl+S` / `Cmd+S`.
 
 ---
 
@@ -131,16 +131,16 @@ See the [official documentation](https://docs.github.com/en/copilot/customizing-
 2. Select **Ask** mode and type:
 
    ```
-   Write a function that creates a new task object with default values.
+   Based on the project conventions, describe the technology stack,
+   coding standards, and data model for this project.
    ```
 
-3. Review the response. It should follow your conventions:
+3. Review the response. It should reflect the conventions you defined:
 
-   - ES module syntax (`export`)
-   - Single quotes for strings
-   - `const` for variable declarations
-   - JSDoc comment on the function
-   - A `try/catch` block if the function performs error-prone operations
+   - ES module syntax (`import`/`export`), not CommonJS
+   - Single quotes, 2-space indentation, `const` by default
+   - The Task entity with its properties and types
+   - Built-in Node.js modules only, no external dependencies
 
 4. Click the **Used n references** link at the top of the response. Expand the list and confirm `.github/copilot-instructions.md` appears.
 
@@ -148,13 +148,13 @@ See the [official documentation](https://docs.github.com/en/copilot/customizing-
 
    <img width="504" alt="Screenshot: Copilot Chat response showing the Used n references link expanded to list loaded instruction files" src="https://github.com/user-attachments/assets/2214ed9e-c165-4440-a23e-d2d33c0231a9" />
 
-5. Open a new chat thread and try a prompt that contradicts your instructions:
+5. Open a new chat thread and try a different question:
 
    ```
-   Write a function that reads a JSON file using require() and var.
+   What testing approach should this project use?
    ```
 
-   Copilot follows your explicit request. Custom instructions set defaults but do not override direct prompts.
+   The response should mention the built-in Node.js `assert` module and `.test.js` convention from your instructions.
 
 ---
 
@@ -192,7 +192,7 @@ The Architect Agent reads a project plan and produces a data schema with file st
    - Save the design document to `docs/schema.md`.
    ```
 
-2. Save the file.
+   > 💡 **Tip:** In Codespaces, files save automatically. If you are working locally, save with `Ctrl+S` / `Cmd+S`.
 
 ### How the agent file works
 
