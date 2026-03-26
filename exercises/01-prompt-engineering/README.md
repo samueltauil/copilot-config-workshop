@@ -57,9 +57,9 @@ All five exercises build toward the same application. Here is the scope:
 
 ## Copilot Interaction Modes
 
-Copilot offers four ways to interact. Each mode fits different tasks. You do not need to memorize them all right now. The table below is a quick reference you can revisit any time.
+Copilot offers five ways to interact. Each mode fits different tasks. You do not need to memorize them all right now. The table below is a quick reference you can revisit any time.
 
-> **Where is the mode selector?** Look at the top of the Copilot Chat panel. A dropdown lets you switch between Ask and Agent modes.
+> **Where is the mode selector?** Look at the top of the Copilot Chat panel. A dropdown lets you switch between Ask, Agent, and Plan modes.
 >
 > <img width="350" alt="Screenshot: Copilot Chat mode selector showing Ask and Agent options" src="https://raw.githubusercontent.com/skills/getting-started-with-github-copilot/main/.github/images/ask-mode-selection.png" />
 
@@ -97,7 +97,15 @@ Switch the mode selector to **Agent**. Copilot performs multi-step tasks: creati
 
 **Best for:** Complex tasks that span multiple files or require running commands. In the SDLC context, this is the mode you use to have specialized agents (like the Planner) do their work.
 
-<img width="350" alt="Screenshot: Copilot Chat in Agent mode showing the agent dropdown" src="https://raw.githubusercontent.com/skills/getting-started-with-github-copilot/main/.github/images/agent-mode-dropdown.png" />
+### Plan Mode
+
+Switch the mode selector to **Plan**. Copilot outlines a step-by-step plan and waits for your approval before executing any changes.
+
+**Best for:** Reviewing what Copilot intends to do before it acts. Useful when you want more control over multi-step tasks.
+
+<img width="350" alt="Screenshot: Copilot Chat in Plan mode showing the mode dropdown" src="https://raw.githubusercontent.com/skills/getting-started-with-github-copilot/main/.github/images/plan-mode-dropdown.png" />
+
+> **Why build a Planner Agent instead of using Plan mode?** Plan mode is great for one-off tasks, but it does not retain project-specific rules between conversations. A custom Planner Agent carries persistent instructions (role, output format, constraints) so every conversation starts with the same context. Agents are reusable, shareable with your team, and composable across the entire SDLC.
 
 ### Inline Chat
 
@@ -220,13 +228,11 @@ Agent files live in `.github/agents/` and use the `.agent.md` extension. Each fi
 
 ### 1. Create the agents directory
 
-```bash
-mkdir -p .github/agents
-```
+In the VS Code Explorer sidebar, right-click the `.github` folder and select **New Folder**. Name it `agents`.
 
 ### 2. Create the agent file
 
-Create a new file at `.github/agents/planner.agent.md` with the following content:
+Right-click the new `.github/agents` folder and select **New File**. Name it `planner.agent.md`. Paste the following content:
 
 ```markdown
 ---
@@ -281,8 +287,6 @@ Writing a clear system prompt applies the same strategies you learned above: be 
 ### 1. Switch to Agent mode
 
 In Copilot Chat, open the mode selector and choose **Agent**. Then select **planner** from the agent dropdown. If the planner does not appear, reload the window (`Ctrl+Shift+P` then type **Reload Window**).
-
-<img width="350" alt="Screenshot: Copilot Chat showing the plan mode dropdown" src="https://raw.githubusercontent.com/skills/getting-started-with-github-copilot/main/.github/images/plan-mode-dropdown.png" />
 
 ### 2. Enter the prompt
 

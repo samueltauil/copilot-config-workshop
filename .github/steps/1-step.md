@@ -12,18 +12,21 @@ In this first step, you learn [prompt engineering](https://docs.github.com/en/co
 
 ### 📖 Theory: Copilot interaction modes
 
-Copilot offers four ways to work. Each mode fits a different situation. You do not need to memorize them all right now. The table below is a quick reference you can revisit any time.
+Copilot offers five ways to work. Each mode fits a different situation. You do not need to memorize them all right now. The table below is a quick reference you can revisit any time.
 
 | Mode | How to access | Best for |
 |------|---------------|----------|
 | **Inline suggestions** | Start typing in the editor | Completing lines and functions as you code |
 | **Ask mode** | Chat panel (default mode) | Asking questions, understanding code, exploring options |
 | **Agent mode** | Mode selector &rarr; **Agent** | Multi-step tasks that create, edit, and run files autonomously |
+| **Plan mode** | Mode selector &rarr; **Plan** | Reviewing and approving a step-by-step plan before Copilot acts |
 | **Inline chat** | `Ctrl+I` / `Cmd+I` | Quick edits at the cursor without leaving the editor |
 
-> **Where is the mode selector?** Look at the top of the Copilot Chat panel. A dropdown lets you switch between Ask and Agent modes.
+> **Where is the mode selector?** Look at the top of the Copilot Chat panel. A dropdown lets you switch between Ask, Agent, and Plan modes.
 >
 > <img width="350" alt="Screenshot: Copilot Chat mode selector" src="https://raw.githubusercontent.com/skills/getting-started-with-github-copilot/main/.github/images/ask-mode-selection.png" />
+
+> **Plan mode vs. a Planner Agent:** Plan mode lets Copilot outline steps and wait for your approval before executing them. That is useful for one-off tasks, but it does not retain project-specific rules between conversations. A custom Planner Agent, on the other hand, carries persistent instructions (role, output format, constraints) so every conversation starts with the same context. In this workshop you build agents because they are reusable, shareable with your team, and composable across the entire SDLC.
 
 ### 📖 Theory: Six prompt engineering strategies
 
@@ -62,9 +65,7 @@ Try each mode briefly so you know what is available.
 
     Read the response. Ask mode is great for brainstorming without changing files.
 
-1. **Agent mode:** Switch the mode selector to **Agent**. You will use this mode to run the Planner Agent in the next activity.
-
-    <img width="350" alt="Screenshot: Copilot Agent mode dropdown" src="https://raw.githubusercontent.com/skills/getting-started-with-github-copilot/main/.github/images/agent-mode-dropdown.png" />
+1. **Agent mode:** Switch the mode selector to **Agent** (see the mode selector screenshot in the theory section above). You will use this mode to run the Planner Agent in the next activity.
 
 ## ⌨️ Activity: Create the Planner Agent
 
@@ -72,13 +73,11 @@ Try each mode briefly so you know what is available.
 
 A custom agent is a `.agent.md` file with a YAML front matter block (a small configuration header) and a Markdown prompt body. You store agents in `.github/agents/`.
 
-1. Create the agents directory:
+1. In the VS Code Explorer sidebar, right-click the `.github` folder and select **New Folder**. Name it `agents`.
 
-    ```bash
-    mkdir -p .github/agents
-    ```
+1. Right-click the new `.github/agents` folder and select **New File**. Name it `planner.agent.md`.
 
-1. Create a new file at `.github/agents/planner.agent.md` with this content:
+1. Paste the following content into the file:
 
     ```markdown
     ---
@@ -106,7 +105,7 @@ A custom agent is a `.agent.md` file with a YAML front matter block (a small con
     - Save the plan to `docs/project-plan.md`.
     ```
 
-1. Save the file.
+    > 💡 **Tip:** In Codespaces, files save automatically. If you are working locally, save with `Ctrl+S` / `Cmd+S`.
 
 ## ⌨️ Activity: Use the Planner Agent to generate a project plan
 
