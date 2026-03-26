@@ -94,7 +94,7 @@ Before building the orchestrator, verify the agent suite is complete.
     - Run tests after every code change.
     ```
 
-1. Save the file.
+    > 💡 **Tip:** In Codespaces, files save automatically. If you are working locally, save with `Ctrl+S` / `Cmd+S`.
 
 ## ⌨️ Activity: Add a new feature using the full lifecycle
 
