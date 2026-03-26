@@ -6,9 +6,9 @@ on:
     branches:
       - main
     paths:
-      - ".github/prompts/**"
-      - "tests/**"
       - ".github/agents/**"
+      - "!.github/agents/github-skills-creator.agent.md"
+      - "tests/**"
 
 permissions:
   contents: read

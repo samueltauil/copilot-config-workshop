@@ -6,9 +6,9 @@ on:
     branches:
       - main
     paths:
-      - ".github/copilot-instructions.md"
-      - "docs/**"
       - ".github/agents/**"
+      - "!.github/agents/github-skills-creator.agent.md"
+      - "docs/**"
 
 permissions:
   contents: read
