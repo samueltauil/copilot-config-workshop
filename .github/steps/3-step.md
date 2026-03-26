@@ -27,13 +27,9 @@ applyTo: "src/models/**"
 
 ## ⌨️ Activity: Create path-specific instruction files
 
-1. Create the instructions directory:
+1. In the VS Code Explorer sidebar, right-click the `.github` folder and select **New Folder**. Name it `instructions`.
 
-    ```bash
-    mkdir -p .github/instructions
-    ```
-
-1. Create `.github/instructions/models.instructions.md`:
+1. Right-click the new `.github/instructions` folder and select **New File**. Name it `models.instructions.md`. Paste the following content:
 
     ```markdown
     ---
@@ -50,7 +46,7 @@ applyTo: "src/models/**"
     - Add JSDoc comments to the class and every public method.
     ```
 
-1. Create `.github/instructions/services.instructions.md`:
+1. Right-click `.github/instructions` again, select **New File**, and name it `services.instructions.md`. Paste the following content:
 
     ```markdown
     ---
@@ -66,7 +62,7 @@ applyTo: "src/models/**"
     - Keep functions small. Each function handles one operation.
     ```
 
-1. Create `.github/instructions/utils.instructions.md`:
+1. Right-click `.github/instructions` again, select **New File**, and name it `utils.instructions.md`. Paste the following content:
 
     ```markdown
     ---
@@ -81,7 +77,7 @@ applyTo: "src/models/**"
     - Include at least two usage examples in each JSDoc comment.
     ```
 
-1. Save all three files.
+    > 💡 **Tip:** In Codespaces, files save automatically. If you are working locally, save with `Ctrl+S` / `Cmd+S`.
 
 ## ⌨️ Activity: Create the Developer Agent
 
@@ -115,7 +111,7 @@ applyTo: "src/models/**"
     - Add `console.log` calls in the entry point to demonstrate each feature.
     ```
 
-1. Save the file.
+    > 💡 **Tip:** In Codespaces, files save automatically. If you are working locally, save with `Ctrl+S` / `Cmd+S`.
 
 ## ⌨️ Activity: Use the Developer Agent to implement the Task Manager
 

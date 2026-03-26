@@ -78,11 +78,7 @@ The front matter block must:
 
 ## Step 1: Create the Instructions Directory
 
-1. Create the `.github/instructions/` directory if it does not already exist:
-
-   ```bash
-   mkdir -p .github/instructions
-   ```
+1. In the VS Code Explorer sidebar, right-click the `.github` folder and select **New Folder**. Name it `instructions`.
 
 ---
 
@@ -90,7 +86,7 @@ The front matter block must:
 
 This file tells Copilot how to write code for the `src/models/` directory.
 
-1. Create `.github/instructions/models.instructions.md` with the following content:
+1. Right-click the new `.github/instructions` folder and select **New File**. Name it `models.instructions.md`. Paste the following content:
 
    ```markdown
    ---
@@ -107,7 +103,7 @@ This file tells Copilot how to write code for the `src/models/` directory.
    - Add JSDoc comments to the class and every public method.
    ```
 
-2. Save the file.
+   > 💡 **Tip:** In Codespaces, files save automatically. If you are working locally, save with `Ctrl+S` / `Cmd+S`.
 
 ---
 
@@ -115,7 +111,7 @@ This file tells Copilot how to write code for the `src/models/` directory.
 
 This file tells Copilot how to write code for the `src/services/` directory.
 
-1. Create `.github/instructions/services.instructions.md` with the following content:
+1. Right-click `.github/instructions`, select **New File**, and name it `services.instructions.md`. Paste the following content:
 
    ```markdown
    ---
@@ -131,7 +127,7 @@ This file tells Copilot how to write code for the `src/services/` directory.
    - Keep functions small. Each function handles one operation.
    ```
 
-2. Save the file.
+   > 💡 **Tip:** In Codespaces, files save automatically. If you are working locally, save with `Ctrl+S` / `Cmd+S`.
 
 ---
 
@@ -139,7 +135,7 @@ This file tells Copilot how to write code for the `src/services/` directory.
 
 This file tells Copilot how to write code for the `src/utils/` directory.
 
-1. Create `.github/instructions/utils.instructions.md` with the following content:
+1. Right-click `.github/instructions`, select **New File**, and name it `utils.instructions.md`. Paste the following content:
 
    ```markdown
    ---
@@ -154,7 +150,7 @@ This file tells Copilot how to write code for the `src/utils/` directory.
    - Include at least two usage examples in each JSDoc comment.
    ```
 
-2. Save the file.
+   > 💡 **Tip:** In Codespaces, files save automatically. If you are working locally, save with `Ctrl+S` / `Cmd+S`.
 
 ---
 
@@ -177,13 +173,7 @@ Each file targets a different subdirectory under `src/`. When Copilot generates 
 
 The Developer Agent reads a schema document and generates implementation code. It follows the conventions in your repository-wide and path-specific instructions.
 
-1. Create the agents directory if it does not exist:
-
-   ```bash
-   mkdir -p .github/agents
-   ```
-
-2. Create `.github/agents/developer.agent.md` with the following content:
+1. In the VS Code Explorer sidebar, right-click the `.github/agents` folder (created in Exercise 01) and select **New File**. Name it `developer.agent.md`. Paste the following content:
 
    ```markdown
    ---
@@ -213,7 +203,7 @@ The Developer Agent reads a schema document and generates implementation code. I
    - Add `console.log` calls in the entry point to demonstrate each feature.
    ```
 
-3. Save the file.
+   > 💡 **Tip:** In Codespaces, files save automatically. If you are working locally, save with `Ctrl+S` / `Cmd+S`.
 
 ---
 
