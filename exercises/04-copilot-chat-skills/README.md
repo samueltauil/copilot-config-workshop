@@ -114,11 +114,7 @@ These conventions match the constraints from Exercise 01: Node.js only, no exter
 
 ## Step 1: Create the Prompts Directory
 
-1. Create the `.github/prompts/` directory:
-
-   ```bash
-   mkdir -p .github/prompts
-   ```
+1. In the VS Code Explorer sidebar, right-click the `.github` folder and select **New Folder**. Name it `prompts`.
 
 ---
 
@@ -126,7 +122,7 @@ These conventions match the constraints from Exercise 01: Node.js only, no exter
 
 This prompt file generates a complete test file for any source module.
 
-1. Create `.github/prompts/generate-tests.prompt.md` with the following content:
+1. Right-click the new `.github/prompts` folder and select **New File**. Name it `generate-tests.prompt.md`. Paste the following content:
 
    ```markdown
    ---
@@ -152,7 +148,7 @@ This prompt file generates a complete test file for any source module.
    6. Run the tests with `node --test` and fix any failures.
    ```
 
-2. Save the file.
+   > 💡 **Tip:** In Codespaces, files save automatically. If you are working locally, save with `Ctrl+S` / `Cmd+S`.
 
 ### How this prompt file works
 
@@ -167,7 +163,7 @@ This prompt file generates a complete test file for any source module.
 
 This prompt file adds edge case coverage to an existing test file.
 
-1. Create `.github/prompts/test-edge-cases.prompt.md` with the following content:
+1. Right-click `.github/prompts`, select **New File**, and name it `test-edge-cases.prompt.md`. Paste the following content:
 
    ```markdown
    ---
@@ -191,7 +187,7 @@ This prompt file adds edge case coverage to an existing test file.
    Run all tests after adding the new cases and fix any failures.
    ```
 
-2. Save the file.
+   > 💡 **Tip:** In Codespaces, files save automatically. If you are working locally, save with `Ctrl+S` / `Cmd+S`.
 
 ---
 
@@ -219,13 +215,7 @@ If the prompts do not appear, reload the VS Code window: press `Ctrl+Shift+P` (o
 
 The Tester Agent combines both prompt workflows into a single specialized persona. It reads all source files, generates tests, runs them, and iterates until every test passes.
 
-1. Create the agents directory if it does not exist:
-
-   ```bash
-   mkdir -p .github/agents
-   ```
-
-2. Create `.github/agents/tester.agent.md` with the following content:
+1. In the VS Code Explorer sidebar, right-click the `.github/agents` folder (created in Exercise 01) and select **New File**. Name it `tester.agent.md`. Paste the following content:
 
    ```markdown
    ---
@@ -255,7 +245,7 @@ The Tester Agent combines both prompt workflows into a single specialized person
    - Use descriptive test names that explain the expected behavior.
    ```
 
-3. Save the file.
+   > 💡 **Tip:** In Codespaces, files save automatically. If you are working locally, save with `Ctrl+S` / `Cmd+S`.
 
 ### Prompt files vs. the Tester Agent
 

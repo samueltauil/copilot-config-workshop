@@ -24,13 +24,9 @@ You invoke a prompt file by typing `/` in Copilot Chat and selecting it from the
 
 ## ⌨️ Activity: Create prompt files
 
-1. Create the prompts directory:
+1. In the VS Code Explorer sidebar, right-click the `.github` folder and select **New Folder**. Name it `prompts`.
 
-    ```bash
-    mkdir -p .github/prompts
-    ```
-
-1. Create `.github/prompts/generate-tests.prompt.md`:
+1. Right-click the new `.github/prompts` folder and select **New File**. Name it `generate-tests.prompt.md`. Paste the following content:
 
     ```markdown
     ---
@@ -56,7 +52,7 @@ You invoke a prompt file by typing `/` in Copilot Chat and selecting it from the
     6. Run the tests with `node --test` and fix any failures.
     ```
 
-1. Create `.github/prompts/test-edge-cases.prompt.md`:
+1. Right-click `.github/prompts` again, select **New File**, and name it `test-edge-cases.prompt.md`. Paste the following content:
 
     ```markdown
     ---
@@ -80,7 +76,7 @@ You invoke a prompt file by typing `/` in Copilot Chat and selecting it from the
     Run all tests after adding the new cases and fix any failures.
     ```
 
-1. Save both files.
+    > 💡 **Tip:** In Codespaces, files save automatically. If you are working locally, save with `Ctrl+S` / `Cmd+S`.
 
 ## ⌨️ Activity: Create the Tester Agent
 
@@ -114,7 +110,7 @@ You invoke a prompt file by typing `/` in Copilot Chat and selecting it from the
     - Use descriptive test names that explain the expected behavior.
     ```
 
-1. Save the file.
+    > 💡 **Tip:** In Codespaces, files save automatically. If you are working locally, save with `Ctrl+S` / `Cmd+S`.
 
 ## ⌨️ Activity: Use the Tester Agent to generate tests
 
