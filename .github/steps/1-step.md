@@ -107,6 +107,11 @@ A custom agent is a `.agent.md` file with a YAML front matter block (a small con
 
     > 💡 **Tip:** In Codespaces, files save automatically. If you are working locally, save with `Ctrl+S` / `Cmd+S`.
 
+    > 💡 **Tip:** Learn more about custom agents:
+    >
+    > - [VS Code Docs: Custom Agents](https://code.visualstudio.com/docs/copilot/customization/custom-agents)
+    > - [GitHub Docs: Custom Agents Configuration](https://docs.github.com/en/copilot/reference/custom-agents-configuration)
+
 ## ⌨️ Activity: Use the Planner Agent to generate a project plan
 
 1. In Copilot Chat, select **planner** from the agent/mode dropdown.
