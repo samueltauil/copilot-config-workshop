@@ -1,8 +1,20 @@
-## Review
+## Workshop Complete 🎉
 
 _Congratulations! You have completed the GitHub Copilot Configuration Workshop._
 
 <img src="https://octodex.github.com/images/jetpacktocat.png" alt="celebrate" width=200 align=right>
+
+You built a full suite of SDLC agents:
+
+| Agent | SDLC Phase | What it does | Created in |
+|-------|-----------|--------------|------------|
+| Planner | Planning | Generates project plans and user stories | Step 1 |
+| Architect | Design | Produces data schemas and file structures | Step 2 |
+| Developer | Implementation | Writes code following project conventions | Step 3 |
+| Tester | Testing | Creates and runs tests until they pass | Step 4 |
+| Orchestrator | Full Lifecycle | Coordinates all agents end-to-end | Step 5 |
+
+You also used these agents together to deliver a new feature from plan through tested code, covering every phase of the software development lifecycle.
 
 Here is a recap of your accomplishments:
 
@@ -17,14 +29,57 @@ Here is a recap of your accomplishments:
 - Built an **Orchestrator Agent** that coordinates the full software development lifecycle (Full Lifecycle)
 - Delivered a new feature end-to-end across all SDLC phases: plan, design, implement, and test
 
-### What's next?
+### 💡 Where else can custom agents help?
+
+The SDLC pipeline you built is just one pattern. Here are ideas for agents you can design for other scenarios:
+
+**DevOps and Infrastructure**
+
+| Agent idea | What it does |
+|------------|-------------|
+| **Deployer** | Generates CI/CD pipeline configurations, Dockerfiles, and deployment manifests |
+| **Incident Responder** | Analyzes error logs and suggests fixes based on runbooks and past incidents |
+| **Security Auditor** | Scans code for OWASP Top 10 vulnerabilities and suggests remediations |
+
+**Documentation and Knowledge**
+
+| Agent idea | What it does |
+|------------|-------------|
+| **API Documenter** | Reads source code and generates OpenAPI specs or API reference docs |
+| **Onboarding Guide** | Answers new team member questions using the repository structure and README files |
+| **Decision Recorder** | Captures architectural decisions in ADR (Architecture Decision Record) format |
+
+**Data and Analytics**
+
+| Agent idea | What it does |
+|------------|-------------|
+| **Data Modeler** | Designs database schemas, migrations, and seed data from requirements |
+| **Query Optimizer** | Reviews SQL queries and suggests performance improvements |
+| **Report Builder** | Generates data transformation scripts and summary reports from raw datasets |
+
+**Team Workflows**
+
+| Agent idea | What it does |
+|------------|-------------|
+| **PR Reviewer** | Reviews pull requests against team coding standards and leaves structured feedback |
+| **Release Manager** | Generates changelogs, bumps versions, and drafts release notes |
+| **Refactorer** | Identifies duplicated code and suggests clean abstractions |
+
+Each agent follows the same pattern you learned: a `.agent.md` file with YAML front matter, a clear role description, structured output rules, and constraints. Combine agents with custom instructions and prompt files to build workflows tailored to your team.
+
+### 🚀 Keep learning with GitHub Skills
+
+These hands-on exercises build on what you learned in this workshop:
+
+- **[Getting Started with GitHub Copilot](https://github.com/skills/getting-started-with-github-copilot)** - Inline suggestions, Agent Mode, and pull request features
+- **[Customize Your GitHub Copilot Experience](https://github.com/skills/customize-your-github-copilot-experience)** - Custom instructions, prompt files, and agent modes
+- **[Expand Your Team with Copilot](https://github.com/skills/expand-your-team-with-copilot)** - The Copilot coding agent and Agents Panel
+- **[Integrate MCP with Copilot](https://github.com/skills/integrate-mcp-with-copilot)** - MCP server configuration with Copilot
+
+### 📚 Reference documentation
 
 - [GitHub Copilot documentation](https://docs.github.com/en/copilot) - The complete reference for all Copilot features
 - [Prompt engineering for Copilot Chat](https://docs.github.com/en/copilot/using-github-copilot/copilot-chat/prompt-engineering-for-copilot-chat) - Deepen your prompt engineering skills
 - [Adding repository custom instructions](https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot) - Learn more about customization options
 - [Creating custom agents](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents) - Full reference for custom agent profiles
 - [Awesome Copilot](https://github.com/github/awesome-copilot) - Community collection of custom agents, prompts, and instructions
-- [Getting Started with GitHub Copilot](https://github.com/skills/getting-started-with-github-copilot) - Hands-on exercise covering inline suggestions, Agent Mode, and PR features
-- [Customize Your GitHub Copilot Experience](https://github.com/skills/customize-your-github-copilot-experience) - Exercise covering custom instructions, prompt files, and agent modes
-- [Expand Your Team with Copilot](https://github.com/skills/expand-your-team-with-copilot) - Exercise covering the Copilot coding agent and Agents Panel
-- [Integrate MCP with Copilot](https://github.com/skills/integrate-mcp-with-copilot) - Exercise covering MCP server configuration with Copilot
