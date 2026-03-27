@@ -47,13 +47,7 @@ Before creating the Orchestrator, confirm that all four agents exist and are fun
 
 ### 1. Check that every agent file exists
 
-Run the following command from the repository root:
-
-```bash
-ls .github/agents/
-```
-
-You should see these four files:
+In the VS Code Explorer sidebar, expand `.github/agents/`. You should see these four files:
 
 - `planner.agent.md`
 - `architect.agent.md`
@@ -74,13 +68,11 @@ tools: ["edit", "search"]
 
 ### 3. Confirm existing deliverables
 
-Verify the artifacts from previous exercises:
+In the VS Code Explorer sidebar, verify the artifacts from previous exercises:
 
-```bash
-ls docs/project-plan.md docs/schema.md
-ls src/
-ls tests/
-```
+- `docs/project-plan.md` and `docs/schema.md` exist
+- The `src/` folder contains implementation files
+- The `tests/` folder contains test files
 
 Each directory should contain files generated during the earlier exercises. If anything is missing, return to the relevant exercise and complete it first.
 

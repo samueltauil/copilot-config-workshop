@@ -59,12 +59,13 @@ jobs:
           file: exercise-toolkit/markdown-templates/step-feedback/checking-work.md
           edit-mode: replace
 
-      - name: Check if copilot-instructions.md exists
+      - name: Check if copilot-instructions.md has project conventions
         id: check-copilot-instructions
         continue-on-error: true
-        uses: skills/exercise-toolkit/actions/file-exists@v0.8.1
+        uses: skills/action-keyphrase-checker@v1
         with:
-          file: .github/copilot-instructions.md
+          text-file: .github/copilot-instructions.md
+          keyphrase: "Node.js"
 
       - name: Check if schema.md exists
         id: check-schema
@@ -84,7 +85,7 @@ jobs:
           vars: |
             step_number: 2
             results_table:
-              - description: "Created .github/copilot-instructions.md"
+              - description: "Updated .github/copilot-instructions.md with project conventions"
                 passed: ${{ steps.check-copilot-instructions.outcome == 'success' }}
               - description: "Created docs/schema.md"
                 passed: ${{ steps.check-schema.outcome == 'success' }}

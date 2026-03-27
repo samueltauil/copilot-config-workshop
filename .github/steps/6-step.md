@@ -57,3 +57,12 @@ Each agent follows the same pattern you learned: a `.agent.md` file with YAML fr
 1. Select the **Step 6** workflow from the left sidebar.
 
 1. Click **Run workflow** to see the final review of everything you accomplished.
+
+<details>
+<summary>Having trouble? 🤷</summary><br/>
+
+- If you do not see the **Step 6** workflow in the sidebar, check that the previous step completed successfully in the **Actions** tab.
+- If the workflow fails, click the failed run to view the error details and submit an issue.
+- You can also trigger the workflow by clicking **Run workflow** on the **main** branch.
+
+</details>

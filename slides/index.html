@@ -1116,8 +1116,8 @@ available in Copilot?</code></pre>
       <tr><td><code>#editor</code></td><td>The contents of the currently active editor tab</td></tr>
     </tbody>
   </table>
-  <pre style="margin-top:0.9em"><code class="language-text">#file:starter.py /tests Write unit tests for
-the `calculate_average` function using pytest.</code></pre>
+  <pre style="margin-top:0.9em"><code class="language-text">#file:src/models/task.js /tests Write unit tests for
+the Task model using the built-in Node.js test runner.</code></pre>
   <div class="note" style="margin-top:0.7em">
     Combining variables and slash commands in one prompt gives Copilot maximum context with minimum typing.
   </div>
@@ -1148,10 +1148,10 @@ the `calculate_average` function using pytest.</code></pre>
     </div>
   </div>
   <pre style="margin-top:0.5em"><code class="language-text"># Step 1: Generate tests
-#file:starter.py /tests
+#file:src/models/task.js /tests
 
 # Step 3: Run tests
-python3 -m pytest test_starter.py -v
+node --test tests/task.test.js
 
 # Step 4: Fix failures
 These tests failed: [paste error]. Explain and fix.</code></pre>

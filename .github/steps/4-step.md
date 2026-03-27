@@ -21,6 +21,8 @@ Prompt files use the `.prompt.md` suffix and live in `.github/prompts/`. Each fi
 You invoke a prompt file by typing `/` in Copilot Chat and selecting it from the list. This turns a multi-step workflow into a single action.
 
 > 🪧 **Note:** When you type `/` in the Copilot Chat input, a menu appears listing all available prompt files from `.github/prompts/`.
+>
+> The Codespace uses Node.js 20, which supports the built-in test runner (`node --test`). If you are working locally, confirm you have Node.js 18 or later installed.
 
 ## ⌨️ Activity: Create prompt files
 

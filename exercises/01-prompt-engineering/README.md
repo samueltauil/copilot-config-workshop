@@ -374,11 +374,7 @@ The `---` markers must start on the very first line with no blank lines above th
 
 **Agent does not create the docs directory**
 
-Create it manually and re-run the prompt:
-
-```bash
-mkdir -p docs
-```
+Right-click in the Explorer sidebar, select **New Folder**, and name it `docs`. Then re-run the prompt.
 
 **Agent produces incomplete output**
 

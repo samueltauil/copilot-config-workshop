@@ -8,6 +8,7 @@ on:
     paths:
       - ".github/agents/**"
       - "!.github/agents/github-skills-creator.agent.md"
+      - ".github/instructions/**"
       - "src/**"
 
 permissions:

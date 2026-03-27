@@ -1,5 +1,7 @@
 ## Step 1: Prompt Engineering - Build a Planner Agent
 
+_Welcome, {{ login }}! You are working in [{{ full_repo_name }}](https://github.com/{{ full_repo_name }})._
+
 _SDLC Phase: **Planning & Requirements**_
 
 > **Why this matters:** Every project starts with a plan. In the SDLC, the Planning phase defines what you will build, for whom, and why. Copilot can accelerate this phase by helping you brainstorm requirements, structure user stories, and draft project plans, all through natural language conversation.
@@ -166,7 +168,7 @@ A custom agent is a `.agent.md` file with a YAML front matter block (a small con
 - Make sure the GitHub Copilot extension is installed and you are signed in to GitHub in VS Code.
 - If the planner agent does not appear in the dropdown, reload the VS Code window (`Ctrl+Shift+P` &rarr; **Reload Window**).
 - Confirm `.github/agents/planner.agent.md` has valid YAML front matter (the `description` property is required).
-- If the agent does not create the file, create `docs/` manually (`mkdir -p docs`) and re-run the prompt.
+- If the agent does not create the file, right-click in the Explorer sidebar and select **New Folder**, name it `docs`, then re-run the prompt.
 - For a deeper walkthrough, see [exercises/01-prompt-engineering/README.md](exercises/01-prompt-engineering/README.md).
 
 </details>

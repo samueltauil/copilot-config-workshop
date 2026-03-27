@@ -14,7 +14,6 @@ The following images are used under the [MIT License](https://github.com/skills/
 |---|---|
 | `ask-mode-selection.png` | Exercise 01 README, Step 1 |
 | `shadow-text.gif` | Exercise 01 README, Step 1 |
-| `agent-mode-dropdown.png` | Exercise 01 README, Step 1 |
 | `plan-mode-dropdown.png` | Exercise 01 README |
 | `staging-changes-icon.png` | Exercise READMEs (01-05), Steps 1-5 |
 
