@@ -738,6 +738,29 @@
 </section>
 
 <!-- ============================================================
+     SLIDE 7b: Copilot Interaction Modes
+     ============================================================ -->
+<section>
+  <h2>Copilot Interaction Modes</h2>
+  <p style="font-size:0.9rem">GitHub Copilot supports five interaction modes, each suited for different tasks.</p>
+  <table>
+    <thead>
+      <tr><th style="width:25%">Mode</th><th style="width:30%">Where</th><th>Best for</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Inline suggestions</td><td>Editor (ghost text)</td><td>Auto-completing code as you type</td></tr>
+      <tr><td>Ask</td><td>Chat panel</td><td>Research and questions without code changes</td></tr>
+      <tr><td>Agent</td><td>Chat panel</td><td>Multi-step tasks with file edits and terminal commands</td></tr>
+      <tr><td>Plan</td><td>Chat panel</td><td>Complex task planning before implementation</td></tr>
+      <tr><td>Inline chat</td><td>Editor (<kbd>Ctrl+I</kbd>)</td><td>Quick, scoped edits in the current file</td></tr>
+    </tbody>
+  </table>
+  <div class="note" style="margin-top:0.7em">
+    <strong>Plan mode vs. custom Planner Agent:</strong> Plan mode is a built-in Copilot mode for breaking down tasks. A custom Planner Agent goes further: it carries your project context, enforces specific templates, and embeds domain knowledge. You build both in Exercise 1.
+  </div>
+</section>
+
+<!-- ============================================================
      SLIDE 8: Exercise 1 - Six strategies
      ============================================================ -->
 <section>
@@ -901,7 +924,7 @@ Expected output:
   <h2>Verifying Your Instructions</h2>
   <div class="step">
     <div class="step-num">1</div>
-    <div class="step-content">Ask Copilot Chat a question that should trigger your instructions (e.g., "Write a function that saves a user to the database").</div>
+    <div class="step-content">Ask Copilot Chat a question that should trigger your instructions (e.g., "Based on the project conventions, describe the technology stack and data model for this project").</div>
   </div>
   <div class="step">
     <div class="step-num">2</div>
@@ -1390,51 +1413,66 @@ You are a testing specialist. Your responsibilities:
 </section>
 
 <!-- ============================================================
-     SLIDE 33: Exercise 6 intro
+     SLIDE 33: What's Next intro
      ============================================================ -->
 <section class="exercise-intro" data-background="linear-gradient(160deg, #0d1117 0%, #0d1f38 50%, #0d1117 100%)">
   <svg width="36" height="36" viewBox="0 0 24 24" fill="#388bfd" style="opacity:0.4; margin-bottom:0.3em; display:block; margin-left:auto; margin-right:auto" aria-hidden="true">
     <path d="M12 2l2.4 7.4H22l-6.4 4.6 2.4 7.4L12 17l-6 4.4 2.4-7.4L2 9.4h7.6L12 2z"/>
   </svg>
-  <span class="exercise-number" style="opacity:0.5">REF</span>
-  <h2>Org-Level Best Practices</h2>
-  <p>Reference material: Scale your Copilot configuration across an entire GitHub organization.</p>
-  <p class="cta-hint">This is not a hands-on exercise. Use these slides as reference for org-level rollout.</p>
+  <span class="exercise-number" style="opacity:0.5">06</span>
+  <h2>What's Next</h2>
+  <p>You built five agents that cover the SDLC. Now explore what else custom agents can do.</p>
+  <p class="cta-hint">Ideas, org-level configuration, and next steps.</p>
 </section>
 
 <!-- ============================================================
-     SLIDE 34: Exercise 6 - The org .github repo
+     SLIDE 34: Agent Ideas Beyond the SDLC
      ============================================================ -->
 <section>
-  <h2>The Org-Level <code>.github</code> Repository</h2>
-  <p style="font-size:0.9rem">GitHub supports a special repository named <code>.github</code> within an organization. Files placed there serve as organization-wide defaults.</p>
-  <div class="step">
-    <div class="step-num">1</div>
-    <div class="step-content">Navigate to your organization on GitHub.</div>
-  </div>
-  <div class="step">
-    <div class="step-num">2</div>
-    <div class="step-content">Create a repository named exactly <code>.github</code>.</div>
-  </div>
-  <div class="step">
-    <div class="step-num">3</div>
-    <div class="step-content">Place Copilot configuration files using the same directory structure as repository-level files.</div>
-  </div>
-  <div class="note orange" style="margin-top:0.7em">
-    <strong>Important:</strong> Repository-level configuration always takes precedence and does <em>not</em> merge with org-level files. When a repository defines its own <code>copilot-instructions.md</code>, the org-level file is ignored entirely for that repository. For example, if your org provides a standard instructions file and a repository adds its own, only the repository-level file is used. Plan your org-level content as a fallback baseline, not as additions.
+  <h2>Agent Ideas Beyond the SDLC</h2>
+  <div class="two-col">
+    <div>
+      <p style="font-weight:600; font-size:0.88rem">DevOps &amp; Infrastructure</p>
+      <ul style="font-size:0.8rem">
+        <li><strong>CI/CD Debugger</strong> &mdash; diagnose pipeline failures</li>
+        <li><strong>Dockerfile Optimizer</strong> &mdash; reduce image size</li>
+        <li><strong>IaC Reviewer</strong> &mdash; validate Terraform plans</li>
+      </ul>
+      <p style="font-weight:600; font-size:0.88rem; margin-top:0.6em">Documentation &amp; Knowledge</p>
+      <ul style="font-size:0.8rem">
+        <li><strong>API Doc Writer</strong> &mdash; generate OpenAPI specs</li>
+        <li><strong>Onboarding Guide</strong> &mdash; explain repo architecture</li>
+        <li><strong>ADR Author</strong> &mdash; draft decision records</li>
+      </ul>
+    </div>
+    <div>
+      <p style="font-weight:600; font-size:0.88rem">Data &amp; Analytics</p>
+      <ul style="font-size:0.8rem">
+        <li><strong>SQL Analyst</strong> &mdash; generate and review queries</li>
+        <li><strong>Migration Planner</strong> &mdash; plan schema changes</li>
+        <li><strong>Data Validator</strong> &mdash; check data quality rules</li>
+      </ul>
+      <p style="font-weight:600; font-size:0.88rem; margin-top:0.6em">Team Workflows</p>
+      <ul style="font-size:0.8rem">
+        <li><strong>PR Reviewer</strong> &mdash; enforce team standards</li>
+        <li><strong>Release Notes Drafter</strong> &mdash; summarize changes</li>
+        <li><strong>Dependency Auditor</strong> &mdash; find outdated packages</li>
+      </ul>
+    </div>
   </div>
 </section>
 
 <!-- ============================================================
-     SLIDE 35: Exercise 6 - Configuration file hierarchy
+     SLIDE 35: Org-Level Configuration (condensed)
      ============================================================ -->
 <section>
-  <h2>Configuration File Hierarchy</h2>
+  <h2>Org-Level Configuration</h2>
+  <p style="font-size:0.88rem">Scale your configuration across an entire GitHub organization using the <code>.github</code> repository.</p>
   <table>
     <thead>
       <tr>
         <th style="width:30%">File</th>
-        <th>Repository-level path</th>
+        <th>Repo-level path</th>
         <th>Org-level path</th>
       </tr>
     </thead>
@@ -1442,54 +1480,22 @@ You are a testing specialist. Your responsibilities:
       <tr>
         <td><code>copilot-instructions.md</code></td>
         <td><code>.github/copilot-instructions.md</code></td>
-        <td><code>.github/copilot-instructions.md</code> in org <code>.github</code> repository</td>
+        <td><code>.github/copilot-instructions.md</code> in org <code>.github</code> repo</td>
       </tr>
       <tr>
         <td>Path-specific instructions</td>
         <td><code>.github/instructions/*.instructions.md</code></td>
-        <td><code>.github/instructions/*.instructions.md</code> in org <code>.github</code> repository</td>
+        <td>Same path in org <code>.github</code> repo</td>
       </tr>
       <tr>
-        <td><code>AGENTS.md</code></td>
-        <td>Root or any subdirectory</td>
-        <td>Root of org <code>.github</code> repository</td>
-      </tr>
-      <tr>
-        <td>Custom agents (<code>.agent.md</code>)</td>
+        <td>Custom agents</td>
         <td><code>.github/agents/*.agent.md</code></td>
-        <td><code>.github/agents/*.agent.md</code> in org <code>.github-private</code> repository</td>
+        <td><code>.github/agents/*.agent.md</code> in org <code>.github-private</code> repo</td>
       </tr>
     </tbody>
   </table>
-</section>
-
-<!-- ============================================================
-     SLIDE 36: Exercise 6 - Best practices
-     ============================================================ -->
-<section>
-  <h2>Org-Level Best Practices</h2>
-  <div class="two-col">
-    <div class="card">
-      <h3>Put in org-level files</h3>
-      <ul>
-        <li>Company-wide coding standards</li>
-        <li>Security and compliance rules</li>
-        <li>Approved libraries and frameworks</li>
-        <li>Organization conventions (naming, logging)</li>
-      </ul>
-    </div>
-    <div class="card">
-      <h3>Keep in repository-level files</h3>
-      <ul>
-        <li>Project-specific language versions</li>
-        <li>Repository-specific test runner configuration</li>
-        <li>Unique architecture patterns</li>
-        <li>Domain-specific terminology</li>
-      </ul>
-    </div>
-  </div>
-  <div class="note" style="margin-top:0.9em">
-    Org-level files are the right place to enforce consistent SDLC practices across all repositories: shared coding standards, testing conventions, security rules, and documentation expectations. Repository-level files then handle project-specific variation within that baseline.
+  <div class="note orange" style="margin-top:0.7em">
+    <strong>Important:</strong> Repository-level configuration takes precedence and does <em>not</em> merge with org-level files. Plan org-level content as a fallback baseline, not as additions.
   </div>
 </section>
 
@@ -1579,8 +1585,8 @@ You are a testing specialist. Your responsibilities:
         <li><a href="https://docs.github.com/en/copilot/about-github-copilot/what-is-github-copilot">About GitHub Copilot</a></li>
         <li><a href="https://docs.github.com/en/copilot/using-github-copilot/copilot-chat/prompt-engineering-for-copilot-chat">Prompt engineering for Copilot Chat</a></li>
         <li><a href="https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot">Adding repository custom instructions</a></li>
-        <li><a href="https://docs.github.com/en/copilot/using-github-copilot/asking-github-copilot-questions-in-your-ide">Asking Copilot questions in your IDE</a></li>
-        <li><a href="https://docs.github.com/en/copilot/using-github-copilot/github-copilot-chat-cheat-sheet">Copilot Chat cheat sheet</a></li>
+        <li><a href="https://code.visualstudio.com/docs/copilot/copilot-customization">Custom agents in VS Code</a></li>
+        <li><a href="https://docs.github.com/en/copilot/customizing-copilot/extending-copilot-chat-in-vs-code/creating-a-custom-agent-for-copilot-in-vs-code">Creating a custom agent for Copilot</a></li>
         <li><a href="https://docs.github.com/en/copilot/using-github-copilot/best-practices-for-using-github-copilot">Best practices for using Copilot</a></li>
         <li><a href="https://docs.github.com/en/copilot/managing-copilot/managing-github-copilot-in-your-organization">Managing Copilot in your organization</a></li>
       </ul>
