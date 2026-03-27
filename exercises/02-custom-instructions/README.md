@@ -71,11 +71,9 @@ See the [official documentation](https://docs.github.com/en/copilot/customizing-
 
 1. Open your repository in a Codespace or in VS Code locally.
 
-2. Open `.github/copilot-instructions.md` in the Explorer panel. This file already exists in the repository.
+2. Open `docs/project-plan.md` from Exercise 01. Review the technology choices and conventions your Planner Agent defined.
 
-3. Open `docs/project-plan.md` from Exercise 01. Review the technology choices and conventions your Planner Agent defined.
-
-4. Open `.github/copilot-instructions.md` and replace its contents with project-specific conventions. Use the following as a starting point and adjust based on your project plan:
+3. Create a new file at `.github/copilot-instructions.md`. In the VS Code Explorer sidebar, right-click the `.github` folder and select **New File**. Name it `copilot-instructions.md`. Paste the following content and adjust based on your project plan:
 
    ```markdown
    # Task Manager - Project Conventions

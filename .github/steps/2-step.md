@@ -21,7 +21,7 @@ Key facts:
 
 1. Open your project plan at `docs/project-plan.md` and review the technology choices and conventions.
 
-1. Open `.github/copilot-instructions.md` and replace its contents with project-specific conventions. Use the following as a starting point and adjust based on your project plan:
+1. Create a new file at `.github/copilot-instructions.md`. In the VS Code Explorer sidebar, right-click the `.github` folder and select **New File**. Name it `copilot-instructions.md`. Paste the following content and adjust based on your project plan:
 
     ```markdown
     # Task Manager - Project Conventions
