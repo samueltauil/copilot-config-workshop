@@ -1,11 +1,6 @@
 {
   "name": "Copilot Config Workshop",
   "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
-  "features": {
-    "ghcr.io/devcontainers/features/python:1": {
-      "version": "3.12"
-    }
-  },
   "customizations": {
     "vscode": {
       "extensions": [
