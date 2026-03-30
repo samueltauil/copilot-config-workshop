@@ -16,7 +16,7 @@ In this exercise, you create repository-wide custom instructions and build an **
 - Create a `.github/copilot-instructions.md` file with project conventions
 - Know what to include and what to avoid in custom instructions
 - Build an Architect Agent that reads a project plan and produces a data schema
-- Verify Copilot references your instructions using the **Used n references** panel
+- Verify Copilot references your instructions using the **Reviewed n files** panel
 - Connect the Design phase of the SDLC to Copilot configuration
 
 ---
@@ -136,11 +136,11 @@ See the [official documentation](https://docs.github.com/en/copilot/customizing-
    - The Task entity with its properties and types
    - Built-in Node.js modules only, no external dependencies
 
-4. Click the **Used n references** link at the top of the response. Expand the list and confirm `.github/copilot-instructions.md` appears.
+4. Click the **Reviewed n files** link at the top of the response. Expand the list and confirm `.github/copilot-instructions.md` appears.
 
    If you see your instructions file listed, Copilot loaded them.
 
-   <img width="504" alt="Screenshot: Copilot Chat response showing the Used n references link expanded to list loaded instruction files" src="https://github.com/user-attachments/assets/2214ed9e-c165-4440-a23e-d2d33c0231a9" />
+   <img width="504" alt="Screenshot: Copilot Chat response showing the Reviewed n files link expanded to list loaded instruction files" src="../../.github/images/file-references.png" />
 
 5. Open a new chat thread and try a different question:
 
@@ -163,6 +163,11 @@ The Architect Agent reads a project plan and produces a data schema with file st
    name: architect
    description: Reads a project plan and produces a detailed data schema and file structure
    tools: ["edit", "search", "read"]
+   handoffs: 
+   - agent: developer
+     label: "Implement the feature"
+     prompt: "Read #file:docs/schema.md and implement the feature in src/. Use only built-in Node.js modules."
+     send: false
    ---
 
    You are a software architect. Given a project plan, you produce a detailed
@@ -187,6 +192,8 @@ The Architect Agent reads a project plan and produces a data schema with file st
    ```
 
    > 💡 **Tip:** In Codespaces, files save automatically. If you are working locally, save with `Ctrl+S` / `Cmd+S`.
+
+   > ⚠️ **Expected warning:** VS Code may show a validation warning that the `developer` agent referenced in `handoffs` does not exist yet. This is expected — you will create the Developer Agent in Exercise 03. The handoff will work once all agents are in place. You will use these handoffs in the final exercise (Exercise 05) to chain all agents together.
 
 ### How the agent file works
 
@@ -266,7 +273,7 @@ Your schema may differ. The exact content depends on your project plan and the a
 Confirm the following before moving on:
 
 - [ ] `.github/copilot-instructions.md` exists and contains project conventions
-- [ ] Copilot Chat shows `.github/copilot-instructions.md` in the **Used n references** panel
+- [ ] Copilot Chat shows `.github/copilot-instructions.md` in the **Reviewed n files** panel
 - [ ] `.github/agents/architect.agent.md` exists with valid YAML front matter
 - [ ] `docs/schema.md` exists and contains a data model, file structure, and module responsibilities
 - [ ] All files are committed and pushed
@@ -282,7 +289,7 @@ Confirm the following before moving on:
 - Open a new chat thread. Existing threads may not reload instructions.
 - Confirm your organization has not disabled repository custom instructions.
 
-**The "Used n references" panel does not list my instructions:**
+**The "Reviewed n files" panel does not list my instructions:**
 
 - Open a new chat thread with the `+` icon.
 - Verify the file name is `copilot-instructions.md` inside `.github/` at the repository root.

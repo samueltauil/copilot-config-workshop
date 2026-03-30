@@ -68,11 +68,11 @@ Key facts:
     coding standards, and data model for this project.
     ```
 
-1. Click the **Used n references** link at the top of the response. Confirm `.github/copilot-instructions.md` appears in the list. The response should reflect the conventions you defined (ES modules, single quotes, the Task entity properties, and so on).
+1. Click the **Reviewed n files** link at the top of the response. Confirm `.github/copilot-instructions.md` appears in the list. The response should reflect the conventions you defined (ES modules, single quotes, the Task entity properties, and so on).
 
-    > 🪧 **Note:** The **Used n references** link appears at the top of each Copilot Chat response. Click it to expand the list of loaded instruction files.
+    > 🪧 **Note:** The **Reviewed n files** link appears at the top of each Copilot Chat response. Click it to expand the list of loaded instruction files.
     >
-    > <img width="504" alt="Screenshot: Copilot Chat showing Used n references panel" src="https://github.com/user-attachments/assets/2214ed9e-c165-4440-a23e-d2d33c0231a9" />
+    > <img width="504" alt="Screenshot: Copilot Chat showing Reviewed n files panel" src="../../.github/images/file-references.png" />
 
 ## ⌨️ Activity: Create the Architect Agent
 
@@ -83,6 +83,11 @@ Key facts:
     name: architect
     description: Reads a project plan and produces a detailed data schema and file structure
     tools: ["edit", "search", "read"]
+    handoffs: 
+    - agent: developer
+      label: "Implement the feature"
+      prompt: "Read #file:docs/schema.md and implement the feature in src/. Use only built-in Node.js modules."
+      send: false
     ---
 
     You are a software architect. Given a project plan, you produce a detailed
@@ -107,6 +112,8 @@ Key facts:
     ```
 
     > 💡 **Tip:** In Codespaces, files save automatically. If you are working locally, save with `Ctrl+S` / `Cmd+S`.
+
+    > ⚠️ **Expected warning:** VS Code may show a validation warning that the `developer` agent referenced in `handoffs` does not exist yet. This is expected — you will create the Developer Agent in Step 3. The handoff will work once all agents are in place. You will use these handoffs in the final exercise (Step 5) to chain all agents together.
 
 ## ⌨️ Activity: Use the Architect Agent to design the schema
 

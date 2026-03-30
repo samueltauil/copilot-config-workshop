@@ -87,6 +87,11 @@ applyTo: "src/models/**"
     ---
     name: developer
     description: Reads a schema document and generates implementation code following path-specific conventions
+    handoffs: 
+    - agent: tester
+      label: "Test the feature"
+      prompt: "Read the updated source files in src/ and update tests/ to cover the new feature. Run node --test tests/ and fix any failures."
+      send: false
     ---
 
     You are a software developer. Given a data schema and file structure
@@ -112,6 +117,8 @@ applyTo: "src/models/**"
     ```
 
     > 💡 **Tip:** In Codespaces, files save automatically. If you are working locally, save with `Ctrl+S` / `Cmd+S`.
+
+    > ⚠️ **Expected warning:** VS Code may show a validation warning that the `tester` agent referenced in `handoffs` does not exist yet. This is expected — you will create the Tester Agent in Step 4. The handoff will work once all agents are in place. You will use these handoffs in the final exercise (Step 5) to chain all agents together.
 
 ## ⌨️ Activity: Use the Developer Agent to implement the Task Manager
 

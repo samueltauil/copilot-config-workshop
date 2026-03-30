@@ -239,6 +239,11 @@ Right-click the new `.github/agents` folder and select **New File**. Name it `pl
 name: planner
 description: Generates structured project plans with user stories and acceptance criteria
 tools: ["edit", "search"]
+handoffs: 
+- agent: architect
+  label: "Design the architecture"
+  prompt: "Read #file:docs/project-plan.md and update docs/schema.md with any new or modified data structures."
+  send: false
 ---
 
 You are a software project planner. When the user describes an application
@@ -260,6 +265,8 @@ idea, generate a comprehensive project plan in Markdown format.
 - Save the plan to `docs/project-plan.md`.
 ```
 
+> ⚠️ **Expected warning:** VS Code may show a validation warning that the `architect` agent referenced in `handoffs` does not exist yet. This is expected — you will create the Architect Agent in Exercise 02. The handoff will work once all agents are in place. You will use these handoffs in the final exercise (Exercise 05) to chain all agents together.
+
 ### 3. Understand the YAML front matter
 
 The front matter block between `---` markers configures the agent. Think of it as the agent's profile card:
@@ -269,6 +276,7 @@ The front matter block between `---` markers configures the agent. Think of it a
 | `name` | Yes | Display name in the Copilot Chat dropdown |
 | `description` | Yes | Tells Copilot (and users) what the agent does |
 | `tools` | No | Controls what capabilities the agent has access to |
+| `handoffs` | No | Creates buttons that switch to the next agent with a pre-filled prompt (covered in Exercise 05) |
 
 ### 4. Understand the prompt body
 

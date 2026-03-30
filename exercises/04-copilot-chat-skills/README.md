@@ -4,7 +4,7 @@
 
 > **Why this matters:** The Testing phase verifies that what was built actually works as intended. It catches defects before they reach users and ensures requirements are met. Testing is often time-consuming and repetitive. Copilot can automate test creation and run tests repeatedly, turning a manual task into a guided, repeatable workflow.
 
-In this exercise, you create prompt files that capture reusable testing workflows, then build a **Tester Agent** that generates and runs tests automatically. The Developer Agent from Exercise 03 generated your implementation code. Before you can trust it, you need tests.
+In this exercise, you build a **Tester Agent** that generates and runs tests automatically, then create prompt files that capture reusable testing workflows and route them through the Tester Agent. The Developer Agent from Exercise 03 generated your implementation code. Before you can trust it, you need tests.
 
 ## Workshop Roadmap
 
@@ -74,7 +74,7 @@ Every prompt file starts with a YAML front matter block between `---` markers. T
 ```yaml
 ---
 description: Generate unit tests for a source module
-agent: agent
+agent: tester
 argument-hint: Path to the source file to test (e.g. src/models/task.js)
 ---
 ```
@@ -82,7 +82,7 @@ argument-hint: Path to the source file to test (e.g. src/models/task.js)
 | Field | Required | Purpose |
 |-------|----------|---------|
 | `description` | Yes | Short label shown in the `/` command list |
-| `agent` | No | Which Copilot mode runs the prompt (use `agent` for Agent Mode) |
+| `agent` | No | Which Copilot mode or custom agent runs the prompt |
 | `argument-hint` | No | Placeholder text shown in the argument input after selection |
 
 The front matter block must:
@@ -91,7 +91,7 @@ The front matter block must:
 - Begin and end with three hyphens on their own line
 - Contain the `description` value as a quoted string
 
-When you set `agent: agent`, the prompt runs in Agent Mode. This gives Copilot the ability to create files, edit code, and run terminal commands autonomously.
+When you set `agent: tester`, the prompt routes to the Tester Agent. This means invoking the prompt automatically uses the tester persona, rules, and iterate-until-pass behavior. You can also use `agent: agent` to run in generic Agent Mode without a specific custom agent.
 
 The `argument-hint` field tells users what input the prompt expects. When a user selects the prompt, they see this hint as placeholder text.
 
@@ -112,108 +112,9 @@ These conventions match the constraints from Exercise 01: Node.js only, no exter
 
 ---
 
-## Step 1: Create the Prompts Directory
+## Step 1: Create the Tester Agent
 
-1. In the VS Code Explorer sidebar, right-click the `.github` folder and select **New Folder**. Name it `prompts`.
-
----
-
-## Step 2: Create the Generate-Tests Prompt File
-
-This prompt file generates a complete test file for any source module.
-
-1. Right-click the new `.github/prompts` folder and select **New File**. Name it `generate-tests.prompt.md`. Paste the following content:
-
-   ```markdown
-   ---
-   description: Generate unit tests for a source module
-   agent: agent
-   argument-hint: Path to the source file to test (e.g. src/models/task.js)
-   ---
-
-   # Generate Unit Tests
-
-   Your goal is to generate unit tests for the module the user specifies.
-
-   ## Steps
-
-   1. Read the target source file.
-   2. Identify all exported functions and classes.
-   3. Generate tests that cover:
-      - Normal inputs with expected outputs
-      - Edge cases (empty strings, zero, negative numbers, null, undefined)
-      - Error conditions (invalid types, missing required fields)
-   4. Use the built-in Node.js `node:assert` module and Node.js test runner.
-   5. Save the test file to `tests/` using the convention `<module>.test.js`.
-   6. Run the tests with `node --test` and fix any failures.
-   ```
-
-   > 💡 **Tip:** In Codespaces, files save automatically. If you are working locally, save with `Ctrl+S` / `Cmd+S`.
-
-### How this prompt file works
-
-- The `description` appears when users type `/` in Copilot Chat.
-- The `agent: agent` field runs the prompt in Agent Mode so Copilot can create files and run commands.
-- The `argument-hint` tells users to provide a file path.
-- The Markdown body defines the step-by-step workflow Copilot follows.
-
----
-
-## Step 3: Create the Test-Edge-Cases Prompt File
-
-This prompt file adds edge case coverage to an existing test file.
-
-1. Right-click `.github/prompts`, select **New File**, and name it `test-edge-cases.prompt.md`. Paste the following content:
-
-   ```markdown
-   ---
-   description: Add edge case tests for an existing test file
-   agent: agent
-   argument-hint: Path to the existing test file
-   ---
-
-   # Add Edge Case Tests
-
-   Review the existing test file the user provides. Add tests for any
-   edge cases not already covered.
-
-   Focus on:
-   - Boundary values (empty arrays, max integers, very long strings)
-   - Type mismatches (passing a number where a string is expected)
-   - Concurrent modifications (adding while iterating)
-   - Missing optional fields
-   - Duplicate entries
-
-   Run all tests after adding the new cases and fix any failures.
-   ```
-
-   > 💡 **Tip:** In Codespaces, files save automatically. If you are working locally, save with `Ctrl+S` / `Cmd+S`.
-
----
-
-## Step 4: Verify the Prompt File Structure
-
-Your `.github/prompts/` directory should now contain two files:
-
-```
-.github/prompts/
-  generate-tests.prompt.md
-  test-edge-cases.prompt.md
-```
-
-### Test that the prompt files appear
-
-1. Open Copilot Chat in VS Code.
-2. Type `/` in the prompt box.
-3. You should see **generate-tests** and **test-edge-cases** in the list.
-
-If the prompts do not appear, reload the VS Code window: press `Ctrl+Shift+P` (or `Cmd+Shift+P` on macOS) and type **Reload Window**.
-
----
-
-## Step 5: Create the Tester Agent
-
-The Tester Agent combines both prompt workflows into a single specialized persona. It reads all source files, generates tests, runs them, and iterates until every test passes.
+The Tester Agent reads all source files, generates tests, runs them, and iterates until every test passes. You create it first because the prompt files you build next will reference it.
 
 1. In the VS Code Explorer sidebar, right-click the `.github/agents` folder (created in Exercise 01) and select **New File**. Name it `tester.agent.md`. Paste the following content:
 
@@ -247,17 +148,110 @@ The Tester Agent combines both prompt workflows into a single specialized person
 
    > 💡 **Tip:** In Codespaces, files save automatically. If you are working locally, save with `Ctrl+S` / `Cmd+S`.
 
-### Prompt files vs. the Tester Agent
+### How the agent file works
 
-Prompt files and agents serve different purposes in this exercise:
+- The YAML front matter (`name`, `description`) registers the agent in Copilot Chat.
+- The Markdown body is the system prompt. It tells the agent what role to play and what rules to follow.
+- The agent automatically inherits your custom instructions from `.github/copilot-instructions.md`.
 
-| Aspect | Prompt File | Tester Agent |
-|--------|-------------|--------------|
-| Scope | One module at a time | All modules at once |
-| Activation | Type `/` and select a prompt | Select from the agent dropdown |
-| Use case | Quick, targeted test generation | Full test suite creation and iteration |
+---
 
-Use prompt files for focused tasks. Use the agent for comprehensive workflows.
+## Step 2: Create the Prompts Directory
+
+1. In the VS Code Explorer sidebar, right-click the `.github` folder and select **New Folder**. Name it `prompts`.
+
+---
+
+## Step 3: Create the Generate-Tests Prompt File
+
+This prompt file generates a complete test file for any source module. It delegates the work to the Tester Agent you created in Step 1.
+
+1. Right-click the new `.github/prompts` folder and select **New File**. Name it `generate-tests.prompt.md`. Paste the following content:
+
+   ```markdown
+   ---
+   description: Generate unit tests for a source module
+   agent: tester
+   argument-hint: Path to the source file to test (e.g. src/models/task.js)
+   ---
+
+   # Generate Unit Tests
+
+   Your goal is to generate unit tests for the module the user specifies.
+
+   ## Steps
+
+   1. Read the target source file.
+   2. Identify all exported functions and classes.
+   3. Generate tests that cover:
+      - Normal inputs with expected outputs
+      - Edge cases (empty strings, zero, negative numbers, null, undefined)
+      - Error conditions (invalid types, missing required fields)
+   4. Use the built-in Node.js `node:assert` module and Node.js test runner.
+   5. Save the test file to `tests/` using the convention `<module>.test.js`.
+   6. Run the tests with `node --test` and fix any failures.
+   ```
+
+   > 💡 **Tip:** In Codespaces, files save automatically. If you are working locally, save with `Ctrl+S` / `Cmd+S`.
+
+### How this prompt file works
+
+- The `description` appears when users type `/` in Copilot Chat.
+- The `agent: tester` field routes the prompt to the Tester Agent, so Copilot uses the tester persona, rules, and iterate-until-pass behavior you defined in Step 1.
+- The `argument-hint` tells users to provide a file path.
+- The Markdown body defines the step-by-step workflow the agent follows.
+
+---
+
+## Step 4: Create the Test-Edge-Cases Prompt File
+
+This prompt file adds edge case coverage to an existing test file. Like the generate-tests prompt, it uses the Tester Agent.
+
+1. Right-click `.github/prompts`, select **New File**, and name it `test-edge-cases.prompt.md`. Paste the following content:
+
+   ```markdown
+   ---
+   description: Add edge case tests for an existing test file
+   agent: tester
+   argument-hint: Path to the existing test file
+   ---
+
+   # Add Edge Case Tests
+
+   Review the existing test file the user provides. Add tests for any
+   edge cases not already covered.
+
+   Focus on:
+   - Boundary values (empty arrays, max integers, very long strings)
+   - Type mismatches (passing a number where a string is expected)
+   - Concurrent modifications (adding while iterating)
+   - Missing optional fields
+   - Duplicate entries
+
+   Run all tests after adding the new cases and fix any failures.
+   ```
+
+   > 💡 **Tip:** In Codespaces, files save automatically. If you are working locally, save with `Ctrl+S` / `Cmd+S`.
+
+---
+
+## Step 5: Verify the Prompt File Structure
+
+Your `.github/prompts/` directory should now contain two files:
+
+```
+.github/prompts/
+  generate-tests.prompt.md
+  test-edge-cases.prompt.md
+```
+
+### Test that the prompt files appear
+
+1. Open Copilot Chat in VS Code.
+2. Type `/` in the prompt box.
+3. You should see **generate-tests** and **test-edge-cases** in the list.
+
+If the prompts do not appear, reload the VS Code window: press `Ctrl+Shift+P` (or `Cmd+Shift+P` on macOS) and type **Reload Window**.
 
 ---
 
@@ -294,28 +288,41 @@ Use prompt files for focused tasks. Use the agent for comprehensive workflows.
 
 ---
 
-## Step 7: Try the Prompt Files
+## Step 7: Use the test-edge-cases Prompt to Add Coverage
 
-After the agent generates the initial test suite, use the prompt files for targeted work.
-
-### Use generate-tests on a specific module
-
-1. Type `/` in Copilot Chat.
-2. Select **generate-tests** from the list.
-3. Provide the path `src/utils/validators.js` (or whichever module you want).
-4. Compare the output to the tests the agent already wrote.
+After the agent generates the initial test suite, use the `test-edge-cases` prompt file for targeted work. Because the prompt sets `agent: tester`, it automatically uses the Tester Agent persona and iterate-until-pass behavior.
 
 ### Use test-edge-cases to expand coverage
 
 1. Type `/` in Copilot Chat.
 2. Select **test-edge-cases** from the list.
 3. Provide the path to an existing test file, such as `tests/task.test.js`.
-4. Review the new edge case tests the prompt adds.
+4. The Tester Agent adds edge case tests, runs them, and fixes any failures.
 5. Run the full suite to confirm everything still passes:
 
    ```bash
    node --test tests/
    ```
+
+### Try generate-tests on a specific module
+
+1. Type `/` in Copilot Chat.
+2. Select **generate-tests** from the list.
+3. Provide the path `src/utils/validators.js` (or whichever module you want).
+4. Compare the output to the tests the agent already wrote.
+
+### Prompt files vs. the Tester Agent
+
+Prompt files and the agent work together in this exercise:
+
+| Aspect | Prompt File | Tester Agent (directly) |
+|--------|-------------|------------------------|
+| Scope | One module at a time | All modules at once |
+| Activation | Type `/` and select a prompt | Select from the agent dropdown |
+| Use case | Quick, targeted test generation | Full test suite creation and iteration |
+| Agent used | Routes to the Tester Agent (`agent: tester`) | Tester Agent directly |
+
+Prompt files give you reusable shortcuts. The agent gives you a comprehensive persona. Setting `agent: tester` in the prompt files connects the two, so every prompt invocation benefits from the agent's rules and iterate-until-pass behavior.
 
 ---
 

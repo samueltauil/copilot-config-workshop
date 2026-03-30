@@ -86,6 +86,11 @@ A custom agent is a `.agent.md` file with a YAML front matter block (a small con
     name: planner
     description: Generates structured project plans with user stories and acceptance criteria
     tools: ["edit", "search"]
+    handoffs: 
+    - agent: architect
+      label: "Design the architecture"
+      prompt: "Read #file:docs/project-plan.md and update docs/schema.md with any new or modified data structures."
+      send: false
     ---
 
     You are a software project planner. When the user describes an application
@@ -108,6 +113,8 @@ A custom agent is a `.agent.md` file with a YAML front matter block (a small con
     ```
 
     > 💡 **Tip:** In Codespaces, files save automatically. If you are working locally, save with `Ctrl+S` / `Cmd+S`.
+
+    > ⚠️ **Expected warning:** VS Code may show a validation warning that the `architect` agent referenced in `handoffs` does not exist yet. This is expected — you will create the Architect Agent in Step 2. The handoff will work once all agents are in place. You will use these handoffs in the final exercise (Step 5) to chain all agents together.
 
     > 💡 **Tip:** Learn more about custom agents:
     >

@@ -114,6 +114,8 @@ Common uses for `#file:` references:
 
 Handoffs chain agents together, similar to a relay race where each runner passes the baton to the next. When an agent finishes its work, it presents one or more buttons that launch the next agent in the workflow. You click a button to continue, keeping full control of the pipeline.
 
+> 🪧 **Note:** In Exercises 01–03, each agent included a `handoffs` entry referencing the next agent in the pipeline. VS Code may have shown a validation warning because the target agent did not exist yet at the time. Now that all four agents are created, those warnings should be resolved.
+
 Each handoff entry specifies:
 
 | Field | Purpose |

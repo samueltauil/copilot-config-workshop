@@ -8,7 +8,7 @@ You now have four agents that each own one phase of the software development lif
 
 ### 📖 Theory: Bringing agents together
 
-Each agent file you created teaches Copilot a specialized role. An orchestrator agent ties them together using the `handoffs:` front matter property. Handoffs create one-click buttons in Copilot Chat. Each button pre-fills a prompt and switches to the named agent. You click each button in order to move the feature through the full lifecycle.
+Each agent file you created teaches Copilot a specialized role. An orchestrator agent ties them together using the `handoffs:` front matter property.
 
 > **Think of it like a relay race.** Each agent runs one leg and then passes the baton to the next. The orchestrator is the coach who organizes the handoffs.
 
@@ -19,6 +19,35 @@ Each agent file you created teaches Copilot a specialized role. An orchestrator 
 | Developer | Implementation | `src/**/*.js` |
 | Tester | Testing | `tests/**/*.test.js` |
 | **Orchestrator** | **Full lifecycle** | **Coordinates all of the above** |
+
+### 📖 Theory: How handoffs work
+
+In the previous steps, each agent included a `handoffs` entry in its YAML front matter that references the next agent in the pipeline (for example, the Planner hands off to the Architect). You may have noticed VS Code showed a validation warning because the target agent did not exist yet at the time. Now that all four agents are created, those handoffs resolve correctly.
+
+Handoffs create one-click buttons in Copilot Chat. When an agent finishes its work, the buttons appear at the bottom of the response. Each button pre-fills a prompt and switches to the named agent. You click each button in order to move the feature through the full lifecycle.
+
+Each handoff entry in the YAML front matter specifies four fields:
+
+| Field | Purpose |
+|-------|---------|
+| `agent` | The name of the next agent to invoke (matches the `name` field in the target agent's front matter) |
+| `label` | The text shown on the button in Copilot Chat |
+| `prompt` | The pre-filled message sent to the next agent |
+| `send` | `true` to auto-submit the prompt, `false` to let the user review it first |
+
+Setting `send: false` keeps the user in the loop. They can edit the pre-filled prompt before it runs.
+
+```yaml
+handoffs:
+  - agent: architect
+    label: "Design the architecture"
+    prompt: "Read #file:docs/project-plan.md and update docs/schema.md."
+    send: false
+```
+
+> 🪧 **Note:** Handoffs are supported in VS Code and GitHub Codespaces. They are not supported when running agents on GitHub.com.
+
+The Orchestrator Agent below uses handoffs to expose all four agents as a sequential pipeline.
 
 > 🪧 **Note:** After the Orchestrator responds, you see four handoff buttons at the bottom of the message labeled **1. Plan the feature**, **2. Design the architecture**, **3. Implement the feature**, and **4. Test the feature**.
 
@@ -55,7 +84,7 @@ Before building the orchestrator, verify the agent suite is complete.
     ---
     name: orchestrator
     description: Coordinates the full SDLC workflow for new features using the planner, architect, developer, and tester agents
-    tools: ["edit", "search", "runInTerminal", "runTests"]
+    tools: [read/readFile, search]
     handoffs:
       - agent: planner
         label: "1. Plan the feature"
@@ -77,7 +106,7 @@ Before building the orchestrator, verify the agent suite is complete.
 
     You are the orchestrator. When the user requests a new feature you
     summarize the work to be done across all four phases, then use the
-    handoff buttons below to guide the user through each phase.
+    handoff buttons below to guide the user through each phase. Do not start the first phase until the user clicks the handoff button. After each phase, summarize the results and next steps before moving to the next phase.
 
     ## Phases
 
