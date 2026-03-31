@@ -1,4 +1,4 @@
-name: Step 5
+name: Step 7 # Last step of the exercise
 
 on:
   workflow_dispatch:
@@ -6,15 +6,19 @@ on:
     branches:
       - main
     paths:
-      - ".github/copilot-instructions.md"
+      - ".github/agents/**"
+      - "!.github/agents/github-skills-creator.agent.md"
+      - "docs/**"
+      - "src/**"
+      - "tests/**"
 
 permissions:
-  contents: read
+  contents: write
   actions: write
   issues: write
 
 env:
-  STEP_6_FILE: ".github/steps/6-step.md"
+  REVIEW_FILE: ".github/steps/x-review.md"
 
 jobs:
   find_exercise:
@@ -57,34 +61,12 @@ jobs:
           file: exercise-toolkit/markdown-templates/step-feedback/checking-work.md
           edit-mode: replace
 
-      - name: Check if package.json exists
-        id: check-package-json
+      - name: Check if orchestrator agent exists
+        id: check-orchestrator
         continue-on-error: true
         uses: skills/exercise-toolkit/actions/file-exists@v0.8.1
         with:
-          file: package.json
-
-      - name: Check if chalk is a dependency
-        id: check-chalk
-        continue-on-error: true
-        run: |
-          if grep -q '"chalk"' package.json 2>/dev/null; then
-            echo "Found chalk dependency in package.json"
-          else
-            echo "chalk dependency not found in package.json"
-            exit 1
-          fi
-
-      - name: Check if copilot-instructions.md mentions chalk
-        id: check-chalk-instructions
-        continue-on-error: true
-        run: |
-          if grep -qi 'chalk' .github/copilot-instructions.md 2>/dev/null; then
-            echo "Found chalk reference in copilot-instructions.md"
-          else
-            echo "copilot-instructions.md does not mention chalk"
-            exit 1
-          fi
+          file: .github/agents/orchestrator.agent.md
 
       - name: Update comment - step results
         uses: GrantBirki/comment@v2.1.1
@@ -95,21 +77,17 @@ jobs:
           edit-mode: replace
           file: exercise-toolkit/markdown-templates/step-feedback/step-results-table.md
           vars: |
-            step_number: 5
+            step_number: 7
             results_table:
-              - description: "Created package.json"
-                passed: ${{ steps.check-package-json.outcome == 'success' }}
-              - description: "Added chalk as a dependency"
-                passed: ${{ steps.check-chalk.outcome == 'success' }}
-              - description: "Updated copilot-instructions.md to mention chalk"
-                passed: ${{ steps.check-chalk-instructions.outcome == 'success' }}
+              - description: "Created .github/agents/orchestrator.agent.md"
+                passed: ${{ steps.check-orchestrator.outcome == 'success' }}
 
       - name: Fail job if not all checks passed
         if: contains(steps.*.outcome, 'failure')
         run: exit 1
 
-  post_next_step_content:
-    name: Post next step content
+  post_review_content:
+    name: Post review content
     needs: [find_exercise, check_step_work]
     runs-on: ubuntu-latest
     env:
@@ -127,32 +105,29 @@ jobs:
           path: exercise-toolkit
           ref: v0.8.1
 
-      - name: Create comment - step finished
+      - name: Create comment - step finished - final review next
         uses: GrantBirki/comment@v2.1.1
         with:
           repository: ${{ env.ISSUE_REPOSITORY }}
           issue-number: ${{ env.ISSUE_NUMBER }}
-          file: exercise-toolkit/markdown-templates/step-feedback/step-finished-prepare-next-step.md
-          vars: |
-            next_step_number: 6
+          file: exercise-toolkit/markdown-templates/step-feedback/lesson-review.md
 
-      - name: Create comment - add step content
+      - name: Create comment - add review content
         uses: GrantBirki/comment@v2.1.1
         with:
           repository: ${{ env.ISSUE_REPOSITORY }}
           issue-number: ${{ env.ISSUE_NUMBER }}
-          file: ${{ env.STEP_6_FILE }}
+          file: ${{ env.REVIEW_FILE }}
 
-      - name: Create comment - watching for progress
-        uses: GrantBirki/comment@v2.1.1
-        with:
-          repository: ${{ env.ISSUE_REPOSITORY }}
-          issue-number: ${{ env.ISSUE_NUMBER }}
-          file: exercise-toolkit/markdown-templates/step-feedback/watching-for-progress.md
-
-      - name: Disable current workflow and enable next one
-        run: |
-          gh workflow disable "${{ github.workflow }}"
-          gh workflow enable "Step 6"
+      - name: Disable current workflow
+        run: gh workflow disable "${{ github.workflow }}"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  finish_exercise:
+    name: Finish Exercise
+    needs: [find_exercise, post_review_content]
+    uses: skills/exercise-toolkit/.github/workflows/finish-exercise.yml@v0.8.1
+    with:
+      issue-url: ${{ needs.find_exercise.outputs.issue-url }}
+      exercise-title: "GitHub Copilot Configuration Workshop"

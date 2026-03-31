@@ -4,17 +4,19 @@ _Congratulations! You have completed the GitHub Copilot Configuration Workshop._
 
 <img src="https://octodex.github.com/images/jetpacktocat.png" alt="celebrate" width=200 align=right>
 
-You built a full suite of SDLC agents:
+You built a full suite of SDLC agents and configurations:
 
-| Agent | SDLC Phase | What it does | Created in |
-|-------|-----------|--------------|------------|
+| Step | SDLC Phase | What it does | Created in |
+|------|-----------|--------------|------------|
 | Planner | Planning | Generates project plans and user stories | Step 1 |
 | Architect | Design | Produces data schemas and file structures | Step 2 |
 | Developer | Implementation | Writes code following project conventions | Step 3 |
 | Tester | Testing | Creates and runs tests until they pass | Step 4 |
-| Orchestrator | Full Lifecycle | Coordinates all agents end-to-end | Step 5 |
+| Code Review | Code Review | Copilot reviews pull requests for quality | Step 5 |
+| Dependency Security | Security | Dependabot monitors and protects the supply chain | Step 6 |
+| Orchestrator | Full Lifecycle | Coordinates all agents end-to-end | Step 7 |
 
-You also used these agents together to deliver a new feature from plan through tested code, covering every phase of the software development lifecycle.
+You used these agents together to deliver a new feature from plan through tested code, and protected your project with code review and dependency security.
 
 Here is a recap of your accomplishments:
 
@@ -26,8 +28,10 @@ Here is a recap of your accomplishments:
 - Built a **Developer Agent** that turns schemas into working code
 - Created reusable prompt files (`.prompt.md`) for test generation workflows (Testing phase)
 - Built a **Tester Agent** that generates, runs, and iterates on test suites
+- Added the `chalk` dependency via a Copilot-generated pull request and used **Copilot code review** (Code Review phase)
+- Configured **Dependabot alerts**, **version updates**, and the **dependency review action** (Security phase)
 - Built an **Orchestrator Agent** that coordinates the full software development lifecycle (Full Lifecycle)
-- Delivered a new feature end-to-end across all SDLC phases: plan, design, implement, and test
+- Delivered a new feature end-to-end across all SDLC phases: plan, design, implement, test, review, secure, and orchestrate
 
 ### 💡 Where else can custom agents help?
 

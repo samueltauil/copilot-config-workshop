@@ -14,7 +14,9 @@ In this exercise, you build a **Tester Agent** that generates and runs tests aut
 | 02 | Repository-wide custom instructions | Architect | Design |
 | 03 | Path-specific instructions | Developer | Implementation |
 | **04 (this one)** | Prompt files | Tester | Testing |
-| 05 | Agent files and orchestration | Orchestrator | Full lifecycle |
+| 05 | Copilot code review | — | Code Review |
+| 06 | Dependency security | — | Security |
+| 07 | Agent files and orchestration | Orchestrator | Full lifecycle |
 
 Each exercise builds on the output of the previous one. The Developer Agent produced source files under `src/`. The Tester Agent reads those files and generates comprehensive tests.
 

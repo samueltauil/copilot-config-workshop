@@ -118,7 +118,7 @@ applyTo: "src/models/**"
 
     > 💡 **Tip:** In Codespaces, files save automatically. If you are working locally, save with `Ctrl+S` / `Cmd+S`.
 
-    > ⚠️ **Expected warning:** VS Code may show a validation warning that the `tester` agent referenced in `handoffs` does not exist yet. This is expected — you will create the Tester Agent in Step 4. The handoff will work once all agents are in place. You will use these handoffs in the final exercise (Step 5) to chain all agents together.
+    > ⚠️ **Expected warning:** VS Code may show a validation warning that the `tester` agent referenced in `handoffs` does not exist yet. This is expected — you will create the Tester Agent in Step 4. The handoff will work once all agents are in place. You will use these handoffs in the final exercise (Step 7) to chain all agents together.
 
 ## ⌨️ Activity: Use the Developer Agent to implement the Task Manager
 

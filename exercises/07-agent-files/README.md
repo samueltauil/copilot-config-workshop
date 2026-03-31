@@ -1,10 +1,12 @@
-# Exercise 5: Agent Orchestration
+# Exercise 7: Agent Orchestration
 
 **SDLC Phase: Full Lifecycle**
 
 > **Why this matters:** Real software development is not a series of isolated steps. Features flow from planning through design, implementation, and testing. Each phase produces artifacts that the next phase consumes. An orchestrator coordinates these phases so nothing falls through the cracks. This mirrors how project managers and team leads track work across the SDLC using tools and processes.
 
 In this exercise, you build an **Orchestrator Agent** that coordinates the four agents you created in Exercises 1 through 4. The Orchestrator drives features through the full software development lifecycle: **Plan, Design, Develop, and Test**. You also learn advanced agent properties and deliver a new feature end to end.
+
+> In Exercises 05 and 06, you practiced code review and dependency security. Those exercises configured GitHub platform features (Copilot code review and Dependabot) rather than building custom agents, so the Orchestrator below coordinates the four custom agents from Exercises 01–04.
 
 ## Workshop Roadmap
 
@@ -14,7 +16,9 @@ In this exercise, you build an **Orchestrator Agent** that coordinates the four 
 | 02 | Repository-wide custom instructions | Architect | Design |
 | 03 | Path-specific instructions | Developer | Implementation |
 | 04 | Prompt files | Tester | Testing |
-| **05 (this one)** | Agent files and orchestration | Orchestrator | Full lifecycle |
+| 05 | Copilot code review | — | Code Review |
+| 06 | Dependency security | — | Security |
+| **07 (this one)** | Agent files and orchestration | Orchestrator | Full lifecycle |
 
 Each exercise builds on the output of the previous one. The Planner Agent produces a project plan. The Architect Agent reads that plan and generates a schema. The Developer Agent reads the schema and writes code. The Tester Agent reads the code and writes tests. Now the Orchestrator coordinates all four in sequence.
 
@@ -30,7 +34,7 @@ After completing this exercise you will be able to:
 
 ## Prerequisites
 
-- Exercises 01 through 04 complete
+- Exercises 01 through 06 complete
 - All four agents exist in `.github/agents/`:
   - `planner.agent.md`
   - `architect.agent.md`
@@ -294,7 +298,7 @@ The Tester Agent adds tests in `tests/` covering:
 
 ### 4. Run the tests
 
-After the final handoff finishes, run the full test suite to confirm everything passes:
+After the final handoff finishes, open the terminal in VS Code by pressing `` Ctrl+` `` (or `` Cmd+` `` on macOS), or go to **Terminal → New Terminal** in the menu bar. Run the full test suite to confirm everything passes:
 
 ```bash
 node --test tests/
@@ -302,7 +306,28 @@ node --test tests/
 
 All tests should pass, including the new category tests.
 
-### 5. Review the changes
+### 5. Try the category feature
+
+Before committing, verify the feature works interactively. In the terminal (press `` Ctrl+` `` or `` Cmd+` `` if it is not already open), run the app:
+
+```bash
+node src/index.js
+```
+
+Then ask Copilot to help you test it manually. In Copilot Chat, enter:
+
+```
+Show me how to run the Task Manager and test the category feature
+interactively. I want to:
+- Create a task with category "work"
+- Create a task without a category (should default to "general")
+- List all tasks and confirm categories are shown
+- Filter tasks by the "work" category
+```
+
+Copilot will provide the exact commands or code snippets based on your implementation.
+
+### 6. Review the changes
 
 Check that these files were created or updated:
 

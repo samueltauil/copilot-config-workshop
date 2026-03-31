@@ -210,7 +210,7 @@ The Developer Agent reads a schema document and generates implementation code. I
 
    > 💡 **Tip:** In Codespaces, files save automatically. If you are working locally, save with `Ctrl+S` / `Cmd+S`.
 
-   > ⚠️ **Expected warning:** VS Code may show a validation warning that the `tester` agent referenced in `handoffs` does not exist yet. This is expected — you will create the Tester Agent in Exercise 04. The handoff will work once all agents are in place. You will use these handoffs in the final exercise (Exercise 05) to chain all agents together.
+   > ⚠️ **Expected warning:** VS Code may show a validation warning that the `tester` agent referenced in `handoffs` does not exist yet. This is expected — you will create the Tester Agent in Exercise 04. The handoff will work once all agents are in place. You will use these handoffs in the final exercise (Exercise 07) to chain all agents together.
 
 ---
 
