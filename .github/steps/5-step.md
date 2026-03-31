@@ -69,22 +69,27 @@ The Task Manager CLI prints plain text. Adding colored status labels makes the o
 
     > 🪧 **Note:** If Copilot code review is not available on your repository, you can review the PR manually. Read through the diff and check that the implementation follows your project conventions (ES modules, single quotes, JSDoc comments, etc.).
 
-1. Wait for Copilot to complete the review. It will leave inline comments on the PR diff with suggestions and observations.
+1. Wait for Copilot to complete the review. It will leave a summary comment with a table of reviewed files and inline comments on the PR diff.
 
-1. Read each comment. If Copilot suggests a code change, click **Commit suggestion** to apply it directly, or make the fix manually and push.
+1. At the bottom of the review summary, click **Fix all with Copilot** to let Copilot automatically address every comment it raised. Copilot will push fix commits directly to the PR branch.
+
+    <img width="600" alt="Screenshot: Copilot review summary with the Fix all with Copilot button" src=".github/images/fix-all.png" />
+
+    > 🪧 **Note:** You can also address comments individually — click **Commit suggestion** on a single comment to apply that fix, or make the change manually and push.
 
 1. Once all review feedback is addressed, **merge the pull request** on GitHub.
 
 ## ⌨️ Activity: Pull the merged changes
 
-1. Back in your Codespace or VS Code, pull the merged changes to your local main branch:
+1. Back in your Codespace or VS Code, click the **branch name** in the bottom-left corner of the status bar.
 
-    Open the VS Code Source Control sidebar and click **Sync Changes**, or use the terminal:
+    <img width="400" alt="Screenshot: Branch name in VS Code status bar" src=".github/images/update-main.png" />
 
-    ```bash
-    git checkout main
-    git pull
-    ```
+1. In the branch picker that appears, select **main** to switch branches.
+
+    <img width="500" alt="Screenshot: Branch picker showing main branch" src=".github/images/switch-main.png" />
+
+1. Open the VS Code Source Control sidebar and click **Sync Changes** to pull the merged PR changes.
 
 ## ⌨️ Activity: Update project conventions
 

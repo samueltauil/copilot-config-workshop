@@ -33,7 +33,7 @@ You can view the dependency graph at **Settings → Code security and analysis**
 
 1. Navigate to your repository on GitHub.com.
 
-1. Go to **Settings → Code security** (in the left sidebar under "Security").
+1. Go to **Settings → Advanced Security** (in the left sidebar under "Security").
 
 1. Enable the following features:
 
@@ -92,7 +92,7 @@ The dependency review action runs on pull requests and checks whether any newly 
 
 1. On GitHub.com, navigate to your repository.
 
-1. Go to **Insights → Dependency graph** (or **Settings → Code security and analysis**).
+1. Go to **Insights → Dependency graph**.
 
 1. You should see `chalk` listed as a dependency, along with any transitive dependencies it brings in.
 

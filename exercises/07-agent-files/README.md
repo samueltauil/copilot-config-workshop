@@ -298,7 +298,7 @@ The Tester Agent adds tests in `tests/` covering:
 
 ### 4. Run the tests
 
-After the final handoff finishes, run the full test suite to confirm everything passes:
+After the final handoff finishes, open the terminal in VS Code by pressing `` Ctrl+` `` (or `` Cmd+` `` on macOS), or go to **Terminal → New Terminal** in the menu bar. Run the full test suite to confirm everything passes:
 
 ```bash
 node --test tests/
@@ -306,7 +306,28 @@ node --test tests/
 
 All tests should pass, including the new category tests.
 
-### 5. Review the changes
+### 5. Try the category feature
+
+Before committing, verify the feature works interactively. In the terminal (press `` Ctrl+` `` or `` Cmd+` `` if it is not already open), run the app:
+
+```bash
+node src/index.js
+```
+
+Then ask Copilot to help you test it manually. In Copilot Chat, enter:
+
+```
+Show me how to run the Task Manager and test the category feature
+interactively. I want to:
+- Create a task with category "work"
+- Create a task without a category (should default to "general")
+- List all tasks and confirm categories are shown
+- Filter tasks by the "work" category
+```
+
+Copilot will provide the exact commands or code snippets based on your implementation.
+
+### 6. Review the changes
 
 Check that these files were created or updated:
 

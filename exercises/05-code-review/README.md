@@ -135,16 +135,20 @@ This is the agent in action — it plans, executes, verifies, and iterates auton
 
    > 🪧 **Note:** If Copilot code review is not available on your repository (it requires GitHub Copilot Enterprise or organization settings), you can review the PR manually. Read through the diff and check that the implementation follows your project conventions.
 
-3. Wait for Copilot to complete the review. It will leave inline comments on the PR diff.
+3. Wait for Copilot to complete the review. It will leave a summary comment with a table of reviewed files and inline comments on the PR diff.
 
-4. Read each comment. Copilot may:
+4. Read the review summary. Copilot may:
 
    - Suggest improvements to code quality
    - Point out missing error handling
    - Recommend better variable names or documentation
    - Flag potential issues with the chalk integration
 
-5. If Copilot suggests a code change, click **Commit suggestion** to apply it directly. For more complex feedback, make the fix in your Codespace, commit, and push.
+5. At the bottom of the review summary, click **Fix all with Copilot** to let Copilot automatically address every comment it raised. Copilot will push fix commits directly to the PR branch.
+
+    <img width="600" alt="Screenshot: Copilot review summary with the Fix all with Copilot button" src="../.github/images/fix-all.png" />
+
+   > 🪧 **Note:** You can also address comments individually — click **Commit suggestion** on a single inline comment to apply that fix, or make the change manually and push.
 
 6. Once all review feedback is addressed, **merge the pull request** on GitHub.
 
@@ -154,16 +158,17 @@ This is the agent in action — it plans, executes, verifies, and iterates auton
 
 After merging the PR, bring the changes back to your local environment.
 
-1. In the VS Code Source Control sidebar, click **Sync Changes**.
+1. Click the **branch name** in the bottom-left corner of the VS Code status bar.
 
-   Or use the terminal:
+    <img width="400" alt="Screenshot: Branch name in VS Code status bar" src="../.github/images/update-main.png" />
 
-   ```bash
-   git checkout main
-   git pull
-   ```
+2. In the branch picker that appears, select **main** to switch branches.
 
-2. Verify the colored output works:
+    <img width="500" alt="Screenshot: Branch picker showing main branch" src="../.github/images/switch-main.png" />
+
+3. Open the VS Code Source Control sidebar and click **Sync Changes** to pull the merged PR changes.
+
+4. Verify the colored output works:
 
    ```bash
    node src/index.js

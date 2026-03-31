@@ -149,9 +149,32 @@ Use the Orchestrator to add **task categories** to the Task Manager.
 
 1. **Verify the full suite:**
 
+    Open the terminal in VS Code by pressing `` Ctrl+` `` (or `` Cmd+` `` on macOS), or go to **Terminal → New Terminal** in the menu bar. Then run:
+
     ```bash
     node --test tests/
     ```
+
+## ⌨️ Activity: Try the category feature
+
+Before committing, verify the feature works interactively. In the terminal (press `` Ctrl+` `` or `` Cmd+` `` if it is not already open), run the app:
+
+```bash
+node src/index.js
+```
+
+Then ask Copilot to help you test it manually. In Copilot Chat, enter:
+
+```
+Show me how to run the Task Manager and test the category feature
+interactively. I want to:
+- Create a task with category "work"
+- Create a task without a category (should default to "general")
+- List all tasks and confirm categories are shown
+- Filter tasks by the "work" category
+```
+
+Copilot will provide the exact commands or code snippets based on your implementation.
 
 ## ⌨️ Activity: Commit and push your work
 

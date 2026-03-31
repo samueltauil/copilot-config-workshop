@@ -140,7 +140,7 @@ You invoke a prompt file by typing `/` in Copilot Chat and selecting it from the
 
 1. Type `/` in Copilot Chat and select **test-edge-cases** from the list.
 
-1. Provide the path to an existing test file, such as `tests/task.test.js`.
+1. Provide the path to an existing test file, such as `tests/models/task.test.js`.
 
 1. Because the prompt sets `agent: tester`, the Tester Agent runs the workflow automatically. It adds edge case tests, runs them, and fixes any failures.
 
