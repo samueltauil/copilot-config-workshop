@@ -7,7 +7,7 @@ on:
       - main
     paths:
       - "package.json"
-      - "src/**"
+      - ".github/copilot-instructions.md"
 
 permissions:
   contents: read
@@ -76,6 +76,17 @@ jobs:
             exit 1
           fi
 
+      - name: Check if copilot-instructions.md mentions chalk
+        id: check-chalk-instructions
+        continue-on-error: true
+        run: |
+          if grep -qi 'chalk' .github/copilot-instructions.md 2>/dev/null; then
+            echo "Found chalk reference in copilot-instructions.md"
+          else
+            echo "copilot-instructions.md does not mention chalk"
+            exit 1
+          fi
+
       - name: Update comment - step results
         uses: GrantBirki/comment@v2.1.1
         with:
@@ -91,6 +102,8 @@ jobs:
                 passed: ${{ steps.check-package-json.outcome == 'success' }}
               - description: "Added chalk as a dependency"
                 passed: ${{ steps.check-chalk.outcome == 'success' }}
+              - description: "Updated copilot-instructions.md to mention chalk"
+                passed: ${{ steps.check-chalk-instructions.outcome == 'success' }}
 
       - name: Fail job if not all checks passed
         if: contains(steps.*.outcome, 'failure')

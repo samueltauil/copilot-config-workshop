@@ -6,7 +6,7 @@
 
 In this exercise, you build an **Orchestrator Agent** that coordinates the four agents you created in Exercises 1 through 4. The Orchestrator drives features through the full software development lifecycle: **Plan, Design, Develop, and Test**. You also learn advanced agent properties and deliver a new feature end to end.
 
-> In Exercises 05 and 06, you added the `chalk` dependency via a Copilot-generated pull request and configured Dependabot to monitor your supply chain. This exercise focuses on agent orchestration and does not create a new agent for those phases.
+> In Exercises 05 and 06, you practiced code review and dependency security. Those exercises configured GitHub platform features (Copilot code review and Dependabot) rather than building custom agents, so the Orchestrator below coordinates the four custom agents from Exercises 01–04.
 
 ## Workshop Roadmap
 
