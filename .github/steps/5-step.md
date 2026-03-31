@@ -1,156 +1,103 @@
-## Step 5: Agent Orchestration - Build an Orchestrator Agent
+## Step 5: Code Review - Review a Pull Request with Copilot
 
-_SDLC Phase: **Full Lifecycle**_
+_SDLC Phase: **Code Review**_
 
-> **Why this matters:** Real software development is not a series of isolated steps. Features flow from planning through design, implementation, and testing. An orchestrator coordinates these phases so nothing falls through the cracks. This mirrors how teams use project management tools to track work across the SDLC.
+> **Why this matters:** Code review catches issues that testing alone cannot find: naming inconsistencies, missing documentation, design concerns, and potential security problems. Copilot can automate parts of this process by reviewing pull requests and leaving structured feedback, so reviewers can focus on the high-value decisions.
 
-You now have four agents that each own one phase of the software development lifecycle: **Planner** (plan), **Architect** (design), **Developer** (implement), and **Tester** (test). In this final exercise, you create an **Orchestrator Agent** that uses **handoffs** to chain all four agents into a guided pipeline, and then prove it works by delivering a new feature end-to-end.
+Your Tester Agent verified that the code works. Before merging new features, your team needs to review the code. In this step, you add a new feature to the Task Manager, ask Copilot to create a pull request, and then use Copilot code review to review the changes.
 
-### 📖 Theory: Bringing agents together
+### 📖 Theory: Copilot code review
 
-Each agent file you created teaches Copilot a specialized role. An orchestrator agent ties them together using the `handoffs:` front matter property.
+GitHub Copilot can review pull requests on GitHub.com. When a PR is opened, Copilot analyzes the changes and leaves review comments with suggestions, just like a human reviewer.
 
-> **Think of it like a relay race.** Each agent runs one leg and then passes the baton to the next. The orchestrator is the coach who organizes the handoffs.
+Key facts:
 
-| Agent | SDLC Phase | Key Artifacts |
-|-------|-----------|---------------|
-| Planner | Planning | `docs/project-plan.md` |
-| Architect | Design | `docs/schema.md` |
-| Developer | Implementation | `src/**/*.js` |
-| Tester | Testing | `tests/**/*.test.js` |
-| **Orchestrator** | **Full lifecycle** | **Coordinates all of the above** |
+- Copilot code review works on pull requests in GitHub.com.
+- It analyzes the diff and leaves inline comments.
+- It can suggest code changes that you can accept with one click.
+- It respects your custom instructions from `.github/copilot-instructions.md`.
+- You can request a review from Copilot just like you request a review from a teammate.
 
-### 📖 Theory: How handoffs work
+### 📖 Theory: Why add a dependency now?
 
-In the previous steps, each agent included a `handoffs` entry in its YAML front matter that references the next agent in the pipeline (for example, the Planner hands off to the Architect). You may have noticed VS Code showed a validation warning because the target agent did not exist yet at the time. Now that all four agents are created, those handoffs resolve correctly.
+Until this point, the Task Manager used only built-in Node.js modules. Real-world projects eventually need external dependencies. Adding one now lets you practice the review workflow and sets up the next step, where you configure Dependabot to monitor your dependencies for security vulnerabilities.
 
-Handoffs create one-click buttons in Copilot Chat. When an agent finishes its work, the buttons appear at the bottom of the response. Each button pre-fills a prompt and switches to the named agent. You click each button in order to move the feature through the full lifecycle.
+## ⌨️ Activity: Add colored output with chalk
 
-Each handoff entry in the YAML front matter specifies four fields:
+The Task Manager CLI prints plain text. Adding colored status labels makes the output more readable. This feature uses the [chalk](https://www.npmjs.com/package/chalk) npm package.
 
-| Field | Purpose |
-|-------|---------|
-| `agent` | The name of the next agent to invoke (matches the `name` field in the target agent's front matter) |
-| `label` | The text shown on the button in Copilot Chat |
-| `prompt` | The pre-filled message sent to the next agent |
-| `send` | `true` to auto-submit the prompt, `false` to let the user review it first |
-
-Setting `send: false` keeps the user in the loop. They can edit the pre-filled prompt before it runs.
-
-```yaml
-handoffs:
-  - agent: architect
-    label: "Design the architecture"
-    prompt: "Read #file:docs/project-plan.md and update docs/schema.md."
-    send: false
-```
-
-> 🪧 **Note:** Handoffs are supported in VS Code and GitHub Codespaces. They are not supported when running agents on GitHub.com.
-
-The Orchestrator Agent below uses handoffs to expose all four agents as a sequential pipeline.
-
-> 🪧 **Note:** After the Orchestrator responds, you see four handoff buttons at the bottom of the message labeled **1. Plan the feature**, **2. Design the architecture**, **3. Implement the feature**, and **4. Test the feature**.
-
-Agent files support these advanced properties:
-
-| Property | Purpose |
-|----------|---------|
-| `tools` | Controls what the agent can do (e.g., read files, edit files, run commands) |
-| `#file:` references | Attaches other files as context inside the agent prompt body |
-| `handoffs` | Creates buttons that switch to the next agent with a pre-filled prompt |
-
-## ⌨️ Activity: Review your agents
-
-Before building the orchestrator, verify the agent suite is complete.
-
-1. Confirm these files exist:
+1. In Copilot Chat, select **Agent** mode and enter the following prompt:
 
     ```
-    .github/agents/planner.agent.md
-    .github/agents/architect.agent.md
-    .github/agents/developer.agent.md
-    .github/agents/tester.agent.md
+    Add colored terminal output to the Task Manager using the chalk
+    npm package. Follow these requirements:
+
+    - Status "done" should display in green
+    - Status "in-progress" should display in yellow
+    - Status "todo" should display in red
+    - Priority "high" should display in bold red
+    - Priority "medium" should display in bold yellow
+    - Priority "low" should display in dim text
+
+    Steps:
+    1. Initialize the project with npm init if package.json does not
+       exist. Set "type": "module" in package.json for ES module support.
+    2. Install chalk as a dependency.
+    3. Create src/utils/colors.js with helper functions that wrap
+       status and priority values in chalk colors.
+    4. Update src/index.js to use the color helpers when displaying tasks.
+    5. Run src/index.js to verify the colored output works.
+
+    After everything works:
+    6. Create a new branch called feature/colored-output.
+    7. Commit all changes to that branch.
+    8. Push the branch and create a pull request to main with the title
+       "Add colored CLI output with chalk" and a description of changes.
     ```
 
-1. Open each file and confirm it has valid YAML front matter with `name` and `description`.
+1. Review the changes Copilot makes. Approve file creations and edits as prompted.
 
-1. If any file is missing, go back to the corresponding exercise step and create it.
+1. When Copilot finishes, verify the PR was created. You should see a link to the PR in the chat output, or you can check the repository on GitHub.
 
-## ⌨️ Activity: Create the Orchestrator Agent
+    > 🪧 **Note:** If Copilot cannot create the PR directly, you can create it manually: open the VS Code Source Control sidebar, click the **...** menu, and select **Create Pull Request**. Or navigate to the repository on GitHub and create the PR from the `feature/colored-output` branch.
 
-1. Create `.github/agents/orchestrator.agent.md`:
+## ⌨️ Activity: Review the PR with Copilot
 
-    ```markdown
-    ---
-    name: orchestrator
-    description: Coordinates the full SDLC workflow for new features using the planner, architect, developer, and tester agents
-    tools: [read/readFile, search]
-    handoffs:
-      - agent: planner
-        label: "1. Plan the feature"
-        prompt: "Analyze the feature request above and update docs/project-plan.md with the new feature scope."
-        send: false
-      - agent: architect
-        label: "2. Design the architecture"
-        prompt: "Read #file:docs/project-plan.md and update docs/schema.md with any new or modified data structures."
-        send: false
-      - agent: developer
-        label: "3. Implement the feature"
-        prompt: "Read #file:docs/schema.md and implement the feature in src/. Use only built-in Node.js modules."
-        send: false
-      - agent: tester
-        label: "4. Test the feature"
-        prompt: "Read the updated source files in src/ and update tests/ to cover the new feature. Run node --test tests/ and fix any failures."
-        send: false
-    ---
+1. Open the pull request on GitHub.com.
 
-    You are the orchestrator. When the user requests a new feature you
-    summarize the work to be done across all four phases, then use the
-    handoff buttons below to guide the user through each phase. Do not start the first phase until the user clicks the handoff button. After each phase, summarize the results and next steps before moving to the next phase.
+1. In the **Reviewers** section on the right sidebar, click the gear icon and select **Copilot** to request a code review.
 
-    ## Phases
+    > 🪧 **Note:** If Copilot code review is not available on your repository, you can review the PR manually. Read through the diff and check that the implementation follows your project conventions (ES modules, single quotes, JSDoc comments, etc.).
 
-    1. **Plan** - The Planner Agent updates `docs/project-plan.md`.
-    2. **Design** - The Architect Agent updates `docs/schema.md`.
-    3. **Develop** - The Developer Agent implements the feature in `src/`.
-    4. **Test** - The Tester Agent writes and runs tests in `tests/`.
+1. Wait for Copilot to complete the review. It will leave inline comments on the PR diff with suggestions and observations.
 
-    ## Rules
+1. Read each comment. If Copilot suggests a code change, click **Commit suggestion** to apply it directly, or make the fix manually and push.
 
-    - Summarize the full plan before handing off to the first agent.
-    - Follow all repository and path-specific instructions.
-    - Use only built-in Node.js modules.
-    - Run tests after every code change.
-    ```
+1. Once all review feedback is addressed, **merge the pull request** on GitHub.
 
-    > 💡 **Tip:** In Codespaces, files save automatically. If you are working locally, save with `Ctrl+S` / `Cmd+S`.
+## ⌨️ Activity: Pull the merged changes
 
-## ⌨️ Activity: Add a new feature using the full lifecycle
+1. Back in your Codespace or VS Code, pull the merged changes to your local main branch:
 
-Use the Orchestrator to add **task categories** to the Task Manager.
-
-1. In Copilot Chat, select the **orchestrator** agent and enter this prompt:
-
-    ```
-    Add a "category" feature to the Task Manager. Users should be able
-    to assign a category (e.g., "work", "personal", "urgent") when
-    creating a task and filter tasks by category. The category property
-    is optional and defaults to "general".
-    ```
-
-1. After the Orchestrator summarizes the plan, click the handoff buttons in order:
-
-    - **1. Plan the feature** - The Planner Agent updates `docs/project-plan.md`.
-    - **2. Design the architecture** - The Architect Agent updates `docs/schema.md`.
-    - **3. Implement the feature** - The Developer Agent implements the feature in `src/`.
-    - **4. Test the feature** - The Tester Agent writes and runs tests in `tests/`.
-
-    Each button pre-fills a prompt. Review it and press Enter to run it. You stay in control at every step.
-
-1. **Verify the full suite:**
+    Open the VS Code Source Control sidebar and click **Sync Changes**, or use the terminal:
 
     ```bash
-    node --test tests/
+    git checkout main
+    git pull
+    ```
+
+## ⌨️ Activity: Update project conventions
+
+The project now has an external dependency. Update your custom instructions to reflect this.
+
+1. Open `.github/copilot-instructions.md` and update the Dependencies section:
+
+    ```markdown
+    ## Dependencies
+
+    - Use only built-in Node.js modules for core functionality.
+    - The `chalk` package is approved for terminal output formatting.
+    - Do not add other external dependencies without approval.
     ```
 
 ## ⌨️ Activity: Commit and push your work
@@ -164,20 +111,20 @@ Use the Orchestrator to add **task categories** to the Task Manager.
 1. In the **Message** text box, type:
 
     ```
-    Add Orchestrator Agent with handoffs and deliver category feature end-to-end
+    Add colored output feature and update project conventions
     ```
 
 1. Click **Commit**, then click **Sync Changes** to push to GitHub.
 
-1. After you push, the workflow checks your work and posts the final review.
+1. After you push, the workflow checks your work and posts the next step.
 
 <details>
 <summary>Having trouble? 🤷</summary><br/>
 
-- If an agent does not appear in the dropdown, reload the VS Code window (`Ctrl+Shift+P` or `Cmd+Shift+P` → **Developer: Reload Window**).
-- If the handoff buttons do not appear, confirm the `handoffs:` block is inside the YAML front matter (between the `---` markers). Each entry needs `agent`, `label`, `prompt`, and `send`.
-- Handoffs are supported in VS Code and GitHub Codespaces. If you are using a different environment, switch to the next agent manually.
-- If tests fail after adding the category feature, let the tester agent fix both tests and source code.
-- For a deeper walkthrough, see [exercises/05-agent-files/README.md](exercises/05-agent-files/README.md).
+- If Copilot cannot run `npm init` or `npm install`, run them manually in the terminal: `npm init -y && npm pkg set type=module && npm install chalk`.
+- If the branch and PR were not created automatically, create them manually via the VS Code Source Control sidebar or with `git checkout -b feature/colored-output && git add -A && git commit -m "Add colored output" && git push -u origin feature/colored-output`, then open the PR on GitHub.
+- If Copilot code review is not available, review the PR yourself — the learning goal is the review workflow.
+- After merging the PR, remember to switch back to `main` and pull the changes before committing the convention updates.
+- For a deeper walkthrough, see [exercises/05-code-review/README.md](exercises/05-code-review/README.md).
 
 </details>

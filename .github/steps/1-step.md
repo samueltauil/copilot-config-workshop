@@ -6,7 +6,7 @@ _SDLC Phase: **Planning & Requirements**_
 
 > **Why this matters:** Every project starts with a plan. In the SDLC, the Planning phase defines what you will build, for whom, and why. Copilot can accelerate this phase by helping you brainstorm requirements, structure user stories, and draft project plans, all through natural language conversation.
 
-Over the next five exercises you build a suite of specialized Copilot agents that cover the entire software development lifecycle (SDLC). Together, these agents will **plan, design, implement, test, and orchestrate** a Task Manager application.
+Over the next seven exercises you build a suite of specialized Copilot agents that cover the entire software development lifecycle (SDLC). Together, these agents will **plan, design, implement, test, review, secure, and orchestrate** a Task Manager application.
 
 In this first step, you learn [prompt engineering](https://docs.github.com/en/copilot/using-github-copilot/copilot-chat/prompt-engineering-for-copilot-chat) strategies, explore Copilot's interaction modes, and create a **Planner Agent** that generates project plans.
 
@@ -114,7 +114,7 @@ A custom agent is a `.agent.md` file with a YAML front matter block (a small con
 
     > 💡 **Tip:** In Codespaces, files save automatically. If you are working locally, save with `Ctrl+S` / `Cmd+S`.
 
-    > ⚠️ **Expected warning:** VS Code may show a validation warning that the `architect` agent referenced in `handoffs` does not exist yet. This is expected — you will create the Architect Agent in Step 2. The handoff will work once all agents are in place. You will use these handoffs in the final exercise (Step 5) to chain all agents together.
+    > ⚠️ **Expected warning:** VS Code may show a validation warning that the `architect` agent referenced in `handoffs` does not exist yet. This is expected — you will create the Architect Agent in Step 2. The handoff will work once all agents are in place. You will use these handoffs in the final exercise (Step 7) to chain all agents together.
 
     > 💡 **Tip:** Learn more about custom agents:
     >

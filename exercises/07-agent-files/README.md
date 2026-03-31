@@ -1,10 +1,12 @@
-# Exercise 5: Agent Orchestration
+# Exercise 7: Agent Orchestration
 
 **SDLC Phase: Full Lifecycle**
 
 > **Why this matters:** Real software development is not a series of isolated steps. Features flow from planning through design, implementation, and testing. Each phase produces artifacts that the next phase consumes. An orchestrator coordinates these phases so nothing falls through the cracks. This mirrors how project managers and team leads track work across the SDLC using tools and processes.
 
 In this exercise, you build an **Orchestrator Agent** that coordinates the four agents you created in Exercises 1 through 4. The Orchestrator drives features through the full software development lifecycle: **Plan, Design, Develop, and Test**. You also learn advanced agent properties and deliver a new feature end to end.
+
+> In Exercises 05 and 06, you added the `chalk` dependency via a Copilot-generated pull request and configured Dependabot to monitor your supply chain. This exercise focuses on agent orchestration and does not create a new agent for those phases.
 
 ## Workshop Roadmap
 
@@ -14,7 +16,9 @@ In this exercise, you build an **Orchestrator Agent** that coordinates the four 
 | 02 | Repository-wide custom instructions | Architect | Design |
 | 03 | Path-specific instructions | Developer | Implementation |
 | 04 | Prompt files | Tester | Testing |
-| **05 (this one)** | Agent files and orchestration | Orchestrator | Full lifecycle |
+| 05 | Copilot code review | — | Code Review |
+| 06 | Dependency security | — | Security |
+| **07 (this one)** | Agent files and orchestration | Orchestrator | Full lifecycle |
 
 Each exercise builds on the output of the previous one. The Planner Agent produces a project plan. The Architect Agent reads that plan and generates a schema. The Developer Agent reads the schema and writes code. The Tester Agent reads the code and writes tests. Now the Orchestrator coordinates all four in sequence.
 
@@ -30,7 +34,7 @@ After completing this exercise you will be able to:
 
 ## Prerequisites
 
-- Exercises 01 through 04 complete
+- Exercises 01 through 06 complete
 - All four agents exist in `.github/agents/`:
   - `planner.agent.md`
   - `architect.agent.md`

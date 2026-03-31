@@ -6,7 +6,7 @@ Read this file before exploring the codebase or making any changes.
 ## Repository Purpose
 
 This repository is a workshop for learning how to configure GitHub Copilot.
-It contains five exercises that follow the software development lifecycle.
+It contains seven exercises that follow the software development lifecycle.
 Each exercise builds a specialized Copilot agent (Planner, Architect,
 Developer, Tester, Orchestrator) while teaching a different configuration
 concept. There is no application code to build or deploy in the template

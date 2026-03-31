@@ -6,13 +6,13 @@ _Learn to configure and use GitHub Copilot effectively through hands-on exercise
 
 - **Who is this for**: Developers, project managers, team leads, and anyone involved in the software development lifecycle who wants to get the most out of GitHub Copilot.
 - **What you'll learn**: How Copilot supports every phase of the SDLC, from planning and design through implementation and testing. You practice prompt engineering, custom instructions, path-specific instructions, prompt files, custom agents, and agent orchestration.
-- **What you'll build**: Five specialized Copilot agents that plan, design, implement, test, and orchestrate a Task Manager application end-to-end.
+- **What you'll build**: Seven specialized Copilot configurations — including agents, code review, and dependency security — that plan, design, implement, test, review, secure, and orchestrate a Task Manager application end-to-end.
 - **Prerequisites**:
   - A GitHub account with access to GitHub Copilot
   - One of the following:
     - **GitHub Codespaces** (recommended, no local setup required)
     - Visual Studio Code with the GitHub Copilot extension installed
-- **How long**: This workshop takes approximately 2-3 hours to complete.
+- **How long**: This workshop takes approximately 3-4 hours to complete.
 
 In this exercise, you will:
 
@@ -20,6 +20,8 @@ In this exercise, you will:
 1. Create repository-wide custom instructions and build an **Architect Agent** (SDLC: Design phase)
 1. Add path-specific instructions and build a **Developer Agent** (SDLC: Implementation phase)
 1. Create reusable prompt files and build a **Tester Agent** (SDLC: Testing phase)
+1. Use **Copilot code review** on a pull request that adds a new dependency (SDLC: Code Review phase)
+1. Configure **Dependabot** and the dependency review action (SDLC: Security phase)
 1. Build an **Orchestrator Agent** and deliver a new feature using the full SDLC pipeline
 
 ### How to start this exercise

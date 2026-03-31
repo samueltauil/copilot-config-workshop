@@ -1,4 +1,4 @@
-name: Step 5
+name: Step 6
 
 on:
   workflow_dispatch:
@@ -6,8 +6,8 @@ on:
     branches:
       - main
     paths:
-      - "package.json"
-      - "src/**"
+      - ".github/dependabot.yml"
+      - ".github/workflows/dependency-review.yml"
 
 permissions:
   contents: read
@@ -15,7 +15,7 @@ permissions:
   issues: write
 
 env:
-  STEP_6_FILE: ".github/steps/6-step.md"
+  STEP_7_FILE: ".github/steps/7-step.md"
 
 jobs:
   find_exercise:
@@ -58,23 +58,19 @@ jobs:
           file: exercise-toolkit/markdown-templates/step-feedback/checking-work.md
           edit-mode: replace
 
-      - name: Check if package.json exists
-        id: check-package-json
+      - name: Check if dependabot.yml exists
+        id: check-dependabot
         continue-on-error: true
         uses: skills/exercise-toolkit/actions/file-exists@v0.8.1
         with:
-          file: package.json
+          file: .github/dependabot.yml
 
-      - name: Check if chalk is a dependency
-        id: check-chalk
+      - name: Check if dependency review workflow exists
+        id: check-dep-review
         continue-on-error: true
-        run: |
-          if grep -q '"chalk"' package.json 2>/dev/null; then
-            echo "Found chalk dependency in package.json"
-          else
-            echo "chalk dependency not found in package.json"
-            exit 1
-          fi
+        uses: skills/exercise-toolkit/actions/file-exists@v0.8.1
+        with:
+          file: .github/workflows/dependency-review.yml
 
       - name: Update comment - step results
         uses: GrantBirki/comment@v2.1.1
@@ -85,12 +81,12 @@ jobs:
           edit-mode: replace
           file: exercise-toolkit/markdown-templates/step-feedback/step-results-table.md
           vars: |
-            step_number: 5
+            step_number: 6
             results_table:
-              - description: "Created package.json"
-                passed: ${{ steps.check-package-json.outcome == 'success' }}
-              - description: "Added chalk as a dependency"
-                passed: ${{ steps.check-chalk.outcome == 'success' }}
+              - description: "Created .github/dependabot.yml"
+                passed: ${{ steps.check-dependabot.outcome == 'success' }}
+              - description: "Created .github/workflows/dependency-review.yml"
+                passed: ${{ steps.check-dep-review.outcome == 'success' }}
 
       - name: Fail job if not all checks passed
         if: contains(steps.*.outcome, 'failure')
@@ -122,14 +118,14 @@ jobs:
           issue-number: ${{ env.ISSUE_NUMBER }}
           file: exercise-toolkit/markdown-templates/step-feedback/step-finished-prepare-next-step.md
           vars: |
-            next_step_number: 6
+            next_step_number: 7
 
       - name: Create comment - add step content
         uses: GrantBirki/comment@v2.1.1
         with:
           repository: ${{ env.ISSUE_REPOSITORY }}
           issue-number: ${{ env.ISSUE_NUMBER }}
-          file: ${{ env.STEP_6_FILE }}
+          file: ${{ env.STEP_7_FILE }}
 
       - name: Create comment - watching for progress
         uses: GrantBirki/comment@v2.1.1
@@ -141,6 +137,6 @@ jobs:
       - name: Disable current workflow and enable next one
         run: |
           gh workflow disable "${{ github.workflow }}"
-          gh workflow enable "Step 6"
+          gh workflow enable "Step 7"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -4,7 +4,7 @@
 
 > **Why this matters:** Every project starts with a plan. In the SDLC, the Planning phase defines what you will build, for whom, and why. Before any code is written, teams gather requirements, write user stories, and outline priorities. Copilot can accelerate this phase by helping you brainstorm features, structure requirements, and draft project plans, all through natural language conversation.
 
-In this exercise, you learn how to communicate with GitHub Copilot and build a **Planner Agent** that generates structured project plans. The Planner Agent is the first of five agents you create across this workshop. Together, these agents cover the full software development lifecycle: **plan, design, implement, test, and orchestrate**.
+In this exercise, you learn how to communicate with GitHub Copilot and build a **Planner Agent** that generates structured project plans. The Planner Agent is the first of seven agents and configurations you create across this workshop. Together, they cover the full software development lifecycle: **plan, design, implement, test, review, secure, and orchestrate**.
 
 ## Workshop Roadmap
 
@@ -14,9 +14,11 @@ In this exercise, you learn how to communicate with GitHub Copilot and build a *
 | 02 | Repository-wide custom instructions | Architect | Design |
 | 03 | Path-specific instructions | Developer | Implementation |
 | 04 | Prompt files | Tester | Testing |
-| 05 | Agent files and orchestration | Orchestrator | Full lifecycle |
+| 05 | Copilot code review | — | Code Review |
+| 06 | Dependency security | — | Security |
+| 07 | Agent files and orchestration | Orchestrator | Full lifecycle |
 
-Each exercise builds on the output of the previous one. The Planner Agent produces a project plan. The Architect Agent reads that plan and generates a schema. The Developer Agent reads the schema and writes code. This chain continues through all five exercises.
+Each exercise builds on the output of the previous one. The Planner Agent produces a project plan. The Architect Agent reads that plan and generates a schema. The Developer Agent reads the schema and writes code. This chain continues through all seven exercises.
 
 ## Learning Objectives
 
@@ -36,7 +38,7 @@ After completing this exercise you will be able to:
 
 ## The Application: Task Manager CLI
 
-All five exercises build toward the same application. Here is the scope:
+All seven exercises build toward the same application. Here is the scope:
 
 - **Runtime:** Node.js, no external dependencies, built-in modules only
 - **Storage:** In-memory (no database)
@@ -265,7 +267,7 @@ idea, generate a comprehensive project plan in Markdown format.
 - Save the plan to `docs/project-plan.md`.
 ```
 
-> ⚠️ **Expected warning:** VS Code may show a validation warning that the `architect` agent referenced in `handoffs` does not exist yet. This is expected — you will create the Architect Agent in Exercise 02. The handoff will work once all agents are in place. You will use these handoffs in the final exercise (Exercise 05) to chain all agents together.
+> ⚠️ **Expected warning:** VS Code may show a validation warning that the `architect` agent referenced in `handoffs` does not exist yet. This is expected — you will create the Architect Agent in Exercise 02. The handoff will work once all agents are in place. You will use these handoffs in the final exercise (Exercise 07) to chain all agents together.
 
 ### 3. Understand the YAML front matter
 
@@ -276,7 +278,7 @@ The front matter block between `---` markers configures the agent. Think of it a
 | `name` | Yes | Display name in the Copilot Chat dropdown |
 | `description` | Yes | Tells Copilot (and users) what the agent does |
 | `tools` | No | Controls what capabilities the agent has access to |
-| `handoffs` | No | Creates buttons that switch to the next agent with a pre-filled prompt (covered in Exercise 05) |
+| `handoffs` | No | Creates buttons that switch to the next agent with a pre-filled prompt (covered in Exercise 07) |
 
 ### 4. Understand the prompt body
 

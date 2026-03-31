@@ -624,11 +624,19 @@
     </div>
     <div class="toc-item">
       <span class="toc-num">05</span>
+      Copilot Code Review &rarr; Code Review
+    </div>
+    <div class="toc-item">
+      <span class="toc-num">06</span>
+      Dependency Security &rarr; Security
+    </div>
+    <div class="toc-item">
+      <span class="toc-num">07</span>
       Agent Orchestration &rarr; Full Lifecycle
     </div>
   </div>
   <p style="font-size:0.83rem; color:var(--gh-gray); margin-top:1.2em">
-    Each exercise: 20&ndash;40 minutes &bull; Total: approximately 2&ndash;3 hours
+    Each exercise: 20&ndash;40 minutes &bull; Total: approximately 3&ndash;4 hours
   </p>
 </section>
 
@@ -1278,13 +1286,79 @@ tools: ["search"]
 </section>
 
 <!-- ============================================================
-     SLIDE 27: Exercise 5 intro
+     SLIDE 27: Exercise 5 intro - Code Review
      ============================================================ -->
 <section class="exercise-intro" data-background="linear-gradient(160deg, #0d1117 0%, #0d1f38 50%, #0d1117 100%)">
   <svg width="36" height="36" viewBox="0 0 24 24" fill="#388bfd" style="opacity:0.4; margin-bottom:0.3em; display:block; margin-left:auto; margin-right:auto" aria-hidden="true">
     <path d="M12 2l2.4 7.4H22l-6.4 4.6 2.4 7.4L12 17l-6 4.4 2.4-7.4L2 9.4h7.6L12 2z"/>
   </svg>
   <span class="exercise-number">05</span>
+  <h2>Copilot Code Review &rarr; Code Review</h2>
+  <p>Add a new dependency via a Copilot-generated pull request and use Copilot code review on GitHub.com.</p>
+  <div class="cta-box">&#128073; Open your GitHub Issue to start this lab</div>
+  <p class="cta-hint">SDLC Phase: Code Review &bull; Duration: ~20 minutes</p>
+</section>
+
+<!-- ============================================================
+     SLIDE 28: Exercise 5 - Copilot Code Review overview
+     ============================================================ -->
+<section>
+  <h2>Copilot Code Review</h2>
+  <ul style="font-size:0.9rem">
+    <li>AI-powered review that runs alongside human reviewers on pull requests</li>
+    <li>Understands project context from custom instructions and repository conventions</li>
+    <li>Catches bugs, style issues, and security concerns before human review</li>
+    <li>Enable in repository settings under <strong>Code review</strong></li>
+    <li>Request review from <strong>Copilot</strong> on any PR, just like requesting a human reviewer</li>
+  </ul>
+  <div class="note" style="margin-top:0.9em">
+    Copilot code review complements (not replaces) human review. Use it as a first pass before human reviewers look at the PR.
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 29: Exercise 6 intro - Dependency Security
+     ============================================================ -->
+<section class="exercise-intro" data-background="linear-gradient(160deg, #0d1117 0%, #0d1f38 50%, #0d1117 100%)">
+  <svg width="36" height="36" viewBox="0 0 24 24" fill="#388bfd" style="opacity:0.4; margin-bottom:0.3em; display:block; margin-left:auto; margin-right:auto" aria-hidden="true">
+    <path d="M12 2l2.4 7.4H22l-6.4 4.6 2.4 7.4L12 17l-6 4.4 2.4-7.4L2 9.4h7.6L12 2z"/>
+  </svg>
+  <span class="exercise-number">06</span>
+  <h2>Dependency Security &rarr; Security</h2>
+  <p>Configure Dependabot and the dependency review action to protect your supply chain.</p>
+  <div class="cta-box">&#128073; Open your GitHub Issue to start this lab</div>
+  <p class="cta-hint">SDLC Phase: Security &bull; Duration: ~20 minutes</p>
+</section>
+
+<!-- ============================================================
+     SLIDE 30: Exercise 6 - Dependency Security overview
+     ============================================================ -->
+<section>
+  <h2>GitHub Dependency Security</h2>
+  <table style="font-size:0.78rem; margin-top:0.7em">
+    <thead>
+      <tr><th>Feature</th><th>What it does</th><th>When it runs</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Dependabot alerts</strong></td><td>Notifies when a dependency has a known CVE</td><td>When a new advisory is published</td></tr>
+      <tr><td><strong>Security updates</strong></td><td>Opens PRs to fix vulnerable dependencies</td><td>When an alert is created</td></tr>
+      <tr><td><strong>Version updates</strong></td><td>Opens PRs to keep dependencies current</td><td>On your configured schedule</td></tr>
+      <tr><td><strong>Dependency review</strong></td><td>Blocks PRs that introduce vulnerable deps</td><td>On every pull request</td></tr>
+    </tbody>
+  </table>
+  <div class="note" style="margin-top:0.7em">
+    The dependency graph powers all of these features. It maps your direct and transitive dependencies from <code>package.json</code> and lock files.
+  </div>
+</section>
+
+<!-- ============================================================
+     SLIDE 31: Exercise 7 intro - Agent Orchestration
+     ============================================================ -->
+<section class="exercise-intro" data-background="linear-gradient(160deg, #0d1117 0%, #0d1f38 50%, #0d1117 100%)">
+  <svg width="36" height="36" viewBox="0 0 24 24" fill="#388bfd" style="opacity:0.4; margin-bottom:0.3em; display:block; margin-left:auto; margin-right:auto" aria-hidden="true">
+    <path d="M12 2l2.4 7.4H22l-6.4 4.6 2.4 7.4L12 17l-6 4.4 2.4-7.4L2 9.4h7.6L12 2z"/>
+  </svg>
+  <span class="exercise-number">07</span>
   <h2>Agent Orchestration &rarr; Full Lifecycle</h2>
   <p>Build an Orchestrator Agent and deliver a new feature using all SDLC agents together.</p>
   <div class="cta-box">&#128073; Open your GitHub Issue to start this lab</div>
@@ -1292,7 +1366,7 @@ tools: ["search"]
 </section>
 
 <!-- ============================================================
-     SLIDE 28: Exercise 5 - What is a custom agent
+     SLIDE 32: Exercise 7 - What is a custom agent
      ============================================================ -->
 <section>
   <h2>What Are Custom Agents?</h2>
@@ -1309,7 +1383,7 @@ tools: ["search"]
 </section>
 
 <!-- ============================================================
-     SLIDE 29: Exercise 5 - Agent file format
+     SLIDE 33: Exercise 7 - Agent file format
      ============================================================ -->
 <section>
   <h2>Anatomy of a <code>.agent.md</code> File</h2>
@@ -1338,7 +1412,7 @@ You are a testing specialist. Your responsibilities:
 </section>
 
 <!-- ============================================================
-     SLIDE 30: Exercise 5 - Comparison table
+     SLIDE 34: Exercise 7 - Comparison table
      ============================================================ -->
 <section>
   <h2>Custom Agents vs Other Copilot Files</h2>
@@ -1360,7 +1434,7 @@ You are a testing specialist. Your responsibilities:
 </section>
 
 <!-- ============================================================
-     SLIDE 31: Exercise 5 - Where to store agents
+     SLIDE 35: Exercise 7 - Where to store agents
      ============================================================ -->
 <section>
   <h2>Where to Store Custom Agents</h2>
@@ -1381,7 +1455,7 @@ You are a testing specialist. Your responsibilities:
 </section>
 
 <!-- ============================================================
-     SLIDE 32: Exercise 5 - Best practices
+     SLIDE 36: Exercise 7 - Best practices
      ============================================================ -->
 <section>
   <h2>Tips for Effective Agents</h2>
@@ -1413,20 +1487,20 @@ You are a testing specialist. Your responsibilities:
 </section>
 
 <!-- ============================================================
-     SLIDE 33: What's Next intro
+     SLIDE 37: What's Next intro
      ============================================================ -->
 <section class="exercise-intro" data-background="linear-gradient(160deg, #0d1117 0%, #0d1f38 50%, #0d1117 100%)">
   <svg width="36" height="36" viewBox="0 0 24 24" fill="#388bfd" style="opacity:0.4; margin-bottom:0.3em; display:block; margin-left:auto; margin-right:auto" aria-hidden="true">
     <path d="M12 2l2.4 7.4H22l-6.4 4.6 2.4 7.4L12 17l-6 4.4 2.4-7.4L2 9.4h7.6L12 2z"/>
   </svg>
-  <span class="exercise-number" style="opacity:0.5">06</span>
+  <span class="exercise-number" style="opacity:0.5">08</span>
   <h2>What's Next</h2>
-  <p>You built five agents that cover the SDLC. Now explore what else custom agents can do.</p>
+  <p>You built seven configurations that cover the SDLC. Now explore what else custom agents can do.</p>
   <p class="cta-hint">Ideas, org-level configuration, and next steps.</p>
 </section>
 
 <!-- ============================================================
-     SLIDE 34: Agent Ideas Beyond the SDLC
+     SLIDE 38: Agent Ideas Beyond the SDLC
      ============================================================ -->
 <section>
   <h2>Agent Ideas Beyond the SDLC</h2>
@@ -1463,7 +1537,7 @@ You are a testing specialist. Your responsibilities:
 </section>
 
 <!-- ============================================================
-     SLIDE 35: Org-Level Configuration (condensed)
+     SLIDE 39: Org-Level Configuration (condensed)
      ============================================================ -->
 <section>
   <h2>Org-Level Configuration</h2>
@@ -1500,7 +1574,7 @@ You are a testing specialist. Your responsibilities:
 </section>
 
 <!-- ============================================================
-     SLIDE 37: Summary of all files created
+     SLIDE 41: Summary of all files created
      ============================================================ -->
 <section>
   <h2>What You Built</h2>
@@ -1560,13 +1634,23 @@ You are a testing specialist. Your responsibilities:
         <td>Testing</td>
       </tr>
       <tr>
-        <td><code>tests/**/*.test.js</code></td>
-        <td>04</td>
-        <td>Testing</td>
+        <td><code>package.json</code> (chalk dependency)</td>
+        <td>05</td>
+        <td>Code Review</td>
+      </tr>
+      <tr>
+        <td><code>.github/dependabot.yml</code></td>
+        <td>06</td>
+        <td>Security</td>
+      </tr>
+      <tr>
+        <td><code>.github/workflows/dependency-review.yml</code></td>
+        <td>06</td>
+        <td>Security</td>
       </tr>
       <tr>
         <td><code>.github/agents/orchestrator.agent.md</code></td>
-        <td>05</td>
+        <td>07</td>
         <td>Full Lifecycle</td>
       </tr>
     </tbody>
@@ -1574,7 +1658,7 @@ You are a testing specialist. Your responsibilities:
 </section>
 
 <!-- ============================================================
-     SLIDE 38: Official documentation references
+     SLIDE 42: Official documentation references
      ============================================================ -->
 <section>
   <h2>Official Documentation &amp; Further Learning</h2>
@@ -1604,7 +1688,7 @@ You are a testing specialist. Your responsibilities:
 </section>
 
 <!-- ============================================================
-     SLIDE 39: End
+     SLIDE 43: End
      ============================================================ -->
 <section class="title-slide" data-background="linear-gradient(135deg, #0d1117 0%, #161b22 60%, #1a1f2e 100%)">
   <svg class="gh-mark" viewBox="0 0 98 96" xmlns="http://www.w3.org/2000/svg" aria-label="GitHub">
@@ -1616,7 +1700,7 @@ You are a testing specialist. Your responsibilities:
     You can now configure GitHub Copilot at every level:
   </p>
   <p style="color:#8b949e; font-size:0.88rem">
-    Planner &bull; Architect &bull; Developer &bull; Tester &bull; Orchestrator &bull; A full SDLC agent pipeline
+    Planner &bull; Architect &bull; Developer &bull; Tester &bull; Code Review &bull; Security &bull; Orchestrator &bull; A full SDLC pipeline
   </p>
   <p style="margin-top:2em; font-size:0.78rem; color:#484f58">
     Repository:

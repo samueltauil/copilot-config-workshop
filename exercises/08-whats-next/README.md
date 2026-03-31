@@ -1,6 +1,6 @@
 # Workshop Complete
 
-You have finished all five exercises and built a full suite of SDLC agents:
+You have finished all seven exercises and built a full suite of SDLC agents:
 
 | Agent | SDLC Phase | What it does | Created in |
 |-------|-----------|--------------|------------|
@@ -8,9 +8,9 @@ You have finished all five exercises and built a full suite of SDLC agents:
 | Architect | Design | Produces data schemas and file structures | Exercise 02 |
 | Developer | Implementation | Writes code following project conventions | Exercise 03 |
 | Tester | Testing | Creates and runs tests until they pass | Exercise 04 |
-| Orchestrator | Full Lifecycle | Coordinates all agents end-to-end | Exercise 05 |
+| Orchestrator | Full Lifecycle | Coordinates all agents end-to-end | Exercise 07 |
 
-You used these agents together to deliver a new feature from plan through tested code, covering every phase of the software development lifecycle.
+You also configured Copilot code review (Exercise 05) and Dependabot dependency security (Exercise 06) to protect your project's code quality and supply chain.
 
 ---
 
@@ -73,7 +73,7 @@ Organizations that manage many repositories benefit from shared defaults. GitHub
 |-----------|----------------------|----------------------------------------|
 | Custom instructions | `.github/copilot-instructions.md` | `.github/copilot-instructions.md` |
 | Path-specific instructions | `.github/instructions/*.instructions.md` | `.github/instructions/*.instructions.md` |
-| Custom agents | `.github/agents/*.agent.md` | `.github/agents/*.agent.md` |
+| Custom agents | `.github/agents/*.agent.md` | `.github/agents/*.agent.md` in org `.github-private` repo |
 | Prompt files | `.github/prompts/*.prompt.md` | `.github/prompts/*.prompt.md` |
 
 Repository-level files always override org-level files. Use the org level for universal rules (security policies, documentation standards) and the repository level for project-specific conventions.
