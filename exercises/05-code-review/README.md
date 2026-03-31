@@ -146,7 +146,7 @@ This is the agent in action — it plans, executes, verifies, and iterates auton
 
 5. At the bottom of the review summary, click **Fix all with Copilot** to let Copilot automatically address every comment it raised. Copilot will push fix commits directly to the PR branch.
 
-    <img width="600" alt="Screenshot: Copilot review summary with the Fix all with Copilot button" src="../.github/images/fix-all.png" />
+    <img width="600" alt="Screenshot: Copilot review summary with the Fix all with Copilot button" src="../../.github/images/fix-all.png" />
 
    > 🪧 **Note:** You can also address comments individually — click **Commit suggestion** on a single inline comment to apply that fix, or make the change manually and push.
 
@@ -160,11 +160,11 @@ After merging the PR, bring the changes back to your local environment.
 
 1. Click the **branch name** in the bottom-left corner of the VS Code status bar.
 
-    <img width="400" alt="Screenshot: Branch name in VS Code status bar" src="../.github/images/update-main.png" />
+    <img width="400" alt="Screenshot: Branch name in VS Code status bar" src="../../.github/images/update-main.png" />
 
 2. In the branch picker that appears, select **main** to switch branches.
 
-    <img width="500" alt="Screenshot: Branch picker showing main branch" src="../.github/images/switch-main.png" />
+    <img width="500" alt="Screenshot: Branch picker showing main branch" src="../../.github/images/switch-main.png" />
 
 3. Open the VS Code Source Control sidebar and click **Sync Changes** to pull the merged PR changes.
 
