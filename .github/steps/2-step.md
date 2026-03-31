@@ -72,7 +72,7 @@ Key facts:
 
     > 🪧 **Note:** The **Reviewed n files** link appears at the top of each Copilot Chat response. Click it to expand the list of loaded instruction files.
     >
-    > <img width="504" alt="Screenshot: Copilot Chat showing Reviewed n files panel" src="../../.github/images/file-references.png" />
+    > <img width="504" alt="Screenshot: Copilot Chat showing Reviewed n files panel" src="https://raw.githubusercontent.com/samueltauil/copilot-config-workshop/main/.github/images/file-references.png" />
 
 ## ⌨️ Activity: Create the Architect Agent
 

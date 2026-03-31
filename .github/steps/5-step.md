@@ -73,7 +73,7 @@ The Task Manager CLI prints plain text. Adding colored status labels makes the o
 
 1. At the bottom of the review summary, click **Fix all with Copilot** to let Copilot automatically address every comment it raised. Copilot will push fix commits directly to the PR branch.
 
-    <img width="600" alt="Screenshot: Copilot review summary with the Fix all with Copilot button" src="../../.github/images/fix-all.png" />
+    <img width="600" alt="Screenshot: Copilot review summary with the Fix all with Copilot button" src="https://raw.githubusercontent.com/samueltauil/copilot-config-workshop/main/.github/images/fix-all.png" />
 
     > 🪧 **Note:** You can also address comments individually — click **Commit suggestion** on a single comment to apply that fix, or make the change manually and push.
 
@@ -83,11 +83,11 @@ The Task Manager CLI prints plain text. Adding colored status labels makes the o
 
 1. Back in your Codespace or VS Code, click the **branch name** in the bottom-left corner of the status bar.
 
-    <img width="400" alt="Screenshot: Branch name in VS Code status bar" src="../../.github/images/update-main.png" />
+    <img width="400" alt="Screenshot: Branch name in VS Code status bar" src="https://raw.githubusercontent.com/samueltauil/copilot-config-workshop/main/.github/images/update-main.png" />
 
 1. In the branch picker that appears, select **main** to switch branches.
 
-    <img width="500" alt="Screenshot: Branch picker showing main branch" src="../../.github/images/switch-main.png" />
+    <img width="500" alt="Screenshot: Branch picker showing main branch" src="https://raw.githubusercontent.com/samueltauil/copilot-config-workshop/main/.github/images/switch-main.png" />
 
 1. Open the VS Code Source Control sidebar and click **Sync Changes** to pull the merged PR changes.
 
